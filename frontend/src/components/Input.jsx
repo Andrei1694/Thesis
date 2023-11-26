@@ -1,10 +1,11 @@
-function Input({ type, label, placeholder, onChange, value, id, error }) {
+function Input({ type, label, placeholder, onChange, value, id, error, innerRef }) {
   return (
     <div className="">
       <label className="text-black text-xs font-extrabold leading-none mb-2">
         {label}
       </label>
       <input
+        ref={innerRef}
         type={type}
         id={id}
         placeholder={placeholder}

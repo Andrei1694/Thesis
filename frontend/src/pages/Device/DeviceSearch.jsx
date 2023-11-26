@@ -32,13 +32,13 @@ const DeviceSearch = () => {
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    // inputRef.current.focus(); // Focus on the input when typing
+    inputRef.current?.focus(); // Focus on the input when typing
   };
 
   const clearSearch = () => {
     setSearchTerm("");
     setFilteredDevices([]);
-    inputRef.current.focus(); // Focus on the input after clearing search
+    inputRef.current?.focus(); // Focus on the input after clearing search
   };
 
   return (
@@ -47,7 +47,7 @@ const DeviceSearch = () => {
         <div className="bg-white rounded-lg shadow p-4">
           <form>
             <Input
-              ref={inputRef}
+              innerRef={inputRef}
               type="text"
               placeholder="Search for devices..."
               value={searchTerm}
