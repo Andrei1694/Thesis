@@ -8,7 +8,10 @@ function DefaultPagination({ total, page }) {
   useEffect(() => {
     setTotalPages(Math.ceil(total / 20));
   }, [page, total]);
-
+  const createLink = (pageNumber) => {
+    search.set('page', pageNumber)
+    return `?${search.toString()}`
+  }
   const renderPages = () => {
     let items = [];
 
@@ -16,12 +19,11 @@ function DefaultPagination({ total, page }) {
       items.push(
         <Link
           key={`page${number}`}
-          to={`?page=${number}`}
-          className={`inline-block px-3 py-1 mx-1 rounded-md ${
-            parseInt(page) === number
+          to={createLink(number)}
+          className={`inline-block px-3 py-1 mx-1 rounded-md ${parseInt(page) === number
               ? "bg-customPrimary text-white"
               : "bg-customSecondary text-customDark hover:bg-customSecondary"
-          }`}
+            }`}
         >
           {number}
         </Link>

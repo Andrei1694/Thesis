@@ -33,11 +33,7 @@ const options = [
 function DeviceSelect({ action }) {
   const formik = useFormik({
     initialValues: {
-      sort: {
-        label: "sda",
-        name: "deviceName",
-        order: "asc",
-      },
+      sort: options[0].value, // Initialize with the first option's value
     },
   });
 

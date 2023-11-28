@@ -38,7 +38,7 @@ function DevicesPage() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setSearch({ page: 1 });
+    setSearch({ page: 1, sortBy: 'deviceName:asc' });
   }, []);
 
   const handleClose = () => setShow(false);
