@@ -38,7 +38,7 @@ function DevicesPage() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setSearch({ page: 1, sortBy: 'deviceName:asc' });
+    setSearch({ page: 1, sortBy: "deviceName:asc" });
   }, []);
 
   const handleClose = () => setShow(false);
@@ -54,6 +54,12 @@ function DevicesPage() {
 
   const renderDevices = () => {
     const arr = [];
+    if (isLoading)
+      return (
+        <div className="w-full h-full flex justify-center items-center">
+          <Loading />
+        </div>
+      );
     if (data) {
       const { data: devices } = data;
       devices.map(({ _id, ...value }) => {
@@ -70,19 +76,13 @@ function DevicesPage() {
       });
     }
 
-    return arr;
-  };
-  const renderContent = () => {
-    if (data?.total === 0)
-      return (
-        <div>
-          <h5>No Devices</h5>
-        </div>
-      );
     return (
-      <div className="flex">{isLoading ? <Loading /> : renderDevices()}</div>
+      <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
+        {arr}
+      </div>
     );
   };
+
   const setSortBy = (option) => {
     let parsedOption = JSON.parse(option);
 
@@ -106,11 +106,7 @@ function DevicesPage() {
         </div>
       </div>
 
-      <div className="container mt-3">
-        <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
-          {renderDevices()}
-        </div>
-      </div>
+      <div className="container mt-3 w-full h-[500px]">{renderDevices()}</div>
       <div className="container mt-5">
         <Button onClick={() => setShow(!show)}>Create Device</Button>
         <DefaultModal
