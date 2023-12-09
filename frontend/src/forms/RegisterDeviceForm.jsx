@@ -2,14 +2,15 @@ import { useFormik } from "formik";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import * as yup from "yup";
+
 const validationSchema = yup.object().shape({
   deviceName: yup.string().required("Device Name is required").min(3).max(25),
-  description: yup.string(),
-  location: yup.string(),
-  country: yup.string(),
-  ipAddress: yup.string(),
-  serialNumber: yup.string(),
-  manufacturer: yup.string(),
+  description: yup.string().min(3).max(25),
+  location: yup.string().min(3).max(25),
+  country: yup.string().min(3).max(25),
+  ipAddress: yup.string().min(3).max(25),
+  serialNumber: yup.string().min(3).max(25),
+  manufacturer: yup.string().min(3).max(25),
 });
 function splitAndCapitalizeCamelCase(input) {
   return input
@@ -29,8 +30,7 @@ const initialValues = {
 };
 
 function RegisterDeviceForm({ mode = "create", device, action }) {
-  const { _id, ...editValues } = device ?? {};
-
+  const { _id, updatedAt, createdAt, ...editValues } = device ?? {};
   const formik = useFormik({
     initialValues: device ? editValues : initialValues,
     validationSchema,
