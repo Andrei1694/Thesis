@@ -32,9 +32,6 @@ const router = createBrowserRouter([
         path: "devices/:id",
         element: <DevicePage />,
       },
-      {
-        path: "devices/:sda/edit",
-      },
     ],
   },
 ]);

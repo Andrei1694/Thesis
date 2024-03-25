@@ -19,7 +19,7 @@ export async function fetchDevices(page = 1, sortBy = null) {
   return response.data;
 }
 
-export async function searchDevicesRequest(search) {
+export async function searchDevices(search) {
   let url = `${URL}/device/search?searchTerm=${search}`;
 
   const response = await axios.get(url);

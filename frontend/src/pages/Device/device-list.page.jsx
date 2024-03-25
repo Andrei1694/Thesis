@@ -8,7 +8,7 @@ import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/deviceform.form";
 import Spinner from "../../components/spinner.component";
 import DeviceFilter from "./device-filter.component";
-import DeviceSearch from "./DeviceSearch";
+import DeviceSearch from "./device-search.component";
 import Button from "../../components/Button";
 
 function DevicesListPage() {
