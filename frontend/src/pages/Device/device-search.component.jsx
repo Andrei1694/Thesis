@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/input.component";
-import Button from "../../components/Button";
+import Button from "../../components/button.component";
 import { searchDevices } from "../../utils/requests";
 
 const DeviceSearch = () => {

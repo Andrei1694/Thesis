@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Button from "../components/Button";
+import Button from "../components/button.component";
 import Input from "../components/input.component";
 
 const validationSchema = yup.object().shape({

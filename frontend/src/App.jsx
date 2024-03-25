@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar.component";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
-import DevicePage from "./pages/Device/DevicePage";
+import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
 // Create a client
 const queryClient = new QueryClient();
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "devices/:id",
-        element: <DevicePage />,
+        element: <DeviceDetails />,
       },
     ],
   },

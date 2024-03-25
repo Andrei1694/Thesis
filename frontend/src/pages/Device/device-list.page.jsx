@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Outlet } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchDevices, createDevice } from "../../utils/requests";
-import DeviceCard from "../../components/DeviceCard";
-import Pagination from "../../components/Pagination";
+import DeviceCard from "../../components/card.component";
+import Pagination from "../../components/pagination.component";
 import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/deviceform.form";
 import Spinner from "../../components/spinner.component";
 import DeviceFilter from "./device-filter.component";
 import DeviceSearch from "./device-search.component";
-import Button from "../../components/Button";
+import Button from "../../components/button.component";
 
 function DevicesListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,9 +44,10 @@ function DevicesListPage() {
   };
 
   const handleSortChange = (option) => {
-    const { name, order } = JSON.parse(option);
+    const { key, order } = JSON.parse(JSON.parse(option));
+
     setSearchParams({
-      sortBy: `${decodeURIComponent(name)}:${decodeURIComponent(order)}`,
+      sortBy: `${decodeURIComponent(key)}:${decodeURIComponent(order)}`,
       page: searchParams.get("page"),
     });
   };
@@ -81,9 +82,9 @@ function DevicesListPage() {
 
   return (
     <div className="container mt-3">
-      <div className="container mt-3">
+      {/* <div className="container mt-3">
         <DeviceSearch />
-      </div>
+      </div> */}
       <div className="container mt-3">
         <DeviceFilter onSortChange={handleSortChange} />
       </div>
