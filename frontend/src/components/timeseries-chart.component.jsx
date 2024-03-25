@@ -58,7 +58,7 @@ const data = {
     },
   ],
 };
-
+console.log("delete later");
 export default function TimeSeriesChart() {
   return <Line options={options} data={data} />;
 }
