@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import DevicesPage from "./pages/Device/DevicesPage";
+import DevicesListPage from "./pages/Device/device-list.page";
 import DevicePage from "./pages/Device/DevicePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 // Create a client
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "devices",
-        element: <DevicesPage />,
+        element: <DevicesListPage />,
       },
       {
         path: "devices/:id",

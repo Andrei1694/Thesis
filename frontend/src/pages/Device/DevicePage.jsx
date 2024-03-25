@@ -1,63 +1,59 @@
 import { useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
-import DefaultModal from "../../components/Modal";
-import RegisterDeviceForm from "../../forms/RegisterDeviceForm";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  getDeviceRequest,
-  updateDeviceRequest,
-  deleteDeviceRequest,
-} from "../../utils/requests";
-
+import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
+import Modal from "../../components/modal.component";
+import DeviceForm from "../../forms/deviceform.form";
 import Button from "../../components/Button";
-import Loading from "../../components/Loading";
+import Spinner from "../../components/spinner.component";
 
-function DevicePage() {
-  const [show, setShow] = useState(false);
+function DeviceDetailsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = useQueryClient();
+
   const { data: device, isLoading } = useQuery(["devices", id], () =>
-    getDeviceRequest(id)
+    fetchDevice(id)
   );
-  const updateMutation = useMutation({
-    mutationFn: (params) => {
-      console.log(params);
-      return updateDeviceRequest(params.id, params.values);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries("devices");
-    },
-  });
-  const deleteMutation = useMutation({
-    mutationFn: (id) => {
-      return deleteDeviceRequest(id);
-    },
+
+  const updateDeviceMutation = useMutation({
+    mutationFn: ({ id, values }) => updateDevice(id, values),
     onSuccess: () => {
       queryClient.invalidateQueries("devices");
     },
   });
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const deleteDeviceMutation = useMutation({
+    mutationFn: (id) => deleteDevice(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries("devices");
+      navigate("/devices?page=1");
+    },
+  });
 
-  const updateDeviceAction = async (id, values) => {
-    const response = await updateMutation.mutateAsync({ id, values });
-    if (response.status === 200) setShow(false);
+  const handleModalClose = () => setIsModalOpen(false);
+  const handleModalOpen = () => setIsModalOpen(true);
+
+  const handleDeviceUpdate = async (id, values) => {
+    await updateDeviceMutation.mutateAsync({ id, values });
+    handleModalClose();
   };
 
-  const deleteRequest = async () => {
-    deleteMutation.mutate(id);
-    navigate("/devices?page=1");
+  const handleDeviceDelete = () => {
+    deleteDeviceMutation.mutate(id);
   };
 
-  const renderDeviceContent = () => {
-    return (
-      <div className="w-[100%] m-h-[280px] relative bg-white rounded-[10px] shadow p-4">
-        <div className="container">
-          <div className="flex">
-            <div className="flex flex-col w-1 md:w-1/2">
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <div className="mt-3">
+      <div className="container">
+        <div className="w-full max-h-[280px] relative bg-white rounded-[10px] shadow p-4">
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/2">
               <h5 className="text-xl font-extrabold">{device.deviceName}</h5>
               <div>
                 <span className="text-lg">Description:</span>{" "}
@@ -68,69 +64,25 @@ function DevicePage() {
               <div>IP: {device.ipAddress}</div>
               <div>Serial Number: {device.serialNumber}</div>
               <div>Manufacturer: {device.manufacturer}</div>
-              <DefaultModal buttonName="Edit Device">
-                <RegisterDeviceForm
-                  mode="edit"
-                  device={device}
-                  action={(id, values) => updateDeviceAction(id, values)}
-                />
-              </DefaultModal>
-              <DefaultModal buttonName="Delete Device">
-                Are you shure u want to delete?
-                <Button
-                  onClick={() => {
-                    deleteDevice(id);
-                    navigate("/devices");
-                  }}
-                >
-                  Yes
-                </Button>
-                <Button>No</Button>
-              </DefaultModal>
             </div>
-            <div className="flex flex-col w-1 md:w-1/2 justify-center">
-              <Button onClick={() => setShow(!show)}>Edit Device</Button>
+            <div className="w-full md:w-1/2 flex flex-col justify-center mt-4 md:mt-0">
+              <Button onClick={handleModalOpen}>Edit Device</Button>
               <Button
                 className="bg-customLight hover:bg-white"
-                onClick={() => deleteRequest(id)}
+                onClick={handleDeviceDelete}
               >
                 Delete Device
               </Button>
-              <DefaultModal
-                buttonName="Register New Device"
-                show={show}
-                handleClose={() => handleClose()}
-                handleShow={() => handleShow()}
-                device={device}
-              >
-                <RegisterDeviceForm
-                  mode="edit"
-                  action={(id, data) => updateDeviceAction(id, data)}
-                  device={device}
-                />
-              </DefaultModal>
             </div>
           </div>
         </div>
       </div>
-    );
-  };
-  const renderLoading = () => {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  };
-  return (
-    <div className="mt-3">
-      <div>
-        <div className="container">
-          <div>{isLoading ? renderLoading() : renderDeviceContent()}</div>
-        </div>
-      </div>
-      <div></div>
+
+      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+        <DeviceForm mode="edit" device={device} onSubmit={handleDeviceUpdate} />
+      </Modal>
     </div>
   );
 }
-export default DevicePage;
+
+export default DeviceDetailsPage;
