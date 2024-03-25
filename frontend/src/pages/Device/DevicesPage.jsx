@@ -10,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createDeviceRequest, getDevicesRequest } from "../../utils/requests";
 import DeviceSearch from "./DeviceSearch";
 import Button from "../../components/Button";
+import { Outlet } from "react-router-dom";
 
 function DevicesPage() {
   const [search, setSearch] = useSearchParams();
@@ -119,6 +120,7 @@ function DevicesPage() {
           <RegisterDeviceForm mode="create" action={addDeviceFormAction} />
         </DefaultModal>
       </div>
+      <Outlet />
       <div className="mt-5 mb-5">
         {isLoading ? null : (
           <Pagination

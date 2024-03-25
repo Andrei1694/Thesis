@@ -3,16 +3,10 @@ import Navbar from "./components/Navbar";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import DevicesPage from "./pages/Device/DevicesPage";
 import DevicePage from "./pages/Device/DevicePage";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 // Create a client
 const queryClient = new QueryClient();
-const MainPage = () => {
+const MainLayout = () => {
   return (
     <>
       <Navbar />
@@ -25,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <QueryClientProvider client={queryClient}>
-        <MainPage />
+        <MainLayout />
       </QueryClientProvider>
     ),
 
@@ -37,6 +31,9 @@ const router = createBrowserRouter([
       {
         path: "devices/:id",
         element: <DevicePage />,
+      },
+      {
+        path: "devices/:sda/edit",
       },
     ],
   },
