@@ -90,9 +90,13 @@ const Navbar = () => {
                   onChange={handleSearch}
                   className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
                 />
-                {searchResults.length > 0 && (
+                {isLoading ? (
+                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">
+                    Loading...
+                  </div>
+                ) : searchTerm && filteredDevices.length > 0 ? (
                   <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
-                    {searchResults.map(({ _id, deviceName }) => (
+                    {filteredDevices.map(({ _id, deviceName }) => (
                       <div
                         key={_id}
                         onClick={() => {
@@ -105,7 +109,7 @@ const Navbar = () => {
                       </div>
                     ))}
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
@@ -177,34 +181,6 @@ const Navbar = () => {
             >
               Users
             </Link>
-          </div>
-          <div className="pt-4 pb-3 border-t border-customSecondary">
-            <div className="px-2 space-y-1">
-              <input
-                type="text"
-                placeholder="Search devices..."
-                value={searchTerm}
-                onChange={handleSearch}
-                className="w-full px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
-              />
-              {searchResults.length > 0 && (
-                <div className="mt-1 bg-white rounded-md shadow-lg">
-                  {searchResults.map(({ _id, deviceName }) => (
-                    <div
-                      key={_id}
-                      onClick={() => {
-                        navigate(`/devices/${_id}`);
-                        clearSearch();
-                        toggleMobileMenu();
-                      }}
-                      className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
-                    >
-                      {deviceName}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
           <div className="relative">
             <input
