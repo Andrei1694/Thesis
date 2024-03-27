@@ -5,7 +5,7 @@ import { fetchDevices, createDevice } from "../../utils/requests";
 import DeviceCard from "../../components/card.component";
 import Pagination from "../../components/pagination.component";
 import Modal from "../../components/modal.component";
-import DeviceForm from "../../forms/deviceform.form";
+import DeviceForm from "../../forms/device-form.form";
 import Spinner from "../../components/spinner.component";
 import DeviceFilter from "./device-filter.component";
 import DeviceSearch from "./device-search.component";

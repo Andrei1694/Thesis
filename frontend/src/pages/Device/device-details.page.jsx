@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
 import Modal from "../../components/modal.component";
-import DeviceForm from "../../forms/deviceform.form";
+import DeviceForm from "../../forms/device-form.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 
