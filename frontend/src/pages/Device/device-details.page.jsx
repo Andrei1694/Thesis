@@ -6,6 +6,7 @@ import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/device-form.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
+import TimeSeriesChart from "../../components/timeseries-chart.component";
 
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -49,7 +50,7 @@ function DeviceDetails() {
   return (
     <div className="mt-3">
       <div className="container">
-        <div className="w-full max-h-[280px] relative bg-white rounded-[10px] shadow p-4">
+        <div className="w-full max-h-[280px] relative bg-white rounded-[10px] shadow p-4 mb-5">
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-1/2">
               <h5 className="text-xl font-extrabold">
@@ -77,7 +78,11 @@ function DeviceDetails() {
             </div>
           </div>
         </div>
+        <div className="max-h-[800px]">
+          <TimeSeriesChart />
+        </div>
       </div>
+
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <DeviceForm
           mode="edit"

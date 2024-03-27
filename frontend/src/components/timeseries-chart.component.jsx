@@ -33,7 +33,7 @@ export const options = {
     },
   },
 };
-console.log("wwoow");
+
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 const generateRandomData = (length, min, max) => {
   return Array.from(
