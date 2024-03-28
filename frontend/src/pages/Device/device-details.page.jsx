@@ -6,7 +6,7 @@ import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/device-form.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
-import TimeSeriesChart from "../../components/timeseries-chart.component";
+import RealTimeChart from "../../components/realtime-chart.component";
 
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -78,11 +78,11 @@ function DeviceDetails() {
             </div>
           </div>
         </div>
-        <div className="max-h-[800px]">
-          <TimeSeriesChart />
-        </div>
-      </div>
 
+      </div>
+      <div>
+        <RealTimeChart />
+      </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <DeviceForm
           mode="edit"
