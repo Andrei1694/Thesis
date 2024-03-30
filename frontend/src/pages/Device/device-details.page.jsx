@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
@@ -7,16 +7,32 @@ import DeviceForm from "../../forms/device-form.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
-
+import io from 'socket.io-client'
+import Slider from "../../components/slider.component";
+const socket = io('http://localhost:4000', {
+    transports: ['webscoket', 'polling']
+})
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState([])
   const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = useQueryClient();
-
+  const [sliderValue, setSliderValue] = useState(500);
+  const [start,setStart] = useState(false)
+  useEffect(() => {
+    socket.on('cpuUsage', (responseObject) => {
+        const {name,cpuUsage} = responseObject
+        console.log(cpuUsage)
+        setData((prevData) => [...prevData, {name, uv: cpuUsage}])
+    })
+}, [])
   const { data: deviceData, isLoading } = useQuery(["devices", id], () =>
     fetchDevice(id)
   );
+  const handleSliderChange = (event) => {
+    setSliderValue(event.target.value);
+  };
 
   const { mutate: updateDeviceMutation, isLoading: isUpdating } = useMutation({
     mutationFn: ({ id, values }) => updateDevice(id, values),
@@ -47,6 +63,10 @@ function DeviceDetails() {
 
   if (isLoading) return <Spinner />;
 
+  const startPlay = () => {
+    setStart(!start)
+    if(start) socket.emit('startRecord', {samplingTime: sliderValue})
+  }
   return (
     <div className="mt-3">
       <div className="container">
@@ -81,7 +101,10 @@ function DeviceDetails() {
 
       </div>
       <div>
-        <RealTimeChart />
+        <RealTimeChart data={data} />
+        <Button onClick={() => startPlay()}>{start ? 'Pause':'Start'}</Button>
+        <Slider value={sliderValue} onChange={handleSliderChange} />
+        {sliderValue}
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <DeviceForm

@@ -13,18 +13,27 @@ export default function socketConnect(server) {
 
   io.on('connection', (socket) => {
     console.log('A client connected');
-
-    // Clear the previous interval if it exists
-    if (interval) {
-      clearInterval(interval);
-    }
-
-    // Start a new interval to emit CPU usage every 10 seconds
-    interval = setInterval(() => {
+    socket.on('startRecord', (requestObject) => {
+      if(!requestObject) return
+      const { samplingTime } = requestObject ?? {}
+      console.log('get') 
+      console.log(samplingTime)
+       // Start a new interval to emit CPU usage every 10 seconds
+       if (interval) {
+        clearInterval(interval);
+      }
+      interval = setInterval(() => {
       cpuUsage((cpuUsage) => {
-        socket.emit('cpuUsage', cpuUsage);
+        console.log(samplingTime)
+        const currentTime = new Date();
+        const hours = currentTime.getHours().toString().padStart(2, '0');
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+        const name = `${hours}:${minutes}:${seconds}`;
+        socket.emit('cpuUsage', {cpuUsage,name});
       });
-    }, 1000);
+    }, samplingTime);
+    })
 
     socket.on('disconnect', () => {
       console.log('A client disconnected');
