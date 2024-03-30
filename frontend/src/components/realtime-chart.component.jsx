@@ -10,6 +10,8 @@ import {
     Brush,
     ResponsiveContainer,
 } from 'recharts';
+import io from 'socket.io-client'
+
 const generateData = (amount = 100) => {
     const data = [];
     const startDate = new Date(2023, 0, 1); // Start from January 1, 2023
@@ -29,11 +31,24 @@ const generateData = (amount = 100) => {
 
     return data;
 };
+const socket = io('http://localhost:4000', {
+    transports: ['webscoket', 'polling']
+})
 export default function RealTimeChart() {
     const [data, setData] = useState([])
-    useEffect(() => { setData(generateData(100)) }, [])
     const [zoomDomain, setZoomDomain] = useState(null);
-
+    useEffect(() => {
+        socket.on('cpuUsage', (cpuPercent) => {
+            console.log(cpuPercent)
+            const currentTime = new Date();
+            const hours = currentTime.getHours().toString().padStart(2, '0');
+            const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+            const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+            const name = `${hours}:${minutes}:${seconds}`;
+            setData((prevData) => [...prevData, {name, uv: cpuPercent}])
+        })
+     
+    }, [])
     const handleZoom = (domain) => {
         setZoomDomain(domain);
     };
