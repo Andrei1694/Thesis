@@ -26,7 +26,7 @@ export default function RealTimeChart({ data }) {
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" domain={zoomDomain?.name} />
+          <XAxis dataKey="date" domain={zoomDomain?.name} />
           <YAxis domain={zoomDomain?.uv} />
           <Tooltip />
           <Legend />
