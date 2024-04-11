@@ -57,19 +57,21 @@ export default function SocketIOService(server) {
     }
     io.on(CONNECTION, (socket) => {
         console.log(`A client connected ${socket.id}`)
+        let interval = null
         // Clear the previous interval if it exists
         // if (interval) {
         //     clearInterval(interval);
         // }
-        let interval = null
+
         socket.on(START_STREAMING, (data) => {
+            if (interval) return
             console.log(data)
             const { time } = data ?? {}
             console.log(time)
             interval = sendMeasurement(socket, time);
         })
         socket.on(STOP_STREAMING, () => {
-            clearInterval(interval)
+            interval = clearInterval(interval)
         })
         socket.on(DISCONNECT, () => {
             console.log('A client disconnected');
