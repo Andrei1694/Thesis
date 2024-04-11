@@ -2,12 +2,14 @@ import http from 'http'
 import app from './app.mjs'
 import dotenv from 'dotenv'
 import { mongoConnect } from './utils/mongoose.mjs'
-import socketConnect from './socket.mjs'
+// import socketConnect from './socket.mjs'
+import SocketIOService from './services/io.service.mjs'
 
 const PORT = process.env.PORT || 3000
 
 const server = http.createServer(app)
-socketConnect(server);
+const socketIOService = new SocketIOService(server);
+socketIOService.emitDeviceIsOnline()
 async function startServer() {
     await mongoConnect();
 
