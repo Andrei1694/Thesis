@@ -10,21 +10,10 @@ import {
   Brush,
   ResponsiveContainer,
 } from "recharts";
-import io from "socket.io-client";
 
-const socket = io("http://localhost:4000", {
-  transports: ["webscoket", "polling"],
-});
-export default function RealTimeChart() {
-  const [data, setData] = useState([]);
+export default function RealTimeChart({ data }) {
   const [zoomDomain, setZoomDomain] = useState(null);
-  useEffect(() => {
-    socket.on("cpu_usage", (payload) => {
-      console.log(payload);
-      const { cpuUsage, date } = payload;
-      setData((prevData) => [...prevData, { date, uv: cpuUsage }]);
-    });
-  }, []);
+  //   useEffect(() => {}, []);
   const handleZoom = (domain) => {
     setZoomDomain(domain);
   };
