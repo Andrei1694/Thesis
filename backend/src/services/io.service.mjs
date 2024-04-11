@@ -9,7 +9,7 @@ const CPU_USAGE = "cpu_usage"
 const DEVICE_IS_ONLINE = 'DEVICE_IS_ONLINE'
 const START_STREAMING = "START_STREAMING"
 const STOP_STREAMING = "STOP_STREAMING"
-let interval = null;
+
 
 export default function SocketIOService(server) {
     const io = new Server(server, {
@@ -22,12 +22,10 @@ export default function SocketIOService(server) {
     }
     //TODO
     function emitDeviceIsOnline() {
-        console.log("TRIIGER")
+
         io.emit(DEVICE_IS_ONLINE, { online: true })
     }
-    function ceva() {
-        console.log("dsasda")
-    }
+
     function sendMeasurement(socket, time = 1000) {
 
         let interval = setInterval(() => {
@@ -59,26 +57,18 @@ export default function SocketIOService(server) {
     }
     io.on(CONNECTION, (socket) => {
         console.log(`A client connected ${socket.id}`)
-
         // Clear the previous interval if it exists
         // if (interval) {
         //     clearInterval(interval);
         // }
-        // Start a new interval to emit CPU usage every 10 seconds
-        // interval = setInterval(() => {
-        //     cpuUsage((cpuUsage) => {
-        //         socket.emit(CPU_USAGE, cpuUsage);
-        //     });
-        // }, 1000);
-        // Start a new interval to emit CPU usage every 10 seconds
         let interval = null
-        socket.on("START", (data) => {
+        socket.on(START_STREAMING, (data) => {
             console.log(data)
             const { time } = data ?? {}
             console.log(time)
             interval = sendMeasurement(socket, time);
         })
-        socket.on("STOP", () => {
+        socket.on(STOP_STREAMING, () => {
             clearInterval(interval)
         })
         socket.on(DISCONNECT, () => {

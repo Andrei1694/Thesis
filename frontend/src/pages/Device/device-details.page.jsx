@@ -10,6 +10,9 @@ import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
 import Slider from "../../components/slider.component";
 
+const START_STREAMING = "START_STREAMING";
+const STOP_STREAMING = "STOP_STREAMING";
+
 const socket = io("http://localhost:4000", {
   transports: ["webscoket", "polling"],
 });
@@ -29,6 +32,9 @@ function DeviceDetails() {
       const { cpuUsage, date } = payload;
       setMeasurements((prevData) => [...prevData, { date, uv: cpuUsage }]);
     });
+    return () => {
+      socket.emit(STOP_STREAMING);
+    };
   }, []);
   const { mutate: updateDeviceMutation, isLoading: isUpdating } = useMutation({
     mutationFn: ({ id, values }) => updateDevice(id, values),
@@ -97,14 +103,14 @@ function DeviceDetails() {
       <div>
         <Button
           onClick={() => {
-            socket.emit("START", { time: sliderValue });
+            socket.emit(START_STREAMING, { time: sliderValue });
           }}
         >
           START
         </Button>
         <Button
           onClick={() => {
-            socket.emit("STOP");
+            socket.emit(STOP_STREAMING);
           }}
         >
           STOP
