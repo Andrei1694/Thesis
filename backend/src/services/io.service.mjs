@@ -28,9 +28,15 @@ export default function SocketIOService(server) {
         console.log("dsasda")
     }
     function sendMeasurement(socket, time = 1000) {
+
         let interval = setInterval(() => {
+            const currentTime = new Date();
+            const hours = currentTime.getHours().toString().padStart(2, "0");
+            const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+            const seconds = currentTime.getSeconds().toString().padStart(2, "0");
+            const date = `${hours}:${minutes}:${seconds}`;
             cpuUsage((cpuUsage) => {
-                socket.emit(CPU_USAGE, cpuUsage);
+                socket.emit(CPU_USAGE, { cpuUsage, date });
             });
         }, time);
 

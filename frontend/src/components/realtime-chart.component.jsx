@@ -12,25 +12,6 @@ import {
 } from "recharts";
 import io from "socket.io-client";
 
-const generateData = (amount = 100) => {
-  const data = [];
-  const startDate = new Date(2023, 0, 1); // Start from January 1, 2023
-
-  for (let i = 0; i < amount; i++) {
-    const date = new Date(startDate);
-    date.setDate(startDate.getDate() + i);
-
-    const entry = {
-      name: date.toISOString().slice(0, 10),
-      uv: Math.floor(Math.random() * 1000),
-      pv: Math.floor(Math.random() * 5000),
-    };
-
-    data.push(entry);
-  }
-
-  return data;
-};
 const socket = io("http://localhost:4000", {
   transports: ["webscoket", "polling"],
 });
@@ -38,14 +19,10 @@ export default function RealTimeChart() {
   const [data, setData] = useState([]);
   const [zoomDomain, setZoomDomain] = useState(null);
   useEffect(() => {
-    socket.on("cpu_usage", (cpuPercent) => {
-      console.log(cpuPercent);
-      const currentTime = new Date();
-      const hours = currentTime.getHours().toString().padStart(2, "0");
-      const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-      const seconds = currentTime.getSeconds().toString().padStart(2, "0");
-      const name = `${hours}:${minutes}:${seconds}`;
-      setData((prevData) => [...prevData, { name, uv: cpuPercent }]);
+    socket.on("cpu_usage", (payload) => {
+      console.log(payload);
+      const { cpuUsage, date } = payload;
+      setData((prevData) => [...prevData, { date, uv: cpuUsage }]);
     });
   }, []);
   const handleZoom = (domain) => {
