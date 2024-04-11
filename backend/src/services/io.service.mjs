@@ -1,6 +1,7 @@
 import { Server } from 'socket.io'
 import cors from 'cors';
 import { cpuUsage } from 'os-utils';
+import MeasurmentService from './measurment.service.mjs';
 
 const CONNECTION = "connection"
 const DISCONNECT = "disconnect"
@@ -37,7 +38,18 @@ export default function SocketIOService(server) {
             const date = `${hours}:${minutes}:${seconds}`;
             cpuUsage((cpuUsage) => {
                 socket.emit(CPU_USAGE, { cpuUsage, date });
+                const measurment = new MeasurmentService()
+                measurment.createMeasurment({
+                    timestamp: new Date(),
+                    value: cpuUsage,
+                    metadata: {
+                        sensorId: 'sensor123',
+                        location: 'Room A',
+                        unit: 'Celsius'
+                    }
+                })
             });
+
         }, time);
 
         return interval;
