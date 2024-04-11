@@ -42,6 +42,9 @@ export default function SocketIOService(server) {
 
         return interval;
     }
+    function stopMeasurment(interval) {
+        clearInterval(interval)
+    }
     io.on(CONNECTION, (socket) => {
         console.log(`A client connected ${socket.id}`)
 
@@ -56,7 +59,16 @@ export default function SocketIOService(server) {
         //     });
         // }, 1000);
         // Start a new interval to emit CPU usage every 10 seconds
-        const interval = sendMeasurement(socket, 5000);
+        let interval = null
+        socket.on("START", (data) => {
+            console.log(data)
+            const { time } = data ?? {}
+            console.log(time)
+            interval = sendMeasurement(socket, time);
+        })
+        socket.on("STOP", () => {
+            clearInterval(interval)
+        })
         socket.on(DISCONNECT, () => {
             console.log('A client disconnected');
             clearInterval(interval);

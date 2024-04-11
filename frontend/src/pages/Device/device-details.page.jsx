@@ -8,6 +8,7 @@ import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
+import Slider from "../../components/slider.component";
 
 const socket = io("http://localhost:4000", {
   transports: ["webscoket", "polling"],
@@ -21,6 +22,7 @@ function DeviceDetails() {
   const { data: deviceData, isLoading } = useQuery(["devices", id], () =>
     fetchDevice(id)
   );
+  const [sliderValue, setSliderValue] = useState(1000);
   useEffect(() => {
     socket.on("cpu_usage", (payload) => {
       console.log(payload);
@@ -91,6 +93,28 @@ function DeviceDetails() {
       </div>
       <div>
         <RealTimeChart data={measurments} />
+      </div>
+      <div>
+        <Button
+          onClick={() => {
+            socket.emit("START", { time: sliderValue });
+          }}
+        >
+          START
+        </Button>
+        <Button
+          onClick={() => {
+            socket.emit("STOP");
+          }}
+        >
+          STOP
+        </Button>
+        <Slider
+          value={sliderValue}
+          handleInputChange={(value) => {
+            setSliderValue(parseInt(value));
+          }}
+        />
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <DeviceForm
