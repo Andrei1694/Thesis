@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
 import cors from 'cors';
-import { cpuUsage } from 'os-utils';
+
 import MeasurmentService from './measurment.service.mjs';
 
 const CONNECTION = "connection"
@@ -9,7 +9,7 @@ const CPU_USAGE = "cpu_usage"
 const DEVICE_IS_ONLINE = 'DEVICE_IS_ONLINE'
 const START_STREAMING = "START_STREAMING"
 const STOP_STREAMING = "STOP_STREAMING"
-
+const JOIN_ROOM = "JOIN_ROOM"
 
 export default function SocketIOService(server) {
     const io = new Server(server, {
@@ -17,66 +17,47 @@ export default function SocketIOService(server) {
             origin: "*",
         },
     });
-    function ceva() {
-        console.log("HOO")
-    }
-    //TODO
-    function emitDeviceIsOnline() {
-
-        io.emit(DEVICE_IS_ONLINE, { online: true })
-    }
-
-    function sendMeasurement(socket, time = 1000) {
-
-        let interval = setInterval(() => {
-            const currentTime = new Date();
-            const hours = currentTime.getHours().toString().padStart(2, "0");
-            const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-            const seconds = currentTime.getSeconds().toString().padStart(2, "0");
-            const date = `${hours}:${minutes}:${seconds}`;
-            cpuUsage((cpuUsage) => {
-                socket.emit(CPU_USAGE, { cpuUsage, date });
-                const measurment = new MeasurmentService()
-                measurment.createMeasurment({
-                    timestamp: new Date(),
-                    value: cpuUsage,
-                    metadata: {
-                        sensorId: 'sensor123',
-                        location: 'Room A',
-                        unit: 'Celsius'
-                    }
-                })
-            });
-
-        }, time);
-
-        return interval;
-    }
-    function stopMeasurment(interval) {
-        clearInterval(interval)
-    }
+    const roomCounts = {}
     io.on(CONNECTION, (socket) => {
         console.log(`A client connected ${socket.id}`)
-        let interval = null
-        // Clear the previous interval if it exists
-        // if (interval) {
-        //     clearInterval(interval);
-        // }
+        const clientType = socket.handshake.query.clientType;
+        socket.on('JOIN_ROOM', (roomId) => {
+            socket.join(roomId);
+            console.log(`${clientType} client ${socket.id} joined room ${roomId}`);
+            // if (clientType === 'device') set isDeviceOnline true
+            if (clientType === 'desktop') {
+                console.log('aici')
+                // Increment the count of desktop clients in the room
+                if (!roomCounts[roomId]) {
+                    roomCounts[roomId] = 1;
+                } else {
+                    roomCounts[roomId]++;
+                }
 
-        socket.on(START_STREAMING, (data) => {
-            if (interval) return
-            console.log(data)
-            const { time } = data ?? {}
-            console.log(time)
-            interval = sendMeasurement(socket, time);
-        })
-        socket.on(STOP_STREAMING, () => {
-            interval = clearInterval(interval)
-        })
-        socket.on(DISCONNECT, () => {
-            console.log('A client disconnected');
-            clearInterval(interval);
+                // Emit an event to the device to start streaming if this is the first desktop client
+                if (roomCounts[roomId] === 1) {
+                    io.to(roomId).emit('START_STREAMING');
+                }
+            }
+        });
+        socket.on('SEND_DATA', (data) => {
+            const { roomId, ...rest } = data;
+            socket.to(roomId).emit('RECEIVE_DATA', rest);
+        });
+
+        socket.on('disconnecting', () => {
+            const rooms = Array.from(socket.rooms);
+            rooms.forEach((roomId) => {
+                if (socket.handshake.query.clientType === 'desktop') {
+                    roomCounts[roomId]--;
+
+                    // Emit an event to the device to stop streaming if this is the last desktop client
+                    if (roomCounts[roomId] === 0) {
+                        io.to(roomId).emit('STOP_STREAMING');
+                    }
+                }
+            });
         });
     })
-    return { io, emitDeviceIsOnline, ceva }
+    return { io }
 }

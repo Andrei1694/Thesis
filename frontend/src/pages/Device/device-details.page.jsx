@@ -15,6 +15,7 @@ const STOP_STREAMING = "STOP_STREAMING";
 
 const socket = io("http://localhost:4000", {
   transports: ["webscoket", "polling"],
+  query: { clientType: "desktop" },
 });
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -27,8 +28,9 @@ function DeviceDetails() {
   );
   const [sliderValue, setSliderValue] = useState(1000);
   useEffect(() => {
-    socket.on("cpu_usage", (payload) => {
-      console.log(payload);
+    socket.emit("JOIN_ROOM", "asdasd");
+    socket.on("RECEIVE_DATA", (payload) => {
+      console.log("Received data:", payload);
       const { cpuUsage, date } = payload;
       setMeasurements((prevData) => [...prevData, { date, uv: cpuUsage }]);
     });
