@@ -9,14 +9,18 @@ import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
 import Slider from "../../components/slider.component";
-
-const START_STREAMING = "START_STREAMING";
-const STOP_STREAMING = "STOP_STREAMING";
+import {
+  JOIN_ROOM,
+  RECEIVE_DATA,
+  START_STREAMING,
+  STOP_STREAMING,
+} from "../../utils/typeDefs";
 
 const socket = io("http://localhost:4000", {
   transports: ["webscoket", "polling"],
   query: { clientType: "desktop" },
 });
+
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,8 +32,8 @@ function DeviceDetails() {
   );
   const [sliderValue, setSliderValue] = useState(1000);
   useEffect(() => {
-    socket.emit("JOIN_ROOM", "asdasd");
-    socket.on("RECEIVE_DATA", (payload) => {
+    socket.emit(JOIN_ROOM, "asdasd");
+    socket.on(RECEIVE_DATA, (payload) => {
       console.log("Received data:", payload);
       const { cpuUsage, date } = payload;
       setMeasurements((prevData) => [...prevData, { date, uv: cpuUsage }]);

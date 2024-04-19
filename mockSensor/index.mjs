@@ -10,12 +10,13 @@ const deviceName = "asdasd"
 // 3. On the server-side, you can listen for the data emission event and broadcast the received data to all the clients connected to the device's room, excluding the device itself.
 // 4. The desktop clients can join the device's room to receive the broadcasted data
 // emitting events to a room with no connected clients can result in unnecessary network traffic and processing overhead on the server side
+
 function createSocketService(url, streamInterval = 1000) {
     const socket = io(url, {
         query: { clientType: 'device' }
     });
     let interval = null
-    const { CONNECT, DISCONNECT, STOP_STREAMING, START_STREAMING } = {
+    const { CONNECT, DISCONNECT, STOP_STREAMING, START_STREAMING, JOIN_ROOM } = {
         CONNECT: 'connect',
         DISCONNECT: 'disconnect',
         STOP_STREAMING: 'STOP_STREAMING',
@@ -29,7 +30,7 @@ function createSocketService(url, streamInterval = 1000) {
     socket.on(CONNECT, () => {
         console.log('Connected to the backend server');
         // Join the room with the device name
-        socket.emit('JOIN_ROOM', deviceName);
+        socket.emit(JOIN_ROOM, deviceName);
     });
 
     socket.on(STOP_STREAMING, () => {
