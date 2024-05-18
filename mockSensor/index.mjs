@@ -1,66 +1,90 @@
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
 
-const URL = 'http://localhost:4000'
-const deviceName = "asdasd"
-
-// 1. When the device (client) connects to the server, it should join a room with its own name. 
-// This room will be used to identify the device and broadcast data to the connected desktop clients.
-// 2. The device will emit the data to the server, specifying the room name.
-// 3. On the server-side, you can listen for the data emission event and broadcast the received data to all the clients connected to the device's room, excluding the device itself.
-// 4. The desktop clients can join the device's room to receive the broadcasted data
-// emitting events to a room with no connected clients can result in unnecessary network traffic and processing overhead on the server side
+const URL = 'http://localhost:4000';
+const deviceName = 'asdasd';
+const reconnectInterval = 5000; // Retry connection every 5 seconds
 
 function createSocketService(url, streamInterval = 1000) {
-    const socket = io(url, {
-        query: { clientType: 'device' }
-    });
-    let interval = null
-    const { CONNECT, DISCONNECT, STOP_STREAMING, START_STREAMING, JOIN_ROOM } = {
-        CONNECT: 'connect',
-        DISCONNECT: 'disconnect',
-        STOP_STREAMING: 'STOP_STREAMING',
-        START_STREAMING: 'START_STREAMING',
-        JOIN_ROOM: 'JOIN_ROOM',
-        SEND_DATA: 'SEND_DATA'
-    }
+  let socket = io(url, { query: { clientType: 'device' } });
+  let streamingInterval;
 
-    console.log('======Start=====');
+  const {
+    CONNECT,
+    DISCONNECT,
+    CONNECT_ERROR,
+    STOP_STREAMING,
+    START_STREAMING,
+    JOIN_ROOM,
+    SEND_DATA,
+  } = {
+    CONNECT: 'connect',
+    DISCONNECT: 'disconnect',
+    CONNECT_ERROR: 'connect_error',
+    STOP_STREAMING: 'STOP_STREAMING',
+    START_STREAMING: 'START_STREAMING',
+    JOIN_ROOM: 'JOIN_ROOM',
+    SEND_DATA: 'SEND_DATA',
+  };
 
-    socket.on(CONNECT, () => {
-        console.log('Connected to the backend server');
-        // Join the room with the device name
-        socket.emit(JOIN_ROOM, deviceName);
-    });
+  console.log('======Start=====');
 
-    socket.on(STOP_STREAMING, () => {
-        interval = null
-        clearInterval(interval)
-    })
+  socket.on(CONNECT, () => {
+    console.log('Connected to the backend server');
+    socket.emit(JOIN_ROOM, deviceName);
+  });
 
-    socket.on(START_STREAMING, () => {
-        console.log('[DEVICE] Streaming Started')
-        interval = setInterval(() => {
-            const currentTime = new Date();
-            const hours = currentTime.getHours().toString().padStart(2, "0");
-            const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-            const seconds = currentTime.getSeconds().toString().padStart(2, "0");
-            const date = `${hours}:${minutes}:${seconds}`;
-            cpuUsage((cpuUsage) => {
-                socket.emit("SEND_DATA", { cpuUsage, date, roomId: deviceName });
-            });
-        }, streamInterval);
+  socket.on(DISCONNECT, () => {
+    console.log('Disconnected from the backend server');
+    stopStreaming();
+    reconnect();
+  });
 
-    })
-    socket.on(STOP_STREAMING, () => {
-        console.log("Streaming stopped");
-        clearInterval(interval);
-        interval = null;
-    });
-    socket.on(DISCONNECT, () => {
-        console.log('Disconnected from the backend server');
-    });
+  socket.on(CONNECT_ERROR, (error) => {
+    console.error('Connection error:', error);
+    reconnect();
+  });
+
+  socket.on(START_STREAMING, () => {
+    console.log('[DEVICE] Streaming Started');
+    startStreaming(streamInterval);
+  });
+
+  socket.on(STOP_STREAMING, () => {
+    console.log('Streaming stopped');
+    stopStreaming();
+  });
+
+  function startStreaming(interval) {
+    streamingInterval = setInterval(() => {
+      const currentTime = new Date();
+      const hours = currentTime.getHours().toString().padStart(2, '0');
+      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+      const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+      const date = `${hours}:${minutes}:${seconds}`;
+
+      cpuUsage((cpuUsage) => {
+        const data = {
+          cpuUsage,
+          date,
+          roomId: deviceName,
+        };
+        socket.emit(SEND_DATA, data);
+        console.log('emmiting')
+      });
+    }, interval);
+  }
+
+  function stopStreaming() {
+    clearInterval(streamingInterval);
+  }
+
+  function reconnect() {
+    setTimeout(() => {
+      console.log('Attempting to reconnect...');
+      socket.connect();
+    }, reconnectInterval);
+  }
 }
 
-createSocketService(URL, 5000)
-
+createSocketService(URL, 5000);
