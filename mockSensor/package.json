@@ -1,0 +1,16 @@
+{
+  "name": "mocksensor",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "os-utils": "^0.0.14",
+    "socket.io-client": "^4.7.5"
+  }
+}

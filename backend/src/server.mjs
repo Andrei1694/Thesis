@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000
 
 const server = http.createServer(app)
 const socketIOService = new SocketIOService(server);
-socketIOService.emitDeviceIsOnline()
+
 async function startServer() {
     await mongoConnect();
 

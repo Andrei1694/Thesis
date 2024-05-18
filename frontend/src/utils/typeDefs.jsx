@@ -1,0 +1,4 @@
+export const START_STREAMING = "START_STREAMING";
+export const STOP_STREAMING = "STOP_STREAMING";
+export const JOIN_ROOM = "JOIN_ROOM";
+export const RECEIVE_DATA = "RECEIVE_DATA";
