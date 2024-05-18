@@ -16,7 +16,11 @@ import {
   STOP_STREAMING,
 } from "../../utils/typeDefs";
 const VITE_API_WS_URL = import.meta.env.VITE_API_WS_URL;
-
+console.log(VITE_API_WS_URL)
+const socket = io(VITE_API_WS_URL, {
+  transports: ["websocket", "polling"],
+  query: { clientType: "desktop" },
+});
 function DeviceDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -29,11 +33,6 @@ function DeviceDetails() {
   const [sliderValue, setSliderValue] = useState(1000);
 
   useEffect(() => {
-    const socket = io(VITE_API_WS_URL, {
-      transports: ["websocket", "polling"],
-      query: { clientType: "desktop" },
-    });
-
     socket.emit(JOIN_ROOM, "asdasd");
     socket.on(RECEIVE_DATA, (payload) => {
       console.log("Received data:", payload);
