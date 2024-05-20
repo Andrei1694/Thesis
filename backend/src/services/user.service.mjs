@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -28,7 +29,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 8,
-        maxlength: 25,
     },
     active: {
         type: Boolean,
@@ -46,6 +46,14 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    tokens: [
+        {
+            token: {
+                type: String,
+                required: true,
+            },
+        },
+    ],
 });
 
 
@@ -53,7 +61,6 @@ const UserSchema = new mongoose.Schema({
 // Password hashing middleware
 UserSchema.pre("save", async function (next) {
     try {
-        console.log('wow')
         if (!this.isModified("password")) {
             return next();
         }
@@ -64,6 +71,14 @@ UserSchema.pre("save", async function (next) {
         return next(error);
     }
 });
+
+
+UserSchema.pre('save', function (next) {
+    if (this.isNew && this.tokens.length === 0) {
+      return next(new Error('Tokens array cannot be empty'));
+    }
+    next();
+  });
 
 // Admin validation method
 UserSchema.methods.isAdmin = function () {
@@ -79,14 +94,46 @@ UserSchema.methods.comparePassword = async function (password) {
     }
 };
 
+UserSchema.methods.generateAuthToken = async function () {
+    const user = this;
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+
+    user.tokens = user.tokens.concat({ token });
+    await user.save();
+
+    return token;
+};
+
+export async function loginUser(email, password) {
+    try {
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        throw new Error('Invalid email or password');
+      }
+  
+      const isMatch = await user.comparePassword(password);
+  
+      if (!isMatch) {
+        throw new Error('Invalid email or password');
+      }
+  
+      const token = await user.generateAuthToken();
+      return { user, token };
+    } catch (error) {
+      throw new Error('Failed to login');
+    }
+  }
 
 // Create a new user
 export async function createUser(userData) {
     try {
         const user = new User(userData);
+        const token = await user.generateAuthToken(); // Generate a token for the new user
         await user.save();
-        return user;
+        return { user };
     } catch (error) {
+        console.log(error)
         throw new Error("Failed to create user");
     }
 }
@@ -94,7 +141,7 @@ export async function createUser(userData) {
 // Get all users
 export async function getAllUsers(limit = 20) {
     try {
-        const users = await User.find({limit});
+        const users = await User.find({ limit });
         return users;
     } catch (error) {
         throw new Error("Failed to retrieve users");

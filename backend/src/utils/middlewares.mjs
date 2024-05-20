@@ -46,23 +46,32 @@ export function errorHandler(err, req, res, next) {
 }
 
 
-
-const jwtSecret = "your-secret-key";
-
-export async function auth(req, res, next) {
+export const auth = async (req, res, next) => {
     try {
-        const token = req.header("Authorization").replace("Bearer ", "");
-        const decoded = jwt.verify(token, jwtSecret);
-        const user = await User.findOne({ _id: decoded._id, "tokens.token": token });
-
-        if (!user) {
-            throw new Error();
-        }
-
-        req.token = token;
-        req.user = user;
-        next();
+      const token = req.header('Authorization').replace('Bearer ', '');
+      const decoded = await verifyToken(token);
+      const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
+  
+      if (!user) {
+        return res.status(401).json({ error: 'User not found' });
+      }
+  
+      req.token = token;
+      req.user = user;
+      next();
     } catch (error) {
-        res.status(401).json({ error: "Authentication required" });
+      console.error('Error in auth middleware:', error);
+      res.status(401).json({ error: 'Invalid token' });
     }
-}
+  };
+  
+  const verifyToken = (token) =>
+    new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(decoded);
+        }
+      });
+    });

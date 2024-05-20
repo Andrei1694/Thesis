@@ -5,6 +5,7 @@ import {
   getUserById,
   updateUserById,
   deleteUserById,
+  loginUser,
 } from "../services/user.service.mjs";
 
 const createUserSchema = Yup.object().shape({
@@ -27,10 +28,21 @@ export async function registerUserHttp(req, res, next) {
   try {
     const userData = await createUserSchema.validate(req.body, { abortEarly: false });
     userData.admin = false
-    const user = await createUser(userData);
-    res.status(201).json(user);
+    const { user, token } = await createUser(req.body);
+    res.status(201).json({ user, token });
   } catch (error) {
     next(error);
+  }
+}
+
+// Login a user
+export async function loginUserHttp(req, res,next) {
+  try {
+    const { email, password } = req.body;
+    const { user, token } = await loginUser(email, password);
+    res.status(200).json({ user, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 }
 

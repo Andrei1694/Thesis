@@ -6,6 +6,7 @@ import Modal from '../components/modal.component';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import { register } from '../utils/requests';
+import { setAuthToken } from '../utils/auth';
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -46,10 +47,14 @@ const AuthModal = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
   const registerMutation = useMutation(
-    (userData) => register(userData),
+    (userData) => axios.post('/api/register', userData),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        const jwtToken = response.data.token; // Assuming the server sends the token in the response data
+        queryClient.setQueryData('authToken', jwtToken);
+        setAuthToken(jwtToken); // Store the token in local storage
         setIsOpen(false);
         navigate('/');
       },
@@ -60,9 +65,14 @@ const AuthModal = () => {
   );
 
   const loginMutation = useMutation(
-    (credentials) => axios.post('/v1/user', credentials),
+    (credentials) => axios.post('/api/login', credentials),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        const jwtToken = response.data.token; // Assuming the server sends the token in the response data
+        queryClient.setQueryData('authToken', jwtToken, {
+          staleTime: THIRTY_DAYS_IN_MS,
+        });
+        setAuthToken(jwtToken); // Store the token in local storage
         setIsOpen(false);
         navigate('/');
       },
@@ -71,6 +81,7 @@ const AuthModal = () => {
       },
     }
   );
+
   const formik = useFormik({
     initialValues,
     validationSchema,
