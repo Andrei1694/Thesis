@@ -40,3 +40,8 @@ export async function deleteDevice(id) {
   const response = await axios.delete(`${URL}/device/${id}`);
   return response.data;
 }
+
+export async function register(userData) {
+  const response = await axios.post(`${URL}/user`,userData);
+  return response.data;
+}

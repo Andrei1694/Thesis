@@ -49,7 +49,7 @@ export function errorHandler(err, req, res, next) {
 
 const jwtSecret = "your-secret-key";
 
-export async function authMiddleware(req, res, next) {
+export async function auth(req, res, next) {
     try {
         const token = req.header("Authorization").replace("Bearer ", "");
         const decoded = jwt.verify(token, jwtSecret);

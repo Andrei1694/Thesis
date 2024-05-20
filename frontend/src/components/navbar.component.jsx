@@ -77,6 +77,12 @@ const Navbar = () => {
                 >
                   Users
                 </Link>
+                <Link
+                  to="/login"
+                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Login
+                </Link>
               </div>
             </div>
           </div>
@@ -168,7 +174,7 @@ const Navbar = () => {
               My Profile
             </Link>
             <Link
-              to="/devices?page=1"
+              to="/profile"
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
               onClick={toggleMobileMenu}
             >

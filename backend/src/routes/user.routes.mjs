@@ -6,6 +6,7 @@ import {
   updateUserByIdHttp,
   deleteUserByIdHttp,
 } from "../controllers/user.controller.mjs";
+import { auth } from "../utils/middlewares.mjs";
 
 const userRouter = express.Router();
 
@@ -13,7 +14,7 @@ const userRouter = express.Router();
 userRouter.post("/", registerUserHttp);
 
 // Get all users
-userRouter.get("/", getAllUsersHttp);
+userRouter.get("/", auth, getAllUsersHttp);
 
 // Get a user by ID
 userRouter.get("/:id", getUserByIdHttp);

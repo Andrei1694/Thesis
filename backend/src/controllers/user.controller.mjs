@@ -9,7 +9,6 @@ import {
 
 const createUserSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
-  username: Yup.string().min(6, "Username must be at least 6 characters").max(20, "Username must be at most 20 characters").required("Username is required"),
   firstName: Yup.string().min(2, "First name must be at least 2 characters").max(25, "First name must be at most 25 characters").required("First name is required"),
   lastName: Yup.string().min(2, "Last name must be at least 2 characters").max(25, "Last name must be at most 25 characters").required("Last name is required"),
   password: Yup.string().min(8, "Password must be at least 8 characters").max(25, "Password must be at most 25 characters").required("Password is required"),
@@ -17,7 +16,6 @@ const createUserSchema = Yup.object().shape({
 
 const updateUserSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email"),
-  username: Yup.string().min(6, "Username must be at least 6 characters").max(20, "Username must be at most 20 characters"),
   firstName: Yup.string().min(2, "First name must be at least 2 characters").max(25, "First name must be at most 25 characters"),
   lastName: Yup.string().min(2, "Last name must be at least 2 characters").max(25, "Last name must be at most 25 characters"),
   password: Yup.string().min(8, "Password must be at least 8 characters").max(25, "Password must be at most 25 characters"),
