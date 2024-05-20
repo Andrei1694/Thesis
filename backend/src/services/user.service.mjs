@@ -55,11 +55,12 @@ const UserSchema = new mongoose.Schema({
     },
 });
 
-export const User = mongoose.model("User", UserSchema);
+
 
 // Password hashing middleware
 UserSchema.pre("save", async function (next) {
     try {
+        console.log('wow')
         if (!this.isModified("password")) {
             return next();
         }
@@ -98,9 +99,9 @@ export async function createUser(userData) {
 }
 
 // Get all users
-export async function getAllUsers() {
+export async function getAllUsers(limit = 20) {
     try {
-        const users = await User.find();
+        const users = await User.find({limit});
         return users;
     } catch (error) {
         throw new Error("Failed to retrieve users");
@@ -148,3 +149,5 @@ export async function deleteUserById(id) {
         throw new Error("Failed to delete user");
     }
 }
+
+export const User = mongoose.model("User", UserSchema);

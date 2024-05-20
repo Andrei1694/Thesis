@@ -1,16 +1,35 @@
+import * as Yup from "yup";
 import {
-    createUser,
-    getAllUsers,
-    getUserById,
-    updateUserById,
-    deleteUserById,
-} from "../services/user.service.mjs"
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUserById,
+  deleteUserById,
+} from "../services/user.service.mjs";
+
+const createUserSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  username: Yup.string().min(6, "Username must be at least 6 characters").max(20, "Username must be at most 20 characters").required("Username is required"),
+  firstName: Yup.string().min(2, "First name must be at least 2 characters").max(25, "First name must be at most 25 characters").required("First name is required"),
+  lastName: Yup.string().min(2, "Last name must be at least 2 characters").max(25, "Last name must be at most 25 characters").required("Last name is required"),
+  password: Yup.string().min(8, "Password must be at least 8 characters").max(25, "Password must be at most 25 characters").required("Password is required"),
+});
+
+const updateUserSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email"),
+  username: Yup.string().min(6, "Username must be at least 6 characters").max(20, "Username must be at most 20 characters"),
+  firstName: Yup.string().min(2, "First name must be at least 2 characters").max(25, "First name must be at most 25 characters"),
+  lastName: Yup.string().min(2, "Last name must be at least 2 characters").max(25, "Last name must be at most 25 characters"),
+  password: Yup.string().min(8, "Password must be at least 8 characters").max(25, "Password must be at most 25 characters"),
+  active: Yup.boolean(),
+});
 
 // Create a new user
 export async function registerUserHttp(req, res, next) {
   try {
-    const userData = req.body;
-    const user = await UserService.createUser(userData);
+    const userData = await createUserSchema.validate(req.body, { abortEarly: false });
+    userData.admin = false
+    const user = await createUser(userData);
     res.status(201).json(user);
   } catch (error) {
     next(error);
@@ -20,7 +39,7 @@ export async function registerUserHttp(req, res, next) {
 // Get all users
 export async function getAllUsersHttp(req, res, next) {
   try {
-    const users = await UserService.getAllUsers();
+    const users = await getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     next(error);
@@ -31,7 +50,7 @@ export async function getAllUsersHttp(req, res, next) {
 export async function getUserByIdHttp(req, res, next) {
   try {
     const userId = req.params.id;
-    const user = await UserService.getUserById(userId);
+    const user = await getUserById(userId);
     res.status(200).json(user);
   } catch (error) {
     if (error.message === "User not found") {
@@ -46,8 +65,9 @@ export async function getUserByIdHttp(req, res, next) {
 export async function updateUserByIdHttp(req, res, next) {
   try {
     const userId = req.params.id;
-    const updateFields = req.body;
-    const user = await UserService.updateUserById(userId, updateFields);
+    const updateFields = await updateUserSchema.validate(req.body, { abortEarly: false });
+    if(updateFields.admin) updateFields.admin = false
+    const user = await updateUserById(userId, updateFields);
     res.status(200).json(user);
   } catch (error) {
     if (error.message === "User not found") {
@@ -62,7 +82,7 @@ export async function updateUserByIdHttp(req, res, next) {
 export async function deleteUserByIdHttp(req, res, next) {
   try {
     const userId = req.params.id;
-    await UserService.deleteUserById(userId);
+    await deleteUserById(userId);
     res.sendStatus(204);
   } catch (error) {
     if (error.message === "User not found") {
