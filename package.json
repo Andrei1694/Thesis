@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
+    "jsonwebtoken": "^9.0.2",
     "recharts": "^2.12.3",
     "socket.io-client": "^4.7.5"
   }

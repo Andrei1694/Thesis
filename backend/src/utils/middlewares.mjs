@@ -1,3 +1,5 @@
+
+import jwt from "jsonwebtoken";
 export const generateProjection = (req, res, next) => {
     const { mask } = req.query;
     const projection = { '_id': 0 };
@@ -41,4 +43,26 @@ export function errorHandler(err, req, res, next) {
         message: errMsg,
         stack: process.env.NODE_ENV === 'development' ? err.stack : {}
     })
+}
+
+
+
+const jwtSecret = "your-secret-key";
+
+export async function authMiddleware(req, res, next) {
+    try {
+        const token = req.header("Authorization").replace("Bearer ", "");
+        const decoded = jwt.verify(token, jwtSecret);
+        const user = await User.findOne({ _id: decoded._id, "tokens.token": token });
+
+        if (!user) {
+            throw new Error();
+        }
+
+        req.token = token;
+        req.user = user;
+        next();
+    } catch (error) {
+        res.status(401).json({ error: "Authentication required" });
+    }
 }
