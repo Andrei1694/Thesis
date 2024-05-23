@@ -3,6 +3,7 @@ import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
 import { searchDevices } from "../utils/requests";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { queryClient } from "../App";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -24,9 +25,10 @@ const Navbar = () => {
       enabled: !!searchTerm,
     }
   );
-
-  const { aut } = useQuery("authToken", () => console.log("asdasd"));
-  console.log(aut);
+  const isLogged = true;
+  // const {
+  //   data: { isLogged },
+  // } = queryClient.getQueryState("authToken");
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -81,12 +83,14 @@ const Navbar = () => {
                 >
                   Users
                 </Link>
-                <Link
-                  to="/login"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Login
-                </Link>
+                {!isLogged && (
+                  <Link
+                    to="/login"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -48,8 +48,13 @@ const AuthForm = () => {
 
   const registerMutation = useMutation((userData) => register(userData), {
     onSuccess: (response) => {
-      const jwtToken = response.user.token; // Assuming the server sends the token in the response data
-      queryClient.setQueryData("authToken", jwtToken);
+      const jwtToken = response.user.tokens[0]; // Assuming the server sends the token in the response data
+      console.log(response.user);
+      queryClient.setQueryData("authToken", {
+        jwtToken,
+        isAuthenticated: true,
+      });
+      console.log(jwtToken);
       setAuthToken(jwtToken); // Store the token in local storage
       navigate("/devices");
     },
