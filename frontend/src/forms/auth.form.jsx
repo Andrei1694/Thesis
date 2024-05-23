@@ -1,83 +1,83 @@
-import React, { useState } from 'react';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Modal from '../components/modal.component';
-import { useMutation } from 'react-query';
-import axios from 'axios';
-import { register } from '../utils/requests';
-import { setAuthToken } from '../utils/auth';
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useNavigate, useLocation } from "react-router-dom";
+import Modal from "../components/modal.component";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { register } from "../utils/requests";
+import { setAuthToken } from "../utils/auth";
 
 const validationSchema = yup.object().shape({
   email: yup
     .string()
-    .email('Invalid email address')
-    .required('Email is required')
-    .min(12, 'Email must be at least 12 characters')
+    .email("Invalid email address")
+    .required("Email is required")
+    .min(12, "Email must be at least 12 characters")
     .trim()
     .lowercase(),
   firstName: yup
     .string()
-    .required('First name is required')
-    .min(2, 'First name must be at least 2 characters')
-    .max(25, 'First name must be at most 25 characters')
+    .required("First name is required")
+    .min(2, "First name must be at least 2 characters")
+    .max(25, "First name must be at most 25 characters")
     .trim(),
   lastName: yup
     .string()
-    .required('Last name is required')
-    .min(2, 'Last name must be at least 2 characters')
-    .max(25, 'Last name must be at most 25 characters')
+    .required("Last name is required")
+    .min(2, "Last name must be at least 2 characters")
+    .max(25, "Last name must be at most 25 characters")
     .trim(),
   password: yup
     .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters')
-    .max(25, 'Password must be at most 25 characters'),
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .max(25, "Password must be at most 25 characters"),
 });
 
 const initialValues = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  password: '',
+  email: "",
+  firstName: "",
+  lastName: "",
+  password: "",
 };
 
-const AuthModal = () => {
+const AuthForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const registerMutation = useMutation(
-    (userData) => axios.post('/api/register', userData),
+    (userData) => axios.post("/api/register", userData),
     {
       onSuccess: (response) => {
         const jwtToken = response.data.token; // Assuming the server sends the token in the response data
-        queryClient.setQueryData('authToken', jwtToken);
+        queryClient.setQueryData("authToken", jwtToken);
         setAuthToken(jwtToken); // Store the token in local storage
         setIsOpen(false);
-        navigate('/');
+        navigate("/");
       },
       onError: (error) => {
-        console.error('Registration error:', error);
+        console.error("Registration error:", error);
       },
     }
   );
 
   const loginMutation = useMutation(
-    (credentials) => axios.post('/api/login', credentials),
+    (credentials) => axios.post("/api/login", credentials),
     {
       onSuccess: (response) => {
         const jwtToken = response.data.token; // Assuming the server sends the token in the response data
-        queryClient.setQueryData('authToken', jwtToken, {
+        queryClient.setQueryData("authToken", jwtToken, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
         setAuthToken(jwtToken); // Store the token in local storage
         setIsOpen(false);
-        navigate('/');
+        navigate("/");
       },
       onError: (error) => {
-        console.error('Login error:', error);
+        console.error("Login error:", error);
       },
     }
   );
@@ -99,18 +99,14 @@ const AuthModal = () => {
 
   // Show modal if the current path is '/login'
   React.useEffect(() => {
-    if (location.pathname === '/login') {
+    if (location.pathname === "/login") {
       setIsOpen(true);
       setIsRegistering(false); // Set to login mode
     }
   }, [location.pathname]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={toggleModal}
-      heading={isRegistering ? 'Register' : 'Login'}
-    >
+    <div>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         {isRegistering && (
           <>
@@ -121,11 +117,11 @@ const AuthModal = () => {
               <input
                 id="firstName"
                 type="text"
-                {...formik.getFieldProps('firstName')}
+                {...formik.getFieldProps("firstName")}
                 className={`w-full px-3 py-2 border ${
                   formik.touched.firstName && formik.errors.firstName
-                    ? 'border-red-500'
-                    : 'border-gray-300'
+                    ? "border-red-500"
+                    : "border-gray-300"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
               {formik.touched.firstName && formik.errors.firstName ? (
@@ -142,11 +138,11 @@ const AuthModal = () => {
               <input
                 id="lastName"
                 type="text"
-                {...formik.getFieldProps('lastName')}
+                {...formik.getFieldProps("lastName")}
                 className={`w-full px-3 py-2 border ${
                   formik.touched.lastName && formik.errors.lastName
-                    ? 'border-red-500'
-                    : 'border-gray-300'
+                    ? "border-red-500"
+                    : "border-gray-300"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
               {formik.touched.lastName && formik.errors.lastName ? (
@@ -165,11 +161,11 @@ const AuthModal = () => {
           <input
             id="email"
             type="email"
-            {...formik.getFieldProps('email')}
+            {...formik.getFieldProps("email")}
             className={`w-full px-3 py-2 border ${
               formik.touched.email && formik.errors.email
-                ? 'border-red-500'
-                : 'border-gray-300'
+                ? "border-red-500"
+                : "border-gray-300"
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
           {formik.touched.email && formik.errors.email ? (
@@ -184,11 +180,11 @@ const AuthModal = () => {
           <input
             id="password"
             type="password"
-            {...formik.getFieldProps('password')}
+            {...formik.getFieldProps("password")}
             className={`w-full px-3 py-2 border ${
               formik.touched.password && formik.errors.password
-                ? 'border-red-500'
-                : 'border-gray-300'
+                ? "border-red-500"
+                : "border-gray-300"
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
           {formik.touched.password && formik.errors.password ? (
@@ -200,14 +196,14 @@ const AuthModal = () => {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
         >
-          {isRegistering ? 'Register' : 'Login'}
+          {isRegistering ? "Register" : "Login"}
         </button>
       </form>
 
       <div className="mt-4 text-center">
         {isRegistering ? (
           <p>
-            Already have an account?{' '}
+            Already have an account?{" "}
             <button
               type="button"
               onClick={toggleRegistration}
@@ -218,7 +214,7 @@ const AuthModal = () => {
           </p>
         ) : (
           <p>
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <button
               type="button"
               onClick={toggleRegistration}
@@ -229,8 +225,8 @@ const AuthModal = () => {
           </p>
         )}
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default AuthModal;
+export default AuthForm;

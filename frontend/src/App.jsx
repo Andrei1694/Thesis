@@ -6,9 +6,10 @@ import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Profile from "./pages/User/profile.page";
 import Users from "./pages/User/users.page";
-import AuthModal from "./forms/auth.form";
+import AuthForm from "./forms/auth.form";
 import { useEffect } from "react";
 import { getAuthToken } from "./utils/auth";
+import LoginPage from "./pages/Login/login.page";
 // Create a client
 const queryClient = new QueryClient();
 const MainLayout = () => {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <AuthModal />,
+        element: <LoginPage />,
       },
     ],
   },
@@ -57,7 +58,7 @@ function App() {
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
-      queryClient.setQueryData('authToken', token);
+      queryClient.setQueryData("authToken", token);
     }
   }, []);
   return (
