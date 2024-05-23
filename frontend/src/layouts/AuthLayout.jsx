@@ -5,29 +5,33 @@ import { getAuthToken } from "../utils/auth";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
-  const authData = queryClient.getQueryData("authToken");
 
   useEffect(() => {
-    console.log(authData);
-    let isAuthenticated = authData?.isAuthenticated ?? false;
-    console.log(isAuthenticated);
-    console.log(getAuthToken());
+    const checkAuth = () => {
+      const token = getAuthToken();
+      if (token) {
+        queryClient.setQueryData("authToken", { token, isAuthenticated: true });
+      } else {
+        queryClient.setQueryData("authToken", {
+          token: null,
+          isAuthenticated: false,
+        });
+        navigate("/login", { replace: true });
+      }
+    };
 
-    if (!getAuthToken()) {
-      console.log("trigger");
-      isAuthenticated = false;
-    }
+    checkAuth();
 
-    // If the user is not authenticated, redirect to the login page
-    if (!isAuthenticated) {
-      navigate("/login", { replace: true });
-    }
-  }, [authData, navigate]);
+    // Listen for storage changes and update the authentication state
+    window.addEventListener("storage", checkAuth);
 
-  // If the user is authenticated, render the child routes
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, [navigate]);
+
   return (
     <div>
-      {/* Render any common layout elements */}
       <Outlet />
     </div>
   );

@@ -1,35 +1,22 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
-import {
-  createBrowserRouter,
-  Outlet,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
 import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Profile from "./pages/User/profile.page";
 import Users from "./pages/User/users.page";
 import AuthForm from "./forms/auth.form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAuthToken } from "./utils/auth";
 import LoginPage from "./pages/Login/login.page";
 import PublicLayout from "./layouts/PublicLayout";
 import AuthLayout from "./layouts/AuthLayout";
+
 // Create a client
 export const queryClient = new QueryClient();
+
 const MainLayout = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    const token = getAuthToken();
-    if (token) {
-      queryClient.setQueryData("authToken", { token, isAuthenticated: true });
-      navigate("/profile");
-    } else {
-      navigate("/login");
-    }
-  }, [navigate]);
   return (
     <>
       <Navbar />
@@ -37,6 +24,7 @@ const MainLayout = () => {
     </>
   );
 };
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,7 +33,6 @@ const router = createBrowserRouter([
         <MainLayout />
       </QueryClientProvider>
     ),
-
     children: [
       {
         path: "/",
@@ -63,7 +50,6 @@ const router = createBrowserRouter([
             path: "devices/:id",
             element: <DeviceDetails />,
           },
-
           {
             path: "devices",
             element: <DevicesListPage />,
@@ -72,6 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
+
         element: <LoginPage />,
       },
     ],
@@ -79,6 +66,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token) {
+      queryClient.setQueryData("authToken", { token, isAuthenticated: true });
+    }
+  }, []);
+
   return (
     <>
       <RouterProvider router={router} />
