@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
 import { searchDevices } from "../utils/requests";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { queryClient } from "../App";
 
 const Navbar = () => {

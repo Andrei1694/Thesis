@@ -1,10 +1,9 @@
-
 export default function UserCard({ user }) {
   return (
     <div className="bg-white rounded-[10px] shadow p-6 mb-4">
       <div className="flex items-center mb-4">
         <img
-          src={user.profileImage || 'default-profile.png'}
+          src={user.profileImage || "default-profile.png"}
           alt={`${user.firstName} ${user.lastName}`}
           className="w-20 h-20 rounded-full mr-4"
         />
@@ -23,4 +22,3 @@ export default function UserCard({ user }) {
     </div>
   );
 }
-

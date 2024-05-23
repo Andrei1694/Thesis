@@ -55,7 +55,7 @@ const AuthForm = () => {
         isAuthenticated: true,
       });
       setAuthToken(jwtToken); // Store the token in local storage
-      navigate("/devices");
+      navigate("/profile");
     },
     onError: (error) => {
       console.error("Registration error:", error);
