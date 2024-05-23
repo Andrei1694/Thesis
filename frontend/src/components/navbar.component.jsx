@@ -25,10 +25,8 @@ const Navbar = () => {
       enabled: !!searchTerm,
     }
   );
-  const isLogged = true;
-  // const {
-  //   data: { isLogged },
-  // } = queryClient.getQueryState("authToken");
+
+  const { isAuthenticated } = queryClient.getQueryData("authToken") ?? {};
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -64,34 +62,37 @@ const Navbar = () => {
               </span>
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  to="/profile"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  My Profile
-                </Link>
-                <Link
-                  to="/devices?page=1"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Devices
-                </Link>
-                <Link
-                  to="/users"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Users
-                </Link>
-                {!isLogged && (
+              {isAuthenticated && (
+                <div className="ml-10 flex items-baseline space-x-4">
                   <Link
-                    to="/login"
+                    to="/profile"
                     className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Login
+                    My Profile
                   </Link>
-                )}
-              </div>
+                  <Link
+                    to="/devices?page=1"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Devices
+                  </Link>
+                  <Link
+                    to="/users"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Users
+                  </Link>
+
+                  {!isAuthenticated && (
+                    <Link
+                      to="/login"
+                      className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Login
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className="hidden md:block">
