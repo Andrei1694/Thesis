@@ -42,6 +42,6 @@ export async function deleteDevice(id) {
 }
 
 export async function register(userData) {
-  const response = await axios.post(`${URL}/user`,userData);
+  const response = await axios.post(`${URL}/user`, userData);
   return response.data;
 }

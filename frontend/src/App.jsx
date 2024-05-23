@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { getAuthToken } from "./utils/auth";
 import LoginPage from "./pages/Login/login.page";
 // Create a client
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 const MainLayout = () => {
   return (
     <>

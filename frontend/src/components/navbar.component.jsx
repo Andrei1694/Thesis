@@ -3,6 +3,7 @@ import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
 import { searchDevices } from "../utils/requests";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,6 +24,9 @@ const Navbar = () => {
       enabled: !!searchTerm,
     }
   );
+
+  const { aut } = useQuery("authToken", () => console.log("asdasd"));
+  console.log(aut);
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {

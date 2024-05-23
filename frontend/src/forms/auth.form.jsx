@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate, useLocation } from "react-router-dom";
-import Modal from "../components/modal.component";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { register } from "../utils/requests";
 import { setAuthToken } from "../utils/auth";
+import { queryClient } from "../App";
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -43,26 +43,20 @@ const initialValues = {
 };
 
 const AuthForm = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const registerMutation = useMutation(
-    (userData) => axios.post("/api/register", userData),
-    {
-      onSuccess: (response) => {
-        const jwtToken = response.data.token; // Assuming the server sends the token in the response data
-        queryClient.setQueryData("authToken", jwtToken);
-        setAuthToken(jwtToken); // Store the token in local storage
-        setIsOpen(false);
-        navigate("/");
-      },
-      onError: (error) => {
-        console.error("Registration error:", error);
-      },
-    }
-  );
+  const registerMutation = useMutation((userData) => register(userData), {
+    onSuccess: (response) => {
+      const jwtToken = response.user.token; // Assuming the server sends the token in the response data
+      queryClient.setQueryData("authToken", jwtToken);
+      setAuthToken(jwtToken); // Store the token in local storage
+      navigate("/devices");
+    },
+    onError: (error) => {
+      console.error("Registration error:", error);
+    },
+  });
 
   const loginMutation = useMutation(
     (credentials) => axios.post("/api/login", credentials),
@@ -73,7 +67,7 @@ const AuthForm = () => {
           staleTime: THIRTY_DAYS_IN_MS,
         });
         setAuthToken(jwtToken); // Store the token in local storage
-        setIsOpen(false);
+
         navigate("/");
       },
       onError: (error) => {
@@ -88,22 +82,10 @@ const AuthForm = () => {
     onSubmit: isRegistering ? registerMutation.mutate : loginMutation.mutate,
   });
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
   const toggleRegistration = () => {
     setIsRegistering(!isRegistering);
     formik.resetForm();
   };
-
-  // Show modal if the current path is '/login'
-  React.useEffect(() => {
-    if (location.pathname === "/login") {
-      setIsOpen(true);
-      setIsRegistering(false); // Set to login mode
-    }
-  }, [location.pathname]);
 
   return (
     <div>
