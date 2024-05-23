@@ -36,7 +36,7 @@ export async function registerUserHttp(req, res, next) {
 }
 
 // Login a user
-export async function loginUserHttp(req, res,next) {
+export async function loginUserHttp(req, res, next) {
   try {
     const { email, password } = req.body;
     const { user, token } = await loginUser(email, password);
@@ -50,6 +50,7 @@ export async function loginUserHttp(req, res,next) {
 export async function getAllUsersHttp(req, res, next) {
   try {
     const users = await getAllUsers();
+    console.log(users)
     res.status(200).json(users);
   } catch (error) {
     next(error);
@@ -76,7 +77,7 @@ export async function updateUserByIdHttp(req, res, next) {
   try {
     const userId = req.params.id;
     const updateFields = await updateUserSchema.validate(req.body, { abortEarly: false });
-    if(updateFields.admin) updateFields.admin = false
+    if (updateFields.admin) updateFields.admin = false
     const user = await updateUserById(userId, updateFields);
     res.status(200).json(user);
   } catch (error) {

@@ -57,7 +57,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-
 // Password hashing middleware
 UserSchema.pre("save", async function (next) {
     try {
@@ -75,10 +74,10 @@ UserSchema.pre("save", async function (next) {
 
 UserSchema.pre('save', function (next) {
     if (this.isNew && this.tokens.length === 0) {
-      return next(new Error('Tokens array cannot be empty'));
+        return next(new Error('Tokens array cannot be empty'));
     }
     next();
-  });
+});
 
 // Admin validation method
 UserSchema.methods.isAdmin = function () {
@@ -106,24 +105,24 @@ UserSchema.methods.generateAuthToken = async function () {
 
 export async function loginUser(email, password) {
     try {
-      const user = await User.findOne({ email });
-  
-      if (!user) {
-        throw new Error('Invalid email or password');
-      }
-  
-      const isMatch = await user.comparePassword(password);
-  
-      if (!isMatch) {
-        throw new Error('Invalid email or password');
-      }
-  
-      const token = await user.generateAuthToken();
-      return { user, token };
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new Error('Invalid email or password');
+        }
+
+        const isMatch = await user.comparePassword(password);
+
+        if (!isMatch) {
+            throw new Error('Invalid email or password');
+        }
+
+        const token = await user.generateAuthToken();
+        return { user, token };
     } catch (error) {
-      throw new Error('Failed to login');
+        throw new Error('Failed to login');
     }
-  }
+}
 
 // Create a new user
 export async function createUser(userData) {
@@ -141,8 +140,9 @@ export async function createUser(userData) {
 // Get all users
 export async function getAllUsers(limit = 20) {
     try {
-        const users = await User.find({ limit });
-        return users;
+        const users = await User.find({}).limit(limit);
+        const total = await User.countDocuments()
+        return { users, total };
     } catch (error) {
         throw new Error("Failed to retrieve users");
     }
