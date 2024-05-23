@@ -26,8 +26,10 @@ const MainLayout = () => {
     if (token) {
       queryClient.setQueryData("authToken", { token, isAuthenticated: true });
       navigate("/profile");
+    } else {
+      navigate("/login");
     }
-  }, []);
+  }, [navigate]);
   return (
     <>
       <Navbar />

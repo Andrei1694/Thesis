@@ -54,7 +54,6 @@ const AuthForm = () => {
         jwtToken,
         isAuthenticated: true,
       });
-      console.log(jwtToken);
       setAuthToken(jwtToken); // Store the token in local storage
       navigate("/devices");
     },
