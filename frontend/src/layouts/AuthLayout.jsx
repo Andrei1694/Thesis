@@ -28,7 +28,7 @@ const AuthLayout = () => {
     return () => {
       window.removeEventListener("storage", checkAuth);
     };
-  }, [queryClient.getQueryData('authToken')]);
+  }, [queryClient.getQueryData('authToken')], navigate);
 
   return (
     <div>
