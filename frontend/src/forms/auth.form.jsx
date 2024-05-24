@@ -63,13 +63,13 @@ const AuthForm = () => {
 
   const registerMutation = useMutation((userData) => register(userData), {
     onSuccess: (response) => {
-      const token = response.user.token; // Assuming the server sends the token in the response data
-      console.log(response.user);
+      const { user, token } = response
       queryClient.setQueryData("authToken", {
         token: token,
         isAuthenticated: true,
+        user
       });
-      setAuthToken(token); // Store the token in local storage
+      setAuthToken(token, user._id); // Store the token in local storage
       navigate("/profile");
     },
     onError: (error) => {
@@ -81,14 +81,15 @@ const AuthForm = () => {
     (credentials) => login(credentials),
     {
       onSuccess: (response) => {
-        const token = response.token; // Assuming the server sends the token in the response data
+        const { user, token } = response
         queryClient.setQueryData("authToken", {
           token,
-          isAuthenticated: true
+          isAuthenticated: true,
+          user
         }, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
-        setAuthToken(token); // Store the token in local storage
+        setAuthToken(token, user._id); // Store the token in local storage
         navigate("/profile");
       },
       onError: (error) => {

@@ -1,11 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
-import { logout, searchDevices } from "../utils/requests";
+import { getUser, logout, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
-import { removeAuthToken } from "../utils/auth";
+import { getAuthToken, removeAuthToken } from "../utils/auth";
 
+function UserLogo({ firstName, lastName }) {
+  return (
+    <div className="flex items-center max-h-100 w-[200px] h-[50px]">
+      <div className="ml-1">
+        <img className="rounded-full w-10 h-10" src="https://picsum.photos/200/300" alt='img' />
+      </div>
+      <span className="text-white ml-auto mr-2 whitespace-nowrap">{firstName + ' ' + lastName}</span>
+    </div>
+  )
+}
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,16 +23,35 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [authData, setAuthData] = useState(queryClient.getQueryData("authToken"))
-
-  let isAuthenticated = authData?.isAuthenticated;
-  console.log(isAuthenticated)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  let { isAuthenticated, id } = authData ?? getAuthToken() ?? {};
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+  useEffect(() => {
+    if (authData ?? getAuthToken()) {
+      isAuthenticated = authData?.isAuthenticated ?? getAuthToken().isAuthenticated
+      id = authData?.id ?? getAuthToken()?.id
+    }
+
+
+  }, [authData, getAuthToken()])
 
   const [filteredDevices, setFilteredDevices] = useState([]);
   const inputRef = useRef(null);
-
+  const { user, isUserLoading, refetch: fetchUser } = useQuery(
+    ["user"],
+    () => getUser(id),
+    {
+      onSuccess: (response) => {
+        const { firstName, lastName } = response
+        setFirstName(firstName)
+        setLastName(lastName)
+      },
+      enabled: false
+    }
+  );
   const { data, isLoading } = useQuery(
     ["searchDevices", searchTerm],
     () => searchDevices(searchTerm),
@@ -30,7 +59,9 @@ const Navbar = () => {
       enabled: !!searchTerm,
     }
   );
-
+  useEffect(() => {
+    if (isAuthenticated) fetchUser()
+  }, [id])
   const { logoutMessage, isLoadingLogout, refetch } = useQuery(
     ["logout"],
     () => logout(),
@@ -40,7 +71,7 @@ const Navbar = () => {
       refetchOnWindowFocus: false,
       onSuccess: () => {
         console.log('onnSuccess')
-        queryClient.setQueryData("authToken", { isAuthenticated: false });
+        queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
         removeAuthToken()
         navigate('/login')
       }
@@ -51,15 +82,15 @@ const Navbar = () => {
     setAuthData(queryClient.getQueryData("authToken"));
   }, [queryClient.getQueryData("authToken")]);
 
-  // useEffect(() => {
-  //   if (data && data.devices && searchTerm) {
-  //     const filtered = data.devices.map(({ _id, deviceName }) => ({
-  //       _id,
-  //       deviceName,
-  //     }));
-  //     setFilteredDevices(filtered);
-  //   }
-  // }, [data, searchTerm]);
+  useEffect(() => {
+    if (data && data.devices && searchTerm) {
+      const filtered = data.devices.map(({ _id, deviceName }) => ({
+        _id,
+        deviceName,
+      }));
+      setFilteredDevices(filtered);
+    }
+  }, [data, searchTerm]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -108,7 +139,7 @@ const Navbar = () => {
 
                   <Link
 
-                    className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+                    className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-sm font-medium"
                     onClick={() => {
                       console.log('logout')
                       refetch()
@@ -161,6 +192,9 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+          {isAuthenticated && (<Link to='/profile'>
+            <UserLogo firstName={firstName} lastName={lastName} />
+          </Link>)}
           <div className="-mr-2 flex md:hidden">
             <Button
               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-customSecondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-customPrimary focus:ring-white"

@@ -1,14 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
-import { createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
 import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Profile from "./pages/User/profile.page";
 import Users from "./pages/User/users.page";
-import AuthForm from "./forms/auth.form";
-import { useEffect, useLayoutEffect } from "react";
-import { getAuthToken } from "./utils/auth";
 import LoginPage from "./pages/Login/login.page";
 import PublicLayout from "./layouts/PublicLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -71,15 +68,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // useLayoutEffect(() => {
-  //   const token = getAuthToken();
-  //   console.log(getAuthToken())
-  //   if (token) {
-  //     queryClient.setQueryData("authToken", { token, isAuthenticated: true });
-  //     console.log('wow')
-  //   }
-  // }, []);
-
   return (
     <>
       <RouterProvider router={router} />

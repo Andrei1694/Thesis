@@ -8,7 +8,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = getAuthToken() ?? {};
+    const { token } = getAuthToken() ?? {};
     console.log(getAuthToken());
     if (token) {
       console.log('wow')
@@ -80,8 +80,7 @@ export async function getAllUsers() {
   return response.data;
 }
 
-export async function getUser() {
-  // const { _id } = getAuthToken() ?? {};
-  const response = await api.get(`${URL}/user/`);
+export async function getUser(id) {
+  const response = await api.get(`${URL}/user/${id}`);
   return response.data;
 }
