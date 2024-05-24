@@ -87,7 +87,6 @@ function ProfilePage() {
     error: fetchError,
   } = useQuery(["user"], () => getUser(id), {
     onSuccess: (response) => {
-      console.log(response)
       const { firstName, lastName, email } = response
       formik.setValues({ firstName, lastName, email })
     },
@@ -110,7 +109,7 @@ function ProfilePage() {
     },
     onSubmit: (values) => {
       // Handle form submission, e.g., send data to server
-      console.log(values);
+      // console.log(values);
     },
   });
 

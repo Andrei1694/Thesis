@@ -37,7 +37,6 @@ function UsersPage() {
     error: fetchError,
   } = useQuery(["users"], () => getAllUsers(), {
     onSuccess: (data) => {
-      console.log(data.users);
       setUsers(data.users);
       setTotalPages(Math.ceil(data.total / PAGE_SIZE));
     },
@@ -50,9 +49,7 @@ function UsersPage() {
     // fetchUsers();
   }, [currentPage, sortField, sortOrder]);
 
-  useEffect(() => {
-    console.log(authData?.isAuthenticated)
-  }, [])
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
