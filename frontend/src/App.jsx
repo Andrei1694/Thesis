@@ -16,15 +16,7 @@ import AuthLayout from "./layouts/AuthLayout";
 // Create a client
 export const queryClient = new QueryClient();
 
-const MainLayout = () => {
-  const navigate = useNavigate()
-  useLayoutEffect(() => {
-    const token = getAuthToken();
-    if (token) {
-      queryClient.setQueryData("authToken", { token, isAuthenticated: true });
-      console.log('wow')
-    }
-  }, []);
+const RootLayout = () => {
   return (
     <>
       <Navbar />
@@ -38,7 +30,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <QueryClientProvider client={queryClient}>
-        <MainLayout />
+        <RootLayout />
       </QueryClientProvider>
     ),
     children: [
@@ -65,16 +57,28 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "login",
-
-        element: <LoginPage />,
-      },
+        path: '/',
+        element: <PublicLayout />,
+        children: [
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
+        ]
+      }
     ],
   },
 ]);
 
 function App() {
- 
+  // useLayoutEffect(() => {
+  //   const token = getAuthToken();
+  //   console.log(getAuthToken())
+  //   if (token) {
+  //     queryClient.setQueryData("authToken", { token, isAuthenticated: true });
+  //     console.log('wow')
+  //   }
+  // }, []);
 
   return (
     <>

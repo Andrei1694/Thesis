@@ -8,9 +8,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const { token } = getAuthToken() ?? {};
-    // console.log(getAuthToken()._id);
+    const token = getAuthToken() ?? {};
+    console.log(getAuthToken());
     if (token) {
+      console.log('wow')
       config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
@@ -66,8 +67,12 @@ export async function register(userData) {
   return response.data;
 }
 export async function login(userData) {
-  console.log('wow')
   const response = await api.post(`${URL}/user/login`, userData);
+  return response.data;
+}
+export async function logout() {
+  console.log('logout req')
+  const response = await api.get(`${URL}/user/logout`);
   return response.data;
 }
 export async function getAllUsers() {

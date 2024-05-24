@@ -1,18 +1,21 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
-import { searchDevices } from "../utils/requests";
+import { logout, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
+import { removeAuthToken } from "../utils/auth";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [authData, setAuthData] = useState(queryClient.getQueryData("authToken"))
-  const isAuthenticated = authData?.isAuthenticated;
+
+  let isAuthenticated = authData?.isAuthenticated;
+  console.log(isAuthenticated)
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -28,19 +31,35 @@ const Navbar = () => {
     }
   );
 
-  useEffect(() => {
-    setAuthData(queryClient.getQueryData("authToken"));
-  }, []);
+  const { logoutMessage, isLoadingLogout, refetch } = useQuery(
+    ["logout"],
+    () => logout(),
+    {
+      enabled: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      onSuccess: () => {
+        console.log('onnSuccess')
+        queryClient.setQueryData("authToken", { isAuthenticated: false });
+        removeAuthToken()
+        navigate('/login')
+      }
+    }
+  );
 
   useEffect(() => {
-    if (data && data.devices && searchTerm) {
-      const filtered = data.devices.map(({ _id, deviceName }) => ({
-        _id,
-        deviceName,
-      }));
-      setFilteredDevices(filtered);
-    }
-  }, [data, searchTerm]);
+    setAuthData(queryClient.getQueryData("authToken"));
+  }, [queryClient.getQueryData("authToken")]);
+
+  // useEffect(() => {
+  //   if (data && data.devices && searchTerm) {
+  //     const filtered = data.devices.map(({ _id, deviceName }) => ({
+  //       _id,
+  //       deviceName,
+  //     }));
+  //     setFilteredDevices(filtered);
+  //   }
+  // }, [data, searchTerm]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -87,6 +106,16 @@ const Navbar = () => {
                     Users
                   </Link>
 
+                  <Link
+
+                    className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => {
+                      console.log('logout')
+                      refetch()
+                    }}
+                  >
+                    Logout
+                  </Link>
                   {!isAuthenticated && (
                     <Link
                       to="/login"
@@ -200,6 +229,7 @@ const Navbar = () => {
             >
               Users
             </Link>
+
           </div>
           <div className="relative">
             <input
