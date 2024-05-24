@@ -1,18 +1,32 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
-import { searchDevices } from "../utils/requests";
+import { getUser, logout, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
+import { getAuthToken, removeAuthToken } from "../utils/auth";
+
+function UserLogo({ firstName, lastName }) {
+  return (
+    <div className="flex items-center max-h-100 w-[200px] h-[50px]">
+      <div className="ml-1">
+        <img className="rounded-full w-10 h-10" src="https://picsum.photos/200/300" alt="img" />
+      </div>
+      <span className="text-white ml-auto mr-2 whitespace-nowrap">{firstName + " " + lastName}</span>
+    </div>
+  );
+}
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [authData, setAuthData] = useState(queryClient.getQueryData("authToken"))
-  const isAuthenticated = authData?.isAuthenticated;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const authData = queryClient.getQueryData("authToken");
+  const isAuthenticated = authData?.isAuthenticated || getAuthToken()?.isAuthenticated;
+  const userId = authData?.id || getAuthToken()?.id;
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -20,17 +34,31 @@ const Navbar = () => {
   const [filteredDevices, setFilteredDevices] = useState([]);
   const inputRef = useRef(null);
 
-  const { data, isLoading } = useQuery(
-    ["searchDevices", searchTerm],
-    () => searchDevices(searchTerm),
+  const { data: user, isLoading: isUserLoading, refetch: fetchUser } = useQuery(
+    ["user", userId],
+    () => getUser(userId),
     {
-      enabled: !!searchTerm,
+      onSuccess: (response) => {
+        const { firstName, lastName } = response;
+        setFirstName(firstName);
+        setLastName(lastName);
+      },
+      enabled: isAuthenticated,
     }
   );
 
-  useEffect(() => {
-    setAuthData(queryClient.getQueryData("authToken"));
-  }, []);
+  const { data, isLoading } = useQuery(["searchDevices", searchTerm], () => searchDevices(searchTerm), {
+    enabled: !!searchTerm,
+  });
+
+  const { refetch: logoutUser } = useQuery("logout", logout, {
+    enabled: false,
+    onSuccess: () => {
+      queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
+      removeAuthToken();
+      navigate("/login");
+    },
+  });
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -54,14 +82,12 @@ const Navbar = () => {
 
   return (
     <nav className="bg-customPrimary">
+      {/* ... */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <span
-                className="text-white font-bold text-xl cursor-pointer"
-                onClick={() => navigate("/devices")}
-              >
+              <span className="text-white font-bold text-xl cursor-pointer" onClick={() => navigate("/devices")}>
                 Admin Panel
               </span>
             </div>
@@ -86,16 +112,18 @@ const Navbar = () => {
                   >
                     Users
                   </Link>
-
-                  {!isAuthenticated && (
-                    <Link
-                      to="/login"
-                      className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Login
-                    </Link>
-                  )}
+                  <button
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    onClick={logoutUser}
+                  >
+                    Logout
+                  </button>
                 </div>
+              )}
+              {!isAuthenticated && (
+                <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
+                  Login
+                </Link>
               )}
             </div>
           </div>
@@ -110,9 +138,7 @@ const Navbar = () => {
                   className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
                 />
                 {isLoading ? (
-                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">
-                    Loading...
-                  </div>
+                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">Loading...</div>
                 ) : searchTerm && filteredDevices.length > 0 ? (
                   <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
                     {filteredDevices.map(({ _id, deviceName }) => (
@@ -132,6 +158,11 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+          {isAuthenticated && (
+            <Link to="/profile">
+              <UserLogo firstName={firstName} lastName={lastName} />
+            </Link>
+          )}
           <div className="-mr-2 flex md:hidden">
             <Button
               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-customSecondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-customPrimary focus:ring-white"
@@ -147,12 +178,7 @@ const Navbar = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
                 <svg
@@ -163,12 +189,7 @@ const Navbar = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
             </Button>
@@ -187,7 +208,7 @@ const Navbar = () => {
               My Profile
             </Link>
             <Link
-              to="/profile"
+              to="/devices"
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
               onClick={toggleMobileMenu}
             >
@@ -200,6 +221,12 @@ const Navbar = () => {
             >
               Users
             </Link>
+            <button
+              className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              onClick={logoutUser}
+            >
+              Logout
+            </button>
           </div>
           <div className="relative">
             <input
@@ -211,9 +238,7 @@ const Navbar = () => {
               className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
             />
             {isLoading ? (
-              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">
-                Loading...
-              </div>
+              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">Loading...</div>
             ) : searchTerm && filteredDevices.length > 0 ? (
               <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
                 {filteredDevices.map(({ _id, deviceName }) => (

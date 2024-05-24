@@ -6,6 +6,7 @@ import {
   updateUserById,
   deleteUserById,
   loginUser,
+  logoutUser,
 } from "../services/user.service.mjs";
 
 const createUserSchema = Yup.object().shape({
@@ -46,11 +47,23 @@ export async function loginUserHttp(req, res, next) {
   }
 }
 
+// Logout a user
+export async function logoutUserHttp(req, res, next) {
+  try {
+    const { token, user } = req
+    console.log(user)
+    console.log(token)
+    await logoutUser(user._id, token)
+    res.status(200).json({ message: 'Logout succesful' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 // Get all users
 export async function getAllUsersHttp(req, res, next) {
   try {
     const users = await getAllUsers();
-    console.log(users)
     res.status(200).json(users);
   } catch (error) {
     next(error);

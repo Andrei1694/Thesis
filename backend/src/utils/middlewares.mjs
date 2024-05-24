@@ -49,10 +49,16 @@ export function errorHandler(err, req, res, next) {
 
 export const auth = async (req, res, next) => {
   try {
-    const token = req.header('Authorization').replace('Bearer ', '');
-    const decoded = await verifyToken(token);
-    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Authorization header missing' });
+    }
 
+    const token = authHeader.replace('Bearer ', '');
+    const decoded = await verifyToken(token);
+    console.log(decoded);
+
+    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
@@ -66,13 +72,12 @@ export const auth = async (req, res, next) => {
   }
 };
 
-const verifyToken = (token) =>
-  new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(decoded);
-      }
-    });
+const verifyToken = (token) => new Promise((resolve, reject) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(decoded);
+    }
   });
+});

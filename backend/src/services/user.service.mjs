@@ -72,12 +72,12 @@ UserSchema.pre("save", async function (next) {
 });
 
 
-UserSchema.pre('save', function (next) {
-    if (this.isNew && this.tokens.length === 0) {
-        return next(new Error('Tokens array cannot be empty'));
-    }
-    next();
-});
+// UserSchema.pre('save', function (next) {
+//     if (this.isNew && this.tokens.length === 0) {
+//         return next(new Error('Tokens array cannot be empty'));
+//     }
+//     next();
+// });
 
 // Admin validation method
 UserSchema.methods.isAdmin = function () {
@@ -125,13 +125,32 @@ export async function loginUser(email, password) {
     }
 }
 
+export async function logoutUser(userId, token) {
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.tokens = user.tokens.filter(t => t.token !== token);
+        await user.save();
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Failed to logout');
+    }
+}
+
+
 // Create a new user
 export async function createUser(userData) {
     try {
         const user = new User(userData);
         const token = await user.generateAuthToken(); // Generate a token for the new user
         await user.save();
-        return { user };
+        return { user, token };
     } catch (error) {
         console.log(error)
         throw new Error("Failed to create user");

@@ -5,16 +5,18 @@ import { getAuthToken } from "../utils/auth";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
-
+  const authData = queryClient.getQueryData('authToken')
   useEffect(() => {
     const checkAuth = () => {
-      const token = getAuthToken();
+      const { token, id } = getAuthToken() ?? {};
+
       if (token) {
-        queryClient.setQueryData("authToken", { token, isAuthenticated: true });
+        queryClient.setQueryData("authToken", { token, isAuthenticated: true, id });
       } else {
         queryClient.setQueryData("authToken", {
           token: null,
           isAuthenticated: false,
+          id: null
         });
         navigate("/login", { replace: true });
       }
@@ -28,7 +30,7 @@ const AuthLayout = () => {
     return () => {
       window.removeEventListener("storage", checkAuth);
     };
-  }, [navigate]);
+  }, [authData, navigate]);
 
   return (
     <div>

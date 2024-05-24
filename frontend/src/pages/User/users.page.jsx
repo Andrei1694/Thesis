@@ -3,30 +3,7 @@ import axios from "axios";
 import UserCard from "./usercard.component";
 import { useQuery } from "react-query";
 import { getAllUsers } from "../../utils/requests";
-
-const mockUsers = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    jobTitle: "Software Engineer",
-    email: "john.doe@example.com",
-    phone: "+1 123-456-7890",
-    location: "New York, USA",
-    profileImage: "https://example.com/profile1.jpg",
-  },
-  {
-    id: 2,
-    firstName: "Jane",
-    lastName: "Smith",
-    jobTitle: "UI/UX Designer",
-    email: "jane.smith@example.com",
-    phone: "+1 987-654-3210",
-    location: "London, UK",
-    profileImage: "https://example.com/profile2.jpg",
-  },
-  // Add more mock user data here...
-];
+import { queryClient } from "../../App";
 
 const PAGE_SIZE = 10;
 function Pagination({ currentPage, totalPages, onPageChange }) {
@@ -35,11 +12,10 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       {Array.from({ length: totalPages }, (_, index) => (
         <button
           key={index}
-          className={`px-4 py-2 mx-1 rounded-md ${
-            currentPage === index + 1
-              ? "bg-customPrimary text-white"
-              : "bg-white text-customDark"
-          }`}
+          className={`px-4 py-2 mx-1 rounded-md ${currentPage === index + 1
+            ? "bg-customPrimary text-white"
+            : "bg-white text-customDark"
+            }`}
           onClick={() => onPageChange(index + 1)}
         >
           {index + 1}
@@ -54,13 +30,13 @@ function UsersPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [sortField, setSortField] = useState("firstName");
   const [sortOrder, setSortOrder] = useState("asc");
+  const authData = queryClient.getQueryData('authToken')
   const {
     data,
     isLoading,
     error: fetchError,
   } = useQuery(["users"], () => getAllUsers(), {
     onSuccess: (data) => {
-      console.log(data.users);
       setUsers(data.users);
       setTotalPages(Math.ceil(data.total / PAGE_SIZE));
     },
@@ -73,23 +49,6 @@ function UsersPage() {
     // fetchUsers();
   }, [currentPage, sortField, sortOrder]);
 
-  // const fetchUsers = async () => {
-  //   try {
-  //     const response = await axios.get("/api/users", {
-  //       params: {
-  //         page: currentPage,
-  //         pageSize: PAGE_SIZE,
-  //         sortField,
-  //         sortOrder,
-  //       },
-  //     });
-
-  //     setUsers(response.data.users);
-  //     setTotalPages(Math.ceil(response.data.totalCount / PAGE_SIZE));
-  //   } catch (error) {
-  //     console.error("Error fetching users:", error);
-  //   }
-  // };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -124,7 +83,7 @@ function UsersPage() {
         </select>
       </div>
       {!isLoading &&
-        users?.map((user,index) => <UserCard key={`${index}${index}`} user={user} />)}
+        users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} />)}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

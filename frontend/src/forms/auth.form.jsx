@@ -63,13 +63,13 @@ const AuthForm = () => {
 
   const registerMutation = useMutation((userData) => register(userData), {
     onSuccess: (response) => {
-      const jwtToken = response.user.tokens[0]; // Assuming the server sends the token in the response data
-      console.log(response.user);
+      const { user, token } = response
       queryClient.setQueryData("authToken", {
-        jwtToken,
+        token: token,
         isAuthenticated: true,
+        user
       });
-      setAuthToken(jwtToken); // Store the token in local storage
+      setAuthToken(token, user._id); // Store the token in local storage
       navigate("/profile");
     },
     onError: (error) => {
@@ -81,11 +81,15 @@ const AuthForm = () => {
     (credentials) => login(credentials),
     {
       onSuccess: (response) => {
-        const jwtToken = response.user.tokens[0]; // Assuming the server sends the token in the response data
-        queryClient.setQueryData("authToken", jwtToken, {
+        const { user, token } = response
+        queryClient.setQueryData("authToken", {
+          token,
+          isAuthenticated: true,
+          user
+        }, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
-        setAuthToken(jwtToken); // Store the token in local storage
+        setAuthToken(token, user._id); // Store the token in local storage
         navigate("/profile");
       },
       onError: (error) => {
@@ -96,7 +100,7 @@ const AuthForm = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: isRegistering ? validationSchema : loginSchema ,
+    validationSchema: isRegistering ? validationSchema : loginSchema,
     onSubmit: isRegistering ? registerMutation.mutate : loginMutation.mutate,
   });
 
@@ -118,11 +122,10 @@ const AuthForm = () => {
                 id="firstName"
                 type="text"
                 {...formik.getFieldProps("firstName")}
-                className={`w-full px-3 py-2 border ${
-                  formik.touched.firstName && formik.errors.firstName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                className={`w-full px-3 py-2 border ${formik.touched.firstName && formik.errors.firstName
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
               {formik.touched.firstName && formik.errors.firstName ? (
                 <div className="text-red-500 text-sm">
@@ -139,11 +142,10 @@ const AuthForm = () => {
                 id="lastName"
                 type="text"
                 {...formik.getFieldProps("lastName")}
-                className={`w-full px-3 py-2 border ${
-                  formik.touched.lastName && formik.errors.lastName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                className={`w-full px-3 py-2 border ${formik.touched.lastName && formik.errors.lastName
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
               {formik.touched.lastName && formik.errors.lastName ? (
                 <div className="text-red-500 text-sm">
@@ -162,11 +164,10 @@ const AuthForm = () => {
             id="email"
             type="email"
             {...formik.getFieldProps("email")}
-            className={`w-full px-3 py-2 border ${
-              formik.touched.email && formik.errors.email
-                ? "border-red-500"
-                : "border-gray-300"
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-3 py-2 border ${formik.touched.email && formik.errors.email
+              ? "border-red-500"
+              : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
           {formik.touched.email && formik.errors.email ? (
             <div className="text-red-500 text-sm">{formik.errors.email}</div>
@@ -181,11 +182,10 @@ const AuthForm = () => {
             id="password"
             type="password"
             {...formik.getFieldProps("password")}
-            className={`w-full px-3 py-2 border ${
-              formik.touched.password && formik.errors.password
-                ? "border-red-500"
-                : "border-gray-300"
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-3 py-2 border ${formik.touched.password && formik.errors.password
+              ? "border-red-500"
+              : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
           {formik.touched.password && formik.errors.password ? (
             <div className="text-red-500 text-sm">{formik.errors.password}</div>
