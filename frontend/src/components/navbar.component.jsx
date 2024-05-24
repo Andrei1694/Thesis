@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
 import { searchDevices } from "../utils/requests";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
+import { queryClient } from "../App";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,6 +25,8 @@ const Navbar = () => {
       enabled: !!searchTerm,
     }
   );
+
+  const { isAuthenticated } = queryClient.getQueryData("authToken") ?? {};
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -58,26 +62,37 @@ const Navbar = () => {
               </span>
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  to="/profile"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  My Profile
-                </Link>
-                <Link
-                  to="/devices?page=1"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Devices
-                </Link>
-                <Link
-                  to="/users"
-                  className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Users
-                </Link>
-              </div>
+              {isAuthenticated && (
+                <div className="ml-10 flex items-baseline space-x-4">
+                  <Link
+                    to="/profile"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    My Profile
+                  </Link>
+                  <Link
+                    to="/devices?page=1"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Devices
+                  </Link>
+                  <Link
+                    to="/users"
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Users
+                  </Link>
+
+                  {!isAuthenticated && (
+                    <Link
+                      to="/login"
+                      className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Login
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className="hidden md:block">
@@ -168,7 +183,7 @@ const Navbar = () => {
               My Profile
             </Link>
             <Link
-              to="/devices?page=1"
+              to="/profile"
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
               onClick={toggleMobileMenu}
             >

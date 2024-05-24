@@ -1,9 +1,12 @@
 import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
+import logger from './logger.mjs';
 
 const URL = 'http://localhost:4000';
 const deviceName = 'asdasd';
 const reconnectInterval = 5000; // Retry connection every 5 seconds
+
+
 
 function createSocketService(url, streamInterval = 1000) {
   let socket = io(url, { query: { clientType: 'device' } });
@@ -27,31 +30,32 @@ function createSocketService(url, streamInterval = 1000) {
     SEND_DATA: 'SEND_DATA',
   };
 
-  console.log('======Start=====');
+  logger.info(`Device Client (${deviceName}) started and trying to connect to ${url}`);
 
   socket.on(CONNECT, () => {
-    console.log('Connected to the backend server');
+    logger.info(`Device Client (${deviceName}) connected to the backend server`);
     socket.emit(JOIN_ROOM, deviceName);
+    logger.info(`Device Client (${deviceName}) joined room: ${deviceName}`);
   });
 
   socket.on(DISCONNECT, () => {
-    console.log('Disconnected from the backend server');
+    logger.warn(`Device Client (${deviceName}) disconnected from the backend server`);
     stopStreaming();
     reconnect();
   });
 
   socket.on(CONNECT_ERROR, (error) => {
-    console.error('Connection error:', error);
+    logger.error(`Device Client (${deviceName}) connection error: ${error.message}`);
     reconnect();
   });
 
   socket.on(START_STREAMING, () => {
-    console.log('[DEVICE] Streaming Started');
+    logger.info(`Device Client (${deviceName}) started streaming`);
     startStreaming(streamInterval);
   });
 
   socket.on(STOP_STREAMING, () => {
-    console.log('Streaming stopped');
+    logger.info(`Device Client (${deviceName}) stopped streaming`);
     stopStreaming();
   });
 
@@ -70,20 +74,25 @@ function createSocketService(url, streamInterval = 1000) {
           roomId: deviceName,
         };
         socket.emit(SEND_DATA, data);
-        console.log('emmiting')
+        logger.debug(`Device Client (${deviceName}) emitted data to backend via SEND_DATA event:`, data);
       });
     }, interval);
+
+    logger.info(`Device Client (${deviceName}) streaming data every ${interval}ms`);
   }
 
   function stopStreaming() {
     clearInterval(streamingInterval);
+    logger.info(`Device Client (${deviceName}) stopped streaming data`);
   }
 
   function reconnect() {
     setTimeout(() => {
-      console.log('Attempting to reconnect...');
+      logger.info(`Device Client (${deviceName}) attempting to reconnect...`);
       socket.connect();
     }, reconnectInterval);
+
+    logger.info(`Device Client (${deviceName}) will attempt to reconnect in ${reconnectInterval}ms`);
   }
 }
 

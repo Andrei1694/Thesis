@@ -4,8 +4,18 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
 import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Profile from "./pages/User/profile.page";
+import Users from "./pages/User/users.page";
+import AuthForm from "./forms/auth.form";
+import { useEffect } from "react";
+import { getAuthToken } from "./utils/auth";
+import LoginPage from "./pages/Login/login.page";
+import PublicLayout from "./layouts/PublicLayout";
+import AuthLayout from "./layouts/AuthLayout";
+
 // Create a client
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
+
 const MainLayout = () => {
   return (
     <>
@@ -14,6 +24,7 @@ const MainLayout = () => {
     </>
   );
 };
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,21 +33,46 @@ const router = createBrowserRouter([
         <MainLayout />
       </QueryClientProvider>
     ),
-
     children: [
       {
-        path: "devices",
-        element: <DevicesListPage />,
+        path: "/",
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "users",
+            element: <Users />,
+          },
+          {
+            path: "devices/:id",
+            element: <DeviceDetails />,
+          },
+          {
+            path: "devices",
+            element: <DevicesListPage />,
+          },
+        ],
       },
       {
-        path: "devices/:id",
-        element: <DeviceDetails />,
+        path: "login",
+
+        element: <LoginPage />,
       },
     ],
   },
 ]);
 
 function App() {
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token) {
+      queryClient.setQueryData("authToken", { token, isAuthenticated: true });
+    }
+  }, []);
+
   return (
     <>
       <RouterProvider router={router} />
