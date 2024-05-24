@@ -5,13 +5,17 @@ import {
   getUserByIdHttp,
   updateUserByIdHttp,
   deleteUserByIdHttp,
+  loginUserHttp,
 } from "../controllers/user.controller.mjs";
 import { auth } from "../utils/middlewares.mjs";
 
 const userRouter = express.Router();
 
 // Create a new user
-userRouter.post("/", registerUserHttp);
+userRouter.post("/register", registerUserHttp);
+
+// Create a new user
+userRouter.post("/login", loginUserHttp);
 
 // Get all users
 userRouter.get("/", auth, getAllUsersHttp);

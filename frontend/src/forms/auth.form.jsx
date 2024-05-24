@@ -4,10 +4,10 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { register } from "../utils/requests";
+import { login, register } from "../utils/requests";
 import { setAuthToken } from "../utils/auth";
 import { queryClient } from "../App";
-
+const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 const validationSchema = yup.object().shape({
   email: yup
     .string()
@@ -28,6 +28,21 @@ const validationSchema = yup.object().shape({
     .min(2, "Last name must be at least 2 characters")
     .max(25, "Last name must be at most 25 characters")
     .trim(),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .max(25, "Password must be at most 25 characters"),
+});
+
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required")
+    .min(12, "Email must be at least 12 characters")
+    .trim()
+    .lowercase(),
   password: yup
     .string()
     .required("Password is required")
@@ -63,16 +78,15 @@ const AuthForm = () => {
   });
 
   const loginMutation = useMutation(
-    (credentials) => axios.post("/api/login", credentials),
+    (credentials) => login(credentials),
     {
       onSuccess: (response) => {
-        const jwtToken = response.data.token; // Assuming the server sends the token in the response data
+        const jwtToken = response.user.tokens[0]; // Assuming the server sends the token in the response data
         queryClient.setQueryData("authToken", jwtToken, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
         setAuthToken(jwtToken); // Store the token in local storage
-
-        navigate("/");
+        navigate("/profile");
       },
       onError: (error) => {
         console.error("Login error:", error);
@@ -82,7 +96,7 @@ const AuthForm = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: isRegistering ? validationSchema : loginSchema ,
     onSubmit: isRegistering ? registerMutation.mutate : loginMutation.mutate,
   });
 

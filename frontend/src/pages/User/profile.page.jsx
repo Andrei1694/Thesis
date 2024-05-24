@@ -77,21 +77,21 @@ function ProfileField({ label, value, onEdit }) {
 }
 
 function ProfilePage() {
-  const {
-    data,
-    isLoading,
-    error: fetchError,
-  } = useQuery(["users"], () => getUser(), {
-    onSuccess: (data) => {
-      console.log(data.users);
-      setUsers(data.users);
-      setTotalPages(Math.ceil(data.total / PAGE_SIZE));
-    },
-    onError: (error) => {
-      console.error("Error fetching device:", error);
-      // Display error message to the user
-    },
-  });
+  // const {
+  //   data,
+  //   isLoading,
+  //   error: fetchError,
+  // } = useQuery(["users"], () => getUser(), {
+  //   onSuccess: (data) => {
+  //     console.log(data.users);
+  //     setUsers(data.users);
+  //     setTotalPages(Math.ceil(data.total / PAGE_SIZE));
+  //   },
+  //   onError: (error) => {
+  //     console.error("Error fetching device:", error);
+  //     // Display error message to the user
+  //   },
+  // });
   const formik = useFormik({
     initialValues: {
       firstName: "John",

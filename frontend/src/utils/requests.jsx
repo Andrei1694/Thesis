@@ -6,19 +6,19 @@ const api = axios.create({
   baseURL: URL,
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const { token } = getAuthToken() ?? {};
-    console.log(getAuthToken()._id);
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// api.interceptors.request.use(
+//   (config) => {
+//     const { token } = getAuthToken() ?? {};
+//     // console.log(getAuthToken()._id);
+//     if (token) {
+//       config.headers["Authorization"] = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 export async function createDevice(device) {
   const response = await api.post(`${URL}/device`, device);
@@ -62,17 +62,21 @@ export async function deleteDevice(id) {
 
 // Users
 export async function register(userData) {
-  const response = await api.post(`${URL}/user`, userData);
+  const response = await api.post(`${URL}/user/register`, userData);
   return response.data;
 }
-
+export async function login(userData) {
+  console.log('wow')
+  const response = await api.post(`${URL}/user/login`, userData);
+  return response.data;
+}
 export async function getAllUsers() {
   const response = await api.get(`${URL}/user`);
   return response.data;
 }
 
 export async function getUser() {
-  const { _id } = getAuthToken() ?? {};
-  const response = await api.get(`${URL}/user/${_id}`);
+  // const { _id } = getAuthToken() ?? {};
+  const response = await api.get(`${URL}/user/`);
   return response.data;
 }

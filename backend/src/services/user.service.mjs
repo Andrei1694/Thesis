@@ -120,6 +120,7 @@ export async function loginUser(email, password) {
         const token = await user.generateAuthToken();
         return { user, token };
     } catch (error) {
+        console.log(error)
         throw new Error('Failed to login');
     }
 }

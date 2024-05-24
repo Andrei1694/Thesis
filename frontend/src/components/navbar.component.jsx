@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
 import { searchDevices } from "../utils/requests";
@@ -10,7 +10,9 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
+  // const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [authData, setAuthData] = useState(queryClient.getQueryData("authToken"))
+  const isAuthenticated = authData?.isAuthenticated;
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -26,7 +28,9 @@ const Navbar = () => {
     }
   );
 
-  const { isAuthenticated } = queryClient.getQueryData("authToken") ?? {};
+  useEffect(() => {
+    setAuthData(queryClient.getQueryData("authToken"));
+  }, []);
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
