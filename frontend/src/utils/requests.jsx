@@ -6,19 +6,19 @@ const api = axios.create({
   baseURL: URL,
 });
 
-// api.interceptors.request.use(
-//   (config) => {
-//     const { token } = getAuthToken() ?? {};
-//     // console.log(getAuthToken()._id);
-//     if (token) {
-//       config.headers["Authorization"] = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+api.interceptors.request.use(
+  (config) => {
+    const { token } = getAuthToken() ?? {};
+    // console.log(getAuthToken()._id);
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export async function createDevice(device) {
   const response = await api.post(`${URL}/device`, device);
