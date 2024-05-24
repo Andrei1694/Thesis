@@ -124,7 +124,7 @@ function UsersPage() {
         </select>
       </div>
       {!isLoading &&
-        users?.map((user) => <UserCard key={user.id} user={user} />)}
+        users?.map((user,index) => <UserCard key={`${index}${index}`} user={user} />)}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
