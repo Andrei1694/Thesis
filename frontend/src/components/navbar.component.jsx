@@ -10,77 +10,55 @@ function UserLogo({ firstName, lastName }) {
   return (
     <div className="flex items-center max-h-100 w-[200px] h-[50px]">
       <div className="ml-1">
-        <img className="rounded-full w-10 h-10" src="https://picsum.photos/200/300" alt='img' />
+        <img className="rounded-full w-10 h-10" src="https://picsum.photos/200/300" alt="img" />
       </div>
-      <span className="text-white ml-auto mr-2 whitespace-nowrap">{firstName + ' ' + lastName}</span>
+      <span className="text-white ml-auto mr-2 whitespace-nowrap">{firstName + " " + lastName}</span>
     </div>
-  )
+  );
 }
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [authData, setAuthData] = useState(queryClient.getQueryData("authToken"))
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  let { isAuthenticated, id } = authData ?? getAuthToken() ?? {};
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const authData = queryClient.getQueryData("authToken");
+  const isAuthenticated = authData?.isAuthenticated || getAuthToken()?.isAuthenticated;
+  const userId = authData?.id || getAuthToken()?.id;
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  useEffect(() => {
-    if (authData ?? getAuthToken()) {
-      isAuthenticated = authData?.isAuthenticated ?? getAuthToken().isAuthenticated
-      id = authData?.id ?? getAuthToken()?.id
-    }
-
-
-  }, [authData, getAuthToken()])
 
   const [filteredDevices, setFilteredDevices] = useState([]);
   const inputRef = useRef(null);
-  const { user, isUserLoading, refetch: fetchUser } = useQuery(
-    ["user"],
-    () => getUser(id),
+
+  const { data: user, isLoading: isUserLoading, refetch: fetchUser } = useQuery(
+    ["user", userId],
+    () => getUser(userId),
     {
       onSuccess: (response) => {
-        const { firstName, lastName } = response
-        setFirstName(firstName)
-        setLastName(lastName)
+        const { firstName, lastName } = response;
+        setFirstName(firstName);
+        setLastName(lastName);
       },
-      enabled: false
-    }
-  );
-  const { data, isLoading } = useQuery(
-    ["searchDevices", searchTerm],
-    () => searchDevices(searchTerm),
-    {
-      enabled: !!searchTerm,
-    }
-  );
-  useEffect(() => {
-    if (isAuthenticated) fetchUser()
-  }, [id])
-  const { logoutMessage, isLoadingLogout, refetch } = useQuery(
-    ["logout"],
-    () => logout(),
-    {
-      enabled: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      onSuccess: () => {
-        console.log('onnSuccess')
-        queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
-        removeAuthToken()
-        navigate('/login')
-      }
+      enabled: isAuthenticated,
     }
   );
 
-  useEffect(() => {
-    setAuthData(queryClient.getQueryData("authToken"));
-  }, [queryClient.getQueryData("authToken")]);
+  const { data, isLoading } = useQuery(["searchDevices", searchTerm], () => searchDevices(searchTerm), {
+    enabled: !!searchTerm,
+  });
+
+  const { refetch: logoutUser } = useQuery("logout", logout, {
+    enabled: false,
+    onSuccess: () => {
+      queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
+      removeAuthToken();
+      navigate("/login");
+    },
+  });
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -104,14 +82,12 @@ const Navbar = () => {
 
   return (
     <nav className="bg-customPrimary">
+      {/* ... */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <span
-                className="text-white font-bold text-xl cursor-pointer"
-                onClick={() => navigate("/devices")}
-              >
+              <span className="text-white font-bold text-xl cursor-pointer" onClick={() => navigate("/devices")}>
                 Admin Panel
               </span>
             </div>
@@ -136,26 +112,18 @@ const Navbar = () => {
                   >
                     Users
                   </Link>
-
-                  <Link
-
-                    className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-sm font-medium"
-                    onClick={() => {
-                      console.log('logout')
-                      refetch()
-                    }}
+                  <button
+                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    onClick={logoutUser}
                   >
                     Logout
-                  </Link>
-                  {!isAuthenticated && (
-                    <Link
-                      to="/login"
-                      className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Login
-                    </Link>
-                  )}
+                  </button>
                 </div>
+              )}
+              {!isAuthenticated && (
+                <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
+                  Login
+                </Link>
               )}
             </div>
           </div>
@@ -170,9 +138,7 @@ const Navbar = () => {
                   className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
                 />
                 {isLoading ? (
-                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">
-                    Loading...
-                  </div>
+                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">Loading...</div>
                 ) : searchTerm && filteredDevices.length > 0 ? (
                   <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
                     {filteredDevices.map(({ _id, deviceName }) => (
@@ -192,9 +158,11 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          {isAuthenticated && (<Link to='/profile'>
-            <UserLogo firstName={firstName} lastName={lastName} />
-          </Link>)}
+          {isAuthenticated && (
+            <Link to="/profile">
+              <UserLogo firstName={firstName} lastName={lastName} />
+            </Link>
+          )}
           <div className="-mr-2 flex md:hidden">
             <Button
               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-customSecondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-customPrimary focus:ring-white"
@@ -210,12 +178,7 @@ const Navbar = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
                 <svg
@@ -226,12 +189,7 @@ const Navbar = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
             </Button>
@@ -250,7 +208,7 @@ const Navbar = () => {
               My Profile
             </Link>
             <Link
-              to="/profile"
+              to="/devices"
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
               onClick={toggleMobileMenu}
             >
@@ -263,7 +221,12 @@ const Navbar = () => {
             >
               Users
             </Link>
-
+            <button
+              className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              onClick={logoutUser}
+            >
+              Logout
+            </button>
           </div>
           <div className="relative">
             <input
@@ -275,9 +238,7 @@ const Navbar = () => {
               className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
             />
             {isLoading ? (
-              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">
-                Loading...
-              </div>
+              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">Loading...</div>
             ) : searchTerm && filteredDevices.length > 0 ? (
               <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
                 {filteredDevices.map(({ _id, deviceName }) => (
