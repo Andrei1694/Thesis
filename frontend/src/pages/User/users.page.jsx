@@ -4,6 +4,7 @@ import UserCard from "./usercard.component";
 import { useQuery } from "react-query";
 import { getAllUsers } from "../../utils/requests";
 import { queryClient } from "../../App";
+import Spinner from "../../components/spinner.component";
 
 const PAGE_SIZE = 10;
 function Pagination({ currentPage, totalPages, onPageChange }) {
@@ -82,7 +83,7 @@ function UsersPage() {
           <option value="jobTitle">Job Title</option>
         </select>
       </div>
-      {!isLoading &&
+      {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> :
         users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} />)}
       <Pagination
         currentPage={currentPage}
