@@ -80,3 +80,8 @@ export async function getUser(id) {
   const response = await api.get(`${URL}/user/${id}`);
   return response.data;
 }
+
+export async function updateUser(id, values) {
+  const response = await api.put(`${URL}/user/${id}`, values);
+  return response.data;
+}

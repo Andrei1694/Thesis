@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useQuery } from "react-query";
-import { getUser } from "../../utils/requests";
+import { useMutation, useQuery } from "react-query";
+import { getUser, updateUser } from "../../utils/requests";
 import { queryClient } from "../../App";
 import { getAuthToken } from "../../utils/auth";
+import Input from "../../components/input.component";
+import Button from "../../components/button.component";
 
 const getInitials = (firstName, lastName) => {
   const firstInitial = firstName.charAt(0).toUpperCase();
@@ -31,55 +33,10 @@ function ProfilePicture({ formik }) {
   );
 }
 
-function ProfileField({ label, value, onEdit }) {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditing(false);
-    onEdit(value);
-  };
-
-  return (
-    <div className="mb-4">
-      <label className="block text-customDark font-bold mb-2">{label}</label>
-      {isEditing ? (
-        <div className="flex items-center">
-          <input
-            type="text"
-            className="w-full px-3 py-2 text-customDark border rounded-md"
-            value={value}
-            onChange={(e) => onEdit(e.target.value)}
-          />
-          <button
-            type="button"
-            className="ml-2 bg-customPrimary text-white rounded-md px-4 py-2"
-            onClick={handleSaveClick}
-          >
-            Save
-          </button>
-        </div>
-      ) : (
-        <div className="flex items-center">
-          <span className="text-customDark">{value}</span>
-          <button
-            type="button"
-            className="ml-2 bg-customPrimary text-white rounded-md px-4 py-2"
-            onClick={handleEditClick}
-          >
-            Edit
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
 function ProfilePage() {
-  const { id } = queryClient.getQueryData('authToken') ?? getAuthToken()
+  const [isEditMode, setEditMode] = useState(false);
+  const { id } = queryClient.getQueryData("authToken") ?? getAuthToken();
+
   const {
     data,
     isLoading,
@@ -87,35 +44,49 @@ function ProfilePage() {
     error: fetchError,
   } = useQuery(["user"], () => getUser(id), {
     onSuccess: (response) => {
-      const { firstName, lastName, email } = response
-      formik.setValues({ firstName, lastName, email })
+      const { firstName, lastName, email } = response;
+      formik.setValues({ firstName, lastName, email });
     },
     onError: (error) => {
-      console.error("Error fetching device:", error);
+      console.error("Error fetching user:", error);
       // Display error message to the user
     },
   });
 
-  useEffect(() => {
-    fetchUser()
-  }, [id])
+  const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
+    (values) => updateUser(id, values),
+    {
+      onSuccess: () => {
+        // Refetch user data after successful update
+        fetchUser();
+      },
+      onError: (error) => {
+        console.error("Error updating user:", error);
+        // Display error message to the user
+      },
+    }
+  );
+
   const formik = useFormik({
     initialValues: {
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      phone: "+1 123-456-7890",
-      profileImage: "", // Add the profileImage field
+      firstName: "",
+      lastName: "",
+      email: "",
+      // profileImage: "", // Add the profileImage field if needed
     },
     onSubmit: (values) => {
-      // Handle form submission, e.g., send data to server
-      // console.log(values);
+      if (isEditMode) {
+        updateUserMutation(values);
+        setEditMode(false);
+      } else {
+        setEditMode(true);
+      }
     },
   });
 
-  const handleFieldEdit = (field, value) => {
-    formik.setFieldValue(field, value);
-  };
+  useEffect(() => {
+    fetchUser();
+  }, [id]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -124,40 +95,40 @@ function ProfilePage() {
         <div className="flex flex-col md:flex-row">
           <ProfilePicture formik={formik} />
           <div className="w-full md:w-2/3 md:pl-8">
-            <ProfileField
+            <Input
+              id="firstName"
+              type="text"
               label="First Name"
               value={formik.values.firstName}
-              onEdit={(value) => handleFieldEdit("firstName", value)}
+              onChange={formik.handleChange}
+              disabled={!isEditMode}
             />
-            <ProfileField
+            <Input
+              id="lastName"
+              type="text"
               label="Last Name"
               value={formik.values.lastName}
-              onEdit={(value) => handleFieldEdit("lastName", value)}
+              onChange={formik.handleChange}
+              disabled={!isEditMode}
             />
-
-            <ProfileField
+            <Input
+              id="email"
+              type="text"
               label="Email"
               value={formik.values.email}
-              onEdit={(value) => handleFieldEdit("email", value)}
+              onChange={formik.handleChange}
+              disabled={!isEditMode}
             />
-            <ProfileField
-              label="Phone"
-              value={formik.values.phone}
-              onEdit={(value) => handleFieldEdit("phone", value)}
-            />
-
-
-
           </div>
         </div>
         <div className="mt-6">
-          <button
+          <Button
             type="submit"
             className="bg-customPrimary text-white rounded-md px-4 py-2"
             onClick={formik.handleSubmit}
           >
-            Save Changes
-          </button>
+            {isEditMode ? "Save Changes" : "Edit"}
+          </Button>
         </div>
       </div>
     </div>
