@@ -1,6 +1,5 @@
 import http from 'http'
 import app from './app.mjs'
-import dotenv from 'dotenv'
 import { mongoConnect } from './utils/mongoose.mjs'
 // import socketConnect from './socket.mjs'
 import SocketIOService from './services/io.service.mjs'

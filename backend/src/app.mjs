@@ -5,9 +5,18 @@ import cors from 'cors'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import compression from 'compression'
+import dotenv from 'dotenv'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === 'production') {
+    console.log('prod')
+    dotenv.config({ path: path.resolve(__dirname, '.env.production') })
+  } else {
+    console.log('dev')
+    dotenv.config({ path: path.resolve(__dirname, '.env.development') })
+  }
 
 const app = express()
 

@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "backend",
+      "script": "src/server.mjs",
+      "instances": "max",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "node_args": "--experimental-modules"
+    }
+  ]
+}
