@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/server.mjs",
+    "build": "pm2 start src/server.mjs -i max --name backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "os-utils": "^0.0.14",
+    "pm2": "^5.4.0",
     "socket.io": "^4.7.5",
     "yup": "^1.3.2"
   }
