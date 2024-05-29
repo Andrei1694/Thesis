@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAuthToken } from "./auth";
-const URL = VITE_API_URL;
+const URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: URL,
