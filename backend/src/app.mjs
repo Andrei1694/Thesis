@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({ origin: process.env.origin }))
 app.use(compression());
 app.use(express.json())
 
