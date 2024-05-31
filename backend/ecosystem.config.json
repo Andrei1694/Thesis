@@ -7,7 +7,12 @@
       "env": {
         "NODE_ENV": "production"
       },
-      "node_args": "--experimental-modules"
+      "node_args": "--experimental-modules",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "error_file": "./logs/errors.log",
+      "out_file": "./logs/output.log",
+      "combine_logs": true,
+      "max_restarts": 10
     }
   ]
 }
