@@ -17,7 +17,7 @@ function UserLogo({ firstName, lastName }) {
   );
 }
 
-const Navbar = () => {
+export default function Navbar() {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -80,24 +80,6 @@ const Navbar = () => {
     inputRef.current?.focus();
   };
 
-
-
-
-  //       <button
-  //         className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-  //         onClick={logoutUser}
-  //       >
-  //         Logout
-  //       </button>
-  //     </>
-  //   )
-  // }
-  // {
-  //   !isAuthenticated && (
-  //     <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
-  //       Login
-  //     </Link>
-
   return (
     <nav className="bg-customPrimary w-min-[100vw]">
       <div className="flex px-4 py-4 text-white">
@@ -132,7 +114,17 @@ const Navbar = () => {
                   Users
                 </Link>
               </li>
-
+              {!isAuthenticated && (<li className="mr-2">
+                <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
+                  Login
+                </Link>
+              </li>)}
+              {isAuthenticated && <Link
+                onClick={() => logout()}
+                className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
+              >
+                Logout
+              </Link>}
             </ul>
           </div>
           <div className="ml-auto">
@@ -146,4 +138,3 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
