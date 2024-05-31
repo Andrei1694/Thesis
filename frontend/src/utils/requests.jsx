@@ -64,6 +64,9 @@ export async function register(userData) {
   return response.data;
 }
 export async function login(userData) {
+  // Get the base URL
+  const baseURL = api.defaults.baseURL;
+  console.log(baseURL);
   const response = await api.post(`${URL}/user/login`, userData);
   return response.data;
 }
