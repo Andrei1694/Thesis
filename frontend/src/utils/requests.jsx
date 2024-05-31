@@ -68,6 +68,7 @@ export async function login(userData) {
   // Get the base URL
   const baseURL = api.defaults.baseURL;
   console.log(URL);
+  console.log('wow')
   const response = await api.post(`${URL}/user/login`, userData);
   return response.data;
 }
