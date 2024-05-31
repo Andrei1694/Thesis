@@ -7,6 +7,7 @@ import axios from "axios";
 import { login, register } from "../utils/requests";
 import { setAuthToken } from "../utils/auth";
 import { queryClient } from "../App";
+import Button from "../components/button.component";
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 const validationSchema = yup.object().shape({
   email: yup
@@ -194,12 +195,12 @@ const AuthForm = () => {
           ) : null}
         </div>
 
-        <button
+        <Button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
         >
           {isRegistering ? "Register" : "Login"}
-        </button>
+        </Button>
       </form>
 
       <div className="mt-4 text-center">

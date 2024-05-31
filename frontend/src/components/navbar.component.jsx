@@ -54,8 +54,8 @@ export default function Navbar() {
   const { refetch: logoutUser } = useQuery("logout", logout, {
     enabled: false,
     onSuccess: () => {
-      queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
       removeAuthToken();
+      queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
       navigate("/login");
     },
   });
