@@ -24,7 +24,7 @@ export default function Navbar() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const authData = queryClient.getQueryData("authToken");
-  const isAuthenticated = authData?.isAuthenticated || getAuthToken()?.isAuthenticated;
+  const isAuthenticated = authData?.isAuthenticated ?? getAuthToken()?.isAuthenticated;
   const userId = authData?.id || getAuthToken()?.id;
 
   const toggleMobileMenu = () => {
@@ -120,18 +120,18 @@ export default function Navbar() {
                 </Link>
               </li>)}
               {isAuthenticated && <Link
-                onClick={() => logout()}
+                onClick={() => logoutUser()}
                 className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
               >
                 Logout
               </Link>}
             </ul>
           </div>
-          <div className="ml-auto">
+          {isAuthenticated && (<div className="ml-auto">
             <Link to="/profile">
               <UserLogo firstName={firstName} lastName={lastName} />
             </Link>
-          </div>
+          </div>)}
         </div>
       </div>
     </nav>

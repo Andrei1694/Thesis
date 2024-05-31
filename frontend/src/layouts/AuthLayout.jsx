@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { queryClient } from "../App";
 import { getAuthToken } from "../utils/auth";
@@ -6,7 +6,7 @@ import { getAuthToken } from "../utils/auth";
 const AuthLayout = () => {
   const navigate = useNavigate();
   const authData = queryClient.getQueryData('authToken')
-  useEffect(() => {
+  useLayoutEffect(() => {
     const checkAuth = () => {
       const { token, id } = getAuthToken() ?? {};
 

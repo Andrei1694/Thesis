@@ -53,9 +53,6 @@ function ProfilePage() {
       // Display error message to the user
     }
   });
-  useEffect(() => {
-    console.log('wow')
-  }, [])
 
   const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
     (values) => updateUser(id, values),
