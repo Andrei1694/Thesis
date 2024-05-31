@@ -105,6 +105,7 @@ const AuthForm = () => {
   });
 
   const toggleRegistration = () => {
+    console.log('click')
     setIsRegistering(!isRegistering);
     formik.resetForm();
   };
