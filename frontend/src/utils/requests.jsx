@@ -3,7 +3,7 @@ import { getAuthToken } from "./auth";
 const URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
-  baseURL: URL,
+  baseURL: '/v1',
 });
 
 api.interceptors.request.use(
