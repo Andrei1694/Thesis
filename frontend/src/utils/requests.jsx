@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "./auth";
-const URL = import.meta.env.VITE_API_URL;
+
+const URL = import.meta.env.VITE_API_WS_URL;
 
 const api = axios.create({
   baseURL: URL,
@@ -64,7 +65,9 @@ export async function register(userData) {
   return response.data;
 }
 export async function login(userData) {
+  console.log(api.getUri())
   const response = await api.post(`${URL}/user/login`, userData);
+
   return response.data;
 }
 export async function logout() {

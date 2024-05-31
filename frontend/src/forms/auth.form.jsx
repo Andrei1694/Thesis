@@ -89,6 +89,7 @@ const AuthForm = () => {
         }, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
+
         setAuthToken(token, user._id); // Store the token in local storage
         navigate("/profile");
       },
@@ -105,6 +106,7 @@ const AuthForm = () => {
   });
 
   const toggleRegistration = () => {
+    console.log('click')
     setIsRegistering(!isRegistering);
     formik.resetForm();
   };

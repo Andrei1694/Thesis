@@ -5,8 +5,8 @@
   "main": "server.mjs",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/server.mjs",
-    "build": "pm2 start ecosystem.config.json",
+    "dev": "nodemon src/server.mjs",
+    "start": "pm2 start ecosystem.config.json & pm2 logs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
