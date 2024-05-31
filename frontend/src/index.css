@@ -4,4 +4,8 @@
 
 body {
   font-family: "Source Code Pro", monospace;
+  /* border: 1px solid red; */
+  width: 100vw;
 }
+
+:root {}
