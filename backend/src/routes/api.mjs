@@ -4,7 +4,7 @@ import yup from 'yup'
 import userRouter from "./user.routes.mjs";
 
 const api = express.Router()
-
+// test
 api.use('/device', deviceRouter)
 api.use('/user', userRouter)
 
