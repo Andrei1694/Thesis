@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "./auth";
 const URL = import.meta.env.VITE_API_WS_URL;
+const VITE_API_WS_URL = import.meta.env.VITE_API_WS_URL;
 console.log(`Api logging ${URL}`)
 // const api = axios.create({
 //   baseURL: URL + '/v1',
@@ -66,7 +67,7 @@ export async function register(userData) {
 export async function login(userData) {
   // Get the base URL
   const baseURL = api.defaults.baseURL;
-  console.log(baseURL);
+  console.log(URL);
   const response = await api.post(`${URL}/user/login`, userData);
   return response.data;
 }
