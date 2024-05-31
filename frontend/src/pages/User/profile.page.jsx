@@ -35,14 +35,15 @@ function ProfilePicture({ formik }) {
 
 function ProfilePage() {
   const [isEditMode, setEditMode] = useState(false);
-  const { id } = queryClient.getQueryData("authToken") ?? getAuthToken();
+  const authToken = queryClient.getQueryData("authToken") ?? getAuthToken();
+  const id = authToken?.id;
 
   const {
     data,
     isLoading,
     refetch: fetchUser,
     error: fetchError,
-  } = useQuery(["user"], () => getUser(id), {
+  } = useQuery(["user", id], () => getUser(id), {
     onSuccess: (response) => {
       const { firstName, lastName, email } = response;
       formik.setValues({ firstName, lastName, email });
@@ -50,8 +51,11 @@ function ProfilePage() {
     onError: (error) => {
       console.error("Error fetching user:", error);
       // Display error message to the user
-    },
+    }
   });
+  useEffect(() => {
+    console.log('wow')
+  }, [])
 
   const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
     (values) => updateUser(id, values),
@@ -84,10 +88,12 @@ function ProfilePage() {
     },
   });
 
-  useEffect(() => {
-    fetchUser();
-  }, [id]);
-
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!id) {
+    return <div>No user found.</div>;
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-customPrimary">My Profile</h1>
