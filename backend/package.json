@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/server.mjs",
-    "build": "node start --production",
+    "build": "NODE_ENV=production node src/server.mjs --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
