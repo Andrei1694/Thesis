@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
-    "start-backend": "cd backend && npm start",
+    "start-backend": "cd backend && npm run dev",
     "start-frontend": "cd frontend && npm run dev",
     "install": "concurrently \"npm run install-backend\" \"npm run install-frontend\"",
     "install-backend": "cd backend && npm install",

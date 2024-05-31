@@ -89,6 +89,7 @@ const AuthForm = () => {
         }, {
           staleTime: THIRTY_DAYS_IN_MS,
         });
+
         setAuthToken(token, user._id); // Store the token in local storage
         navigate("/profile");
       },
