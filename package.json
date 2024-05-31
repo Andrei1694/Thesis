@@ -10,9 +10,9 @@
     "install": "concurrently \"npm run install-backend\" \"npm run install-frontend\"",
     "install-backend": "cd backend && npm install",
     "install-frontend": "cd frontend && npm install",
-    "build": "npm run build:frontend && npm run build:backend",
+    "build": "npm run build:frontend",
     "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && npm run build"
+    "start:prod": "cd backend && npm run build"
   },
   "keywords": [],
   "author": "",
