@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.mjs",
-    "start": "pm2 start ecosystem.config.json",
-    "build": "NODE_ENV=production node src/server.mjs --production",
+    "ceva": "pm2 start ecosystem.config.json",
+    "start": "NODE_ENV=production node src/server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
