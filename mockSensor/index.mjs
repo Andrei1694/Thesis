@@ -2,8 +2,8 @@ import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
 import logger from './logger.mjs';
 
-const URL = 'http://localhost:4000';
-const deviceName = 'asdasd';
+const URL = 'https://thesis-production.up.railway.app';
+const deviceName = 'adsasddas';
 const reconnectInterval = 5000; // Retry connection every 5 seconds
 
 
@@ -46,6 +46,7 @@ function createSocketService(url, streamInterval = 1000) {
 
   socket.on(CONNECT_ERROR, (error) => {
     logger.error(`Device Client (${deviceName}) connection error: ${error.message}`);
+    console.log(error)
     reconnect();
   });
 
