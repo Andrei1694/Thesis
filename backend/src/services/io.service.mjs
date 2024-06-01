@@ -12,7 +12,7 @@ const SEND_DATA = 'SEND_DATA';
 
 export default function SocketIOService(server) {
   const io = new Server(server, {
-    path: '/socket.io',
+
     cors: {
       origin: '*',
     },

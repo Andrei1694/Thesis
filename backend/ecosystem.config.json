@@ -12,7 +12,8 @@
       "error_file": "./logs/errors.log",
       "out_file": "./logs/output.log",
       "combine_logs": true,
-      "max_restarts": 10
+      "max_restarts": 10,
+      "exec_mode": "cluster"
     }
   ]
 }
