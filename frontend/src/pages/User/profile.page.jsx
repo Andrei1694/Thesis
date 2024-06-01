@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { getUser, updateUser } from "../../utils/requests";
@@ -37,37 +37,6 @@ function ProfilePage() {
   const [isEditMode, setEditMode] = useState(false);
   const authToken = queryClient.getQueryData("authToken") ?? getAuthToken();
   const id = authToken?.id;
-
-  const {
-    data,
-    isLoading,
-    refetch: fetchUser,
-    error: fetchError,
-  } = useQuery(["user", id], () => getUser(id), {
-    onSuccess: (response) => {
-      const { firstName, lastName, email } = response;
-      formik.setValues({ firstName, lastName, email });
-    },
-    onError: (error) => {
-      console.error("Error fetching user:", error);
-      // Display error message to the user
-    }
-  });
-
-  const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
-    (values) => updateUser(id, values),
-    {
-      onSuccess: () => {
-        // Refetch user data after successful update
-        fetchUser();
-      },
-      onError: (error) => {
-        console.error("Error updating user:", error);
-        // Display error message to the user
-      },
-    }
-  );
-
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -84,6 +53,38 @@ function ProfilePage() {
       }
     },
   });
+  const {
+    data,
+    isLoading,
+    refetch: fetchUser,
+    error: fetchError,
+  } = useQuery(["user", authToken.id], () => getUser(id), {
+    onSuccess: (response) => {
+      const { firstName, lastName, email } = response;
+      formik.setValues({ firstName, lastName, email });
+    },
+    onError: (error) => {
+      console.error("Error fetching user:", error);
+      // Display error message to the user
+    },
+
+  });
+
+  const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
+    (values) => updateUser(id, values),
+    {
+      onSuccess: () => {
+        // Refetch user data after successful update
+        fetchUser();
+      },
+      onError: (error) => {
+        console.error("Error updating user:", error);
+        // Display error message to the user
+      },
+    }
+  );
+
+
 
   if (isLoading) {
     return <div>Loading...</div>;

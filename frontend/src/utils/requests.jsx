@@ -80,6 +80,7 @@ export async function getAllUsers() {
 }
 
 export async function getUser(id) {
+  if (!id) throw new Error('No id provided')
   const response = await api.get(`/user/${id}`);
   return response.data;
 }

@@ -90,41 +90,48 @@ export default function Navbar() {
           </div>
           <div className="ml-5 w-[100%]">
             <ul className="flex">
-              <li className="mr-2">
-                <Link
-                  to="/profile"
-                  className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
-                >
-                  My Profile
-                </Link>
-              </li>
-              <li className="mr-2">
-                <Link
-                  to="/devices?page=1"
-                  className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
-                >
-                  Devices
-                </Link>
-              </li>
-              <li className="mr-2">
-                <Link
-                  to="/users"
-                  className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
-                >
-                  Users
-                </Link>
-              </li>
+              {
+                isAuthenticated && <>
+                  <li className="mr-2">
+                    <Link
+                      to="/profile"
+                      className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li className="mr-2">
+                    <Link
+                      to="/devices?page=1"
+                      className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
+                    >
+                      Devices
+                    </Link>
+                  </li>
+                  <li className="mr-2">
+                    <Link
+                      to="/users"
+                      className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
+                    >
+                      Users
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => logoutUser()}
+                      className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </>
+              }
               {!isAuthenticated && (<li className="mr-2">
                 <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
                   Login
                 </Link>
               </li>)}
-              {isAuthenticated && <Link
-                onClick={() => logoutUser()}
-                className="text-white hover:bg-customSecondary px-1 py-1 rounded-md text-sm font-medium"
-              >
-                Logout
-              </Link>}
+              {/* {isAuthenticated && } */}
             </ul>
           </div>
           {isAuthenticated && (<div className="ml-auto">

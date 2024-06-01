@@ -8,9 +8,19 @@ export const setAuthToken = (token, id) => {
 };
 
 export const getAuthToken = () => {
-  const tokenData = JSON.parse(localStorage.getItem("authToken"));
-  if (tokenData && tokenData.expirationTime > new Date().getTime()) {
-    return tokenData;
+  try {
+    const tokenData = JSON.parse(localStorage.getItem("authToken"));
+    if (tokenData && tokenData.expirationTime && tokenData.id) {
+      const currentTime = new Date().getTime();
+      if (tokenData.expirationTime > currentTime) {
+        return tokenData;
+      } else {
+        // Token has expired, remove it from local storage
+        localStorage.removeItem("authToken");
+      }
+    }
+  } catch (error) {
+    console.error("Error parsing authToken from local storage:", error);
   }
   return null;
 };
