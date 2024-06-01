@@ -12,9 +12,17 @@ const socketIOService = new SocketIOService(server);
 async function startServer() {
     await mongoConnect();
 
-    server.listen(PORT, "0.0.0.0", () => {
-        console.log(`Listening on port ${PORT}...`);
-    });
+
+    if (process.env.NODE_ENV === 'production') {
+        server.listen(PORT, "0.0.0.0", () => {
+            console.log(`Listening on port ${PORT}...`);
+        });
+    }
+    else {
+        server.listen(PORT, () => {
+            console.log(`Listening on port ${PORT}...`);
+        });
+    }
 }
 
 startServer();

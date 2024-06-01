@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import cors from 'cors';
-import MeasurmentService from './measurment.service.mjs';
+import { createAdapter } from "@socket.io/cluster-adapter"
+import { setupWorker } from "@socket.io/sticky"
 
 const CONNECTION = 'connection';
 const DISCONNECT = 'disconnect';

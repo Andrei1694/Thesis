@@ -1,0 +1,960 @@
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/cluster-adapter' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@socket.io/sticky' imported from /home/andrei/Desktop/Thesis/backend/src/services/io.service.mjs
+    at new NodeError (node:internal/errors:387:5)
+    at packageResolve (node:internal/modules/esm/resolve:852:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1115:11)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:841:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:424:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:40)
+    at link (node:internal/modules/esm/module_job:75:36)
+Channel is already closed can't broadcast error:
+Error: value() {
+          return `${this.name} [${key}]: ${this.message}`;
+        } could not be cloned.
+    at writeChannelMessage (node:internal/child_process/serialization:109:9)
+    at process.target._send (node:internal/child_process:847:17)
+    at process.target.send (node:internal/child_process:747:19)
+    at process.send (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:52:21)
+    at process.uncaughtListener (/home/andrei/.nvm/versions/node/v16.20.1/lib/node_modules/@socket.io/pm2/lib/ProcessContainer.js:276:19)
+    at process.emit (node:events:513:28)
+    at emit (node:internal/process/promises:140:20)
+    at processPromiseRejections (node:internal/process/promises:274:27)
+    at processTicksAndRejections (node:internal/process/task_queues:97:32)

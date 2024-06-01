@@ -98,3 +98,103 @@
 2024-06-01 01:58:48.602: Listening on port 4000...
 2024-06-01 01:58:48.738: MongoDB connection ready!
 2024-06-01 01:58:48.751: Listening on port 4000...
+2024-06-01 11:15:08.961: prod
+2024-06-01 11:15:09.022: prod
+2024-06-01 11:15:09.034: prod
+2024-06-01 11:15:08.966: production mode
+2024-06-01 11:15:08.966: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.048: prod
+2024-06-01 11:15:09.026: production mode
+2024-06-01 11:15:09.026: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.038: production mode
+2024-06-01 11:15:09.038: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.051: production mode
+2024-06-01 11:15:09.051: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.117: prod
+2024-06-01 11:15:09.137: prod
+2024-06-01 11:15:09.121: production mode
+2024-06-01 11:15:09.121: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.141: production mode
+2024-06-01 11:15:09.141: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.221: prod
+2024-06-01 11:15:09.242: prod
+2024-06-01 11:15:09.255: prod
+2024-06-01 11:15:09.224: production mode
+2024-06-01 11:15:09.224: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.287: prod
+2024-06-01 11:15:09.290: prod
+2024-06-01 11:15:09.292: prod
+2024-06-01 11:15:09.303: prod
+2024-06-01 11:15:09.259: production mode
+2024-06-01 11:15:09.259: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.246: production mode
+2024-06-01 11:15:09.246: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.296: production mode
+2024-06-01 11:15:09.296: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.294: production mode
+2024-06-01 11:15:09.294: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.291: production mode
+2024-06-01 11:15:09.291: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.307: production mode
+2024-06-01 11:15:09.307: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.389: prod
+2024-06-01 11:15:09.412: prod
+2024-06-01 11:15:09.414: prod
+2024-06-01 11:15:09.425: prod
+2024-06-01 11:15:09.425: prod
+2024-06-01 11:15:09.393: production mode
+2024-06-01 11:15:09.393: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.416: production mode
+2024-06-01 11:15:09.416: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.427: production mode
+2024-06-01 11:15:09.428: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.415: production mode
+2024-06-01 11:15:09.416: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.474: prod
+2024-06-01 11:15:09.429: production mode
+2024-06-01 11:15:09.429: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.501: prod
+2024-06-01 11:15:09.478: production mode
+2024-06-01 11:15:09.478: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.504: production mode
+2024-06-01 11:15:09.505: mongodb+srv://stan:root@cluster0.rzgkc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0?directConnection=true&serverSelectionTimeoutMS=2000authSource=admin
+2024-06-01 11:15:09.585: MongoDB connection ready!
+2024-06-01 11:15:09.592: MongoDB connection ready!
+2024-06-01 11:15:09.597: MongoDB connection ready!
+2024-06-01 11:15:09.604: Listening on port 4000...
+2024-06-01 11:15:09.606: Listening on port 4000...
+2024-06-01 11:15:09.608: Listening on port 4000...
+2024-06-01 11:15:09.621: MongoDB connection ready!
+2024-06-01 11:15:09.630: MongoDB connection ready!
+2024-06-01 11:15:09.636: Listening on port 4000...
+2024-06-01 11:15:09.645: Listening on port 4000...
+2024-06-01 11:15:09.667: MongoDB connection ready!
+2024-06-01 11:15:09.682: Listening on port 4000...
+2024-06-01 11:15:09.718: MongoDB connection ready!
+2024-06-01 11:15:09.732: Listening on port 4000...
+2024-06-01 11:15:09.748: MongoDB connection ready!
+2024-06-01 11:15:09.759: Listening on port 4000...
+2024-06-01 11:15:09.782: MongoDB connection ready!
+2024-06-01 11:15:09.795: Listening on port 4000...
+2024-06-01 11:15:09.796: MongoDB connection ready!
+2024-06-01 11:15:09.806: Listening on port 4000...
+2024-06-01 11:15:09.822: MongoDB connection ready!
+2024-06-01 11:15:09.828: MongoDB connection ready!
+2024-06-01 11:15:09.836: Listening on port 4000...
+2024-06-01 11:15:09.842: Listening on port 4000...
+2024-06-01 11:15:09.865: MongoDB connection ready!
+2024-06-01 11:15:09.879: Listening on port 4000...
+2024-06-01 11:15:09.922: MongoDB connection ready!
+2024-06-01 11:15:09.933: Listening on port 4000...
+2024-06-01 11:15:09.956: MongoDB connection ready!
+2024-06-01 11:15:09.960: MongoDB connection ready!
+2024-06-01 11:15:09.961: MongoDB connection ready!
+2024-06-01 11:15:09.967: Listening on port 4000...
+2024-06-01 11:15:09.968: MongoDB connection ready!
+2024-06-01 11:15:09.973: Listening on port 4000...
+2024-06-01 11:15:09.975: Listening on port 4000...
+2024-06-01 11:15:09.982: Listening on port 4000...
+2024-06-01 11:15:10.021: MongoDB connection ready!
+2024-06-01 11:15:10.033: Listening on port 4000...
+2024-06-01 11:15:10.065: MongoDB connection ready!
+2024-06-01 11:15:10.079: Listening on port 4000...
