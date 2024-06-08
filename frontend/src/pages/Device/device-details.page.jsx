@@ -17,6 +17,7 @@ import {
 } from "../../utils/typeDefs";
 
 const VITE_API_WS_URL = import.meta.env.VITE_API_WS_URL;
+console.log('wwwooww')
 console.log(VITE_API_WS_URL, "VITE_API_WS_URL");
 let socket;
 

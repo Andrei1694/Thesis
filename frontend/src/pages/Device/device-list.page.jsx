@@ -19,7 +19,7 @@ function DevicesListPage() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data, isLoading } = useQuery(["devices", page, sortBy], () =>
+  const { data, isLoading, isSuccess } = useQuery(["devices", page, sortBy], () =>
     fetchDevices(page, sortBy)
   );
 
@@ -65,7 +65,7 @@ function DevicesListPage() {
       const { data: devices } = data;
       return (
         <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
-          {devices.map(({ _id, ...value }) => (
+          {isSuccess && devices.map(({ _id, ...value }) => (
             <div key={`deviceCard${_id}`}>
               <DeviceCard
                 {...value}
