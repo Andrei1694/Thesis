@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAuthToken } from "./auth";
 
 const URL = import.meta.env.VITE_API_WS_URL;
-
+console.log('In requests.jsx', URL)
 const api = axios.create({
   baseURL: URL + '/v1',
 });
