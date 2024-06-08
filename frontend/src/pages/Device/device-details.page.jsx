@@ -46,7 +46,7 @@ function DeviceDetails() {
       query: { clientType: "desktop" },
     });
 
-    socket.emit(JOIN_ROOM, "asdasd");
+    socket.emit(JOIN_ROOM, "adsasddas");
 
     socket.on(RECEIVE_DATA, (payload) => {
       console.log("Received data:", payload);
