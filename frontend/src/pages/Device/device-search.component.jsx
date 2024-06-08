@@ -19,7 +19,7 @@ const DeviceSearch = () => {
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
-      const filtered = data.devices.map(({ _id, deviceName }) => ({
+      const filtered = data.devices?.map(({ _id, deviceName }) => ({
         _id,
         deviceName,
       }));
@@ -54,7 +54,7 @@ const DeviceSearch = () => {
           ) : (
             searchTerm && (
               <div>
-                {isSuccess && filteredDevices.map(({ _id, deviceName }) => (
+                {isSuccess && filteredDevices?.map(({ _id, deviceName }) => (
                   <div
                     key={_id}
                     onClick={() => navigate(`/devices/${_id}`)}

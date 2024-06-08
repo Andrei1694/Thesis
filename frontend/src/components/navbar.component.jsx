@@ -62,7 +62,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
-      const filtered = data.devices.map(({ _id, deviceName }) => ({
+      const filtered = data?.devices.map(({ _id, deviceName }) => ({
         _id,
         deviceName,
       }));
