@@ -4,7 +4,8 @@ import { getAuthToken } from "./auth";
 const URL = import.meta.env.VITE_API_WS_URL;
 console.log('In requests.jsx', URL)
 const api = axios.create({
-  baseURL: URL + '/v1',
+  url: URL,
+  baseURL: '/v1',
 });
 
 api.interceptors.request.use(
@@ -82,6 +83,7 @@ export async function getAllUsers() {
 
 export async function getUser(id) {
   const response = await api.get(`/user/${id}`);
+  console.log(api.get())
   return response.data;
 }
 
