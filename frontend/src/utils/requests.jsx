@@ -27,7 +27,7 @@ export async function createDevice(device) {
 
 export async function fetchDevices(page = 1, sortBy = null) {
   console.log(api.getUri())
-  let url = `/device/?page=${page}`;
+  let url = `device/?page=${page}`;
 
   if (sortBy) {
     const [name, order] = sortBy.split(":");
