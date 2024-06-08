@@ -156,28 +156,6 @@ function DeviceDetails() {
       <div>
         <RealTimeChart data={measurments} />
       </div>
-      {/* <div>
-        <Button
-          onClick={() => {
-            socket.emit(START_STREAMING, { time: sliderValue });
-          }}
-        >
-          START
-        </Button>
-        <Button
-          onClick={() => {
-            socket.emit(STOP_STREAMING);
-          }}
-        >
-          STOP
-        </Button>
-        <Slider
-          value={sliderValue}
-          handleInputChange={(value) => {
-            setSliderValue(parseInt(value));
-          }}
-        />
-      </div> */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <DeviceForm
           mode="edit"
