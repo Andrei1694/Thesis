@@ -11,7 +11,7 @@ const DeviceSearch = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isSuccess } = useQuery(
     ["searchDevices", searchTerm],
     () => searchDevices(searchTerm),
     { enabled: !!searchTerm }
@@ -54,7 +54,7 @@ const DeviceSearch = () => {
           ) : (
             searchTerm && (
               <div>
-                {filteredDevices.map(({ _id, deviceName }) => (
+                {isSuccess && filteredDevices.map(({ _id, deviceName }) => (
                   <div
                     key={_id}
                     onClick={() => navigate(`/devices/${_id}`)}
