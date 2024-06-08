@@ -41,7 +41,8 @@ function DeviceDetails() {
 
   useEffect(() => {
     socket = io(VITE_API_WS_URL, {
-      transports: ["websocket", "polling"],
+      path: "/socket.io",
+      transports: ["websocket"],
       query: { clientType: "desktop" },
     });
 
