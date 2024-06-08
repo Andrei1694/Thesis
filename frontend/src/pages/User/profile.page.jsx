@@ -8,9 +8,12 @@ import Input from "../../components/input.component";
 import Button from "../../components/button.component";
 
 const getInitials = (firstName, lastName) => {
-  const firstInitial = firstName.charAt(0).toUpperCase();
-  const lastInitial = lastName.charAt(0).toUpperCase();
-  return `${firstInitial}${lastInitial}`;
+  if (firstName && lastName) {
+    const firstInitial = firstName.charAt(0).toUpperCase();
+    const lastInitial = lastName.charAt(0).toUpperCase();
+    return `${firstInitial}${lastInitial}`;
+  }
+  return "";
 };
 
 function ProfilePicture({ formik }) {
