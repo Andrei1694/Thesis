@@ -13,6 +13,7 @@ export default function SocketIOService(server) {
   const io = new Server(server, {
     cors: {
       origin: '*',
+      path: '/socket.io'
     },
   });
 
@@ -58,7 +59,7 @@ export default function SocketIOService(server) {
       } else {
         // No desktop client connected, send data to the database
         try {
-        //   await MeasurmentService.createMeasurment(rest);
+          //   await MeasurmentService.createMeasurment(rest);
           console.log('Data sent to the database:', rest);
         } catch (error) {
           console.error('Error sending data to the database:', error);
