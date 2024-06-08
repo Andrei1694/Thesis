@@ -21,12 +21,12 @@ api.interceptors.request.use(
 );
 
 export async function createDevice(device) {
-  const response = await api.post(`${URL}/device`, device);
+  const response = await api.post(`/device`, device);
   return response;
 }
 
 export async function fetchDevices(page = 1, sortBy = null) {
-  let url = `${URL}/device/?page=${page}`;
+  let url = `/device/?page=${page}`;
 
   if (sortBy) {
     const [name, order] = sortBy.split(":");
@@ -38,53 +38,53 @@ export async function fetchDevices(page = 1, sortBy = null) {
 }
 
 export async function searchDevices(search) {
-  let url = `${URL}/device/search?searchTerm=${search}`;
+  let url = `/device/search?searchTerm=${search}`;
 
   const response = await api.get(url);
   return response.data;
 }
 
 export async function fetchDevice(id) {
-  const { data } = await api.get(`${URL}/device/${id}`);
+  const { data } = await api.get(`/device/${id}`);
   return data.device;
 }
 
 export async function updateDevice(id, updateData) {
-  const response = await api.patch(`${URL}/device/${id}`, updateData);
+  const response = await api.patch(`/device/${id}`, updateData);
   return response;
 }
 
 export async function deleteDevice(id) {
-  const response = await api.delete(`${URL}/device/${id}`);
+  const response = await api.delete(`/device/${id}`);
   return response.data;
 }
 
 // Users
 export async function register(userData) {
-  const response = await api.post(`${URL}/user/register`, userData);
+  const response = await api.post(`/user/register`, userData);
   return response.data;
 }
 export async function login(userData) {
   console.log(api.getUri())
-  const response = await api.post(`${URL}/user/login`, userData);
+  const response = await api.post(`/user/login`, userData);
 
   return response.data;
 }
 export async function logout() {
-  const response = await api.get(`${URL}/user/logout`);
+  const response = await api.get(`/user/logout`);
   return response.data;
 }
 export async function getAllUsers() {
-  const response = await api.get(`${URL}/user`);
+  const response = await api.get(`/user`);
   return response.data;
 }
 
 export async function getUser(id) {
-  const response = await api.get(`${URL}/user/${id}`);
+  const response = await api.get(`/user/${id}`);
   return response.data;
 }
 
 export async function updateUser(id, values) {
-  const response = await api.put(`${URL}/user/${id}`, values);
+  const response = await api.put(`/user/${id}`, values);
   return response.data;
 }
