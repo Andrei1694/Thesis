@@ -11,16 +11,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === 'production') {
-    console.log('prod')
-    dotenv.config({ path: path.resolve(__dirname, '.env.production') })
-  } else {
-    console.log('dev')
-    dotenv.config({ path: path.resolve(__dirname, '.env.development') })
-  }
+  console.log('prod')
+  dotenv.config({ path: path.resolve(__dirname, '.env.production') })
+} else {
+  console.log('dev')
+  dotenv.config({ path: path.resolve(__dirname, '.env.development') })
+}
 
 const app = express()
 
-app.use(cors({ origin: process.env.origin }))
+app.use(cors({ origin: process.env.VITE_API_WS_URL }))
 app.use(compression());
 app.use(express.json())
 
@@ -31,9 +31,9 @@ app.use('/v1', api)
 
 // Catch-all route to serve the frontend's index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname,'..', 'build', 'index.html'));
-  });
-  
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
+
 app.use(errorHandler)
 
 export default app
