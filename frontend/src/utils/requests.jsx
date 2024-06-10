@@ -3,9 +3,9 @@ import { getAuthToken } from "./auth";
 
 const URL = import.meta.env.VITE_API_WS_URL;
 console.log('In requests.jsx', URL)
+const newUrl = URL + '/v1';
 const api = axios.create({
-  url: URL,
-  baseURL: '/v1',
+  baseURL: newUrl,
 });
 
 api.interceptors.request.use(
