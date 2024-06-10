@@ -5,6 +5,7 @@ import { getUser, logout, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
 import { getAuthToken, removeAuthToken } from "../utils/auth";
+import SearchBar from "./searchbar.component";
 
 function UserLogo({ firstName, lastName }) {
   return (
@@ -126,7 +127,7 @@ const Navbar = () => {
               )}
             </div>
           </div>
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               <div className="relative">
                 <input
@@ -155,6 +156,11 @@ const Navbar = () => {
                   </div>
                 ) : null}
               </div>
+            </div>
+          </div> */}
+          <div className="hidden md:block">
+            <div className="ml-4 flex items-center md:ml-6">
+              <SearchBar />
             </div>
           </div>
           {isAuthenticated && (
