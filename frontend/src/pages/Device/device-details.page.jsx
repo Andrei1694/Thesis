@@ -17,8 +17,6 @@ import {
 } from "../../utils/typeDefs";
 
 const VITE_API_WS_URL = import.meta.env.VITE_API_WS_URL;
-console.log('wwwooww')
-console.log(VITE_API_WS_URL, "VITE_API_WS_URL");
 let socket;
 
 function DeviceDetails() {
@@ -50,7 +48,6 @@ function DeviceDetails() {
     socket.emit(JOIN_ROOM, "adsasddas");
 
     socket.on(RECEIVE_DATA, (payload) => {
-      console.log("Received data:", payload);
       const { cpuUsage, date } = payload;
       setMeasurements((prevData) => [...prevData, { date, uv: cpuUsage }]);
     });

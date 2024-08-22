@@ -35,8 +35,8 @@ export default function UserCard({ user }) {
       </div>
       <div>
         <p className="text-customDark">Email: {user.email}</p>
-        <p className="text-customDark">Phone: {user.phone}</p>
-        <p className="text-customDark">Location: {user.location}</p>
+        <p className="text-customDark">First Name: {user.firstName}</p>
+        <p className="text-customDark">Last Name: {user.lastName}</p>
       </div>
     </div>
   );
