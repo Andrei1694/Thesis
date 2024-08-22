@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
 import Modal from "../../components/modal.component";
-import DeviceForm from "../../forms/device-form.form";
+import DeviceForm from "../../forms/device.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
-import Slider from "../../components/slider.component";
+
 import {
   JOIN_ROOM,
   RECEIVE_DATA,
@@ -156,7 +156,7 @@ function DeviceDetails() {
       <div className="container">
         <RealTimeChart data={measurments} />
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} heading="Edit Device">
         <DeviceForm
           mode="edit"
           device={deviceData}
