@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { login, register } from "../utils/requests";
-import { setAuthToken } from "../utils/auth";
+import { setAuthToken, useAuth } from "../utils/auth";
 import { queryClient } from "../App";
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 const validationSchema = yup.object().shape({
@@ -59,57 +59,61 @@ const initialValues = {
 
 const AuthForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const navigate = useNavigate();
+  const { login: authLogin, isAuthenticated } = useAuth();
 
-  const registerMutation = useMutation((userData) => register(userData), {
-    onSuccess: (response) => {
-      const { user, token } = response
-      queryClient.setQueryData("authToken", {
-        token: token,
-        isAuthenticated: true,
-        user
-      });
-      setAuthToken(token, user._id); // Store the token in local storage
-      navigate("/profile");
-    },
-    onError: (error) => {
-      console.error("Registration error:", error);
-    },
+  const handleAuthSuccess = (response) => {
+    const { user, token } = response;
+    queryClient.setQueryData("authToken", {
+      token,
+      isAuthenticated: true,
+      user
+    }, {
+      staleTime: THIRTY_DAYS_IN_MS,
+    });
+    authLogin(token, user._id);
+    navigate("/profile");
+  };
+
+  const handleAuthError = (error) => {
+    console.error("Auth error:", error);
+    setServerError(error.response?.data?.message || "An error occurred. Please try again.");
+  };
+  const registerMutation = useMutation(register, {
+    onSuccess: handleAuthSuccess,
+    onError: handleAuthError,
   });
 
-  const loginMutation = useMutation(
-    (credentials) => login(credentials),
-    {
-      onSuccess: (response) => {
-        const { user, token } = response
-        queryClient.setQueryData("authToken", {
-          token,
-          isAuthenticated: true,
-          user
-        }, {
-          staleTime: THIRTY_DAYS_IN_MS,
-        });
-
-        setAuthToken(token, user._id); // Store the token in local storage
-        navigate("/profile");
-      },
-      onError: (error) => {
-        console.error("Login error:", error);
-      },
-    }
-  );
+  const loginMutation = useMutation(login, {
+    onSuccess: handleAuthSuccess,
+    onError: handleAuthError,
+  });
 
   const formik = useFormik({
     initialValues,
     validationSchema: isRegistering ? validationSchema : loginSchema,
-    onSubmit: isRegistering ? registerMutation.mutate : loginMutation.mutate,
+    onSubmit: (values) => {
+      setServerError(null);
+      if (isRegistering) {
+        registerMutation.mutate(values);
+      } else {
+        loginMutation.mutate(values);
+      }
+    },
   });
-
   const toggleRegistration = () => {
-    console.log('click')
     setIsRegistering(!isRegistering);
+    setServerError(null);
     formik.resetForm();
   };
+
+  const isLoading = registerMutation.isLoading || loginMutation.isLoading;
+
+  if (isAuthenticated) {
+    navigate("/profile");
+    return null;
+  }
 
   return (
     <div>
@@ -194,38 +198,27 @@ const AuthForm = () => {
           ) : null}
         </div>
 
+        {serverError && (
+          <div className="text-red-500 text-sm">{serverError}</div>
+        )}
+
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+          disabled={isLoading}
+          className={`w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
-          {isRegistering ? "Register" : "Login"}
+          {isLoading ? 'Processing...' : (isRegistering ? "Register" : "Login")}
         </button>
       </form>
 
       <div className="mt-4 text-center">
-        {isRegistering ? (
-          <p>
-            Already have an account?{" "}
-            <button
-              type="button"
-              onClick={toggleRegistration}
-              className="text-blue-500 hover:underline"
-            >
-              Login
-            </button>
-          </p>
-        ) : (
-          <p>
-            Don't have an account?{" "}
-            <button
-              type="button"
-              onClick={toggleRegistration}
-              className="text-blue-500 hover:underline"
-            >
-              Register
-            </button>
-          </p>
-        )}
+        <button
+          type="button"
+          onClick={toggleRegistration}
+          className="text-blue-500 hover:underline"
+        >
+          {isRegistering ? "Already have an account? Login" : "Don't have an account? Register"}
+        </button>
       </div>
     </div>
   );

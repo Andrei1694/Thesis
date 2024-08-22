@@ -1,36 +1,32 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { queryClient } from "../App";
-import { getAuthToken } from "../utils/auth";
+import { useAuth } from "../utils/auth";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
-  const authData = queryClient.getQueryData('authToken')
-  useEffect(() => {
-    const checkAuth = () => {
-      const { token, id } = getAuthToken() ?? {};
+  const { isAuthenticated, checkAuth } = useAuth();
 
-      if (token) {
-        queryClient.setQueryData("authToken", { token, isAuthenticated: true, id });
-      } else {
-        queryClient.setQueryData("authToken", {
-          token: null,
-          isAuthenticated: false,
-          id: null
-        });
-        navigate("/login", { replace: true });
-      }
+  useEffect(() => {
+    const handleStorageChange = () => {
+      checkAuth();
     };
 
+    // Initial auth check
     checkAuth();
 
     // Listen for storage changes and update the authentication state
-    window.addEventListener("storage", checkAuth);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener("storage", checkAuth);
+      window.removeEventListener("storage", handleStorageChange);
     };
-  }, [authData, navigate]);
+  }, [checkAuth]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div>

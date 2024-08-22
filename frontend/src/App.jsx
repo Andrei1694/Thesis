@@ -1,6 +1,7 @@
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider, Navigate } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
 import DeviceDetails from "./pages/Device/device-details.page";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -9,6 +10,7 @@ import Users from "./pages/User/users.page";
 import LoginPage from "./pages/Login/login.page";
 import PublicLayout from "./layouts/PublicLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import { AuthProvider } from "./utils/auth"; // Make sure to create this file if it doesn't exist
 
 // Create a client
 export const queryClient = new QueryClient();
@@ -25,16 +27,13 @@ const RootLayout = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <QueryClientProvider client={queryClient}>
-        <RootLayout />
-      </QueryClientProvider>
-    ),
+    element: <RootLayout />,
     children: [
       {
         path: "/",
         element: <AuthLayout />,
         children: [
+          { index: true, element: <Navigate to="/devices" replace /> },
           {
             path: "profile",
             element: <Profile />,
@@ -69,9 +68,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 

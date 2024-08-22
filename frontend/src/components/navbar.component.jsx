@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Button from "./button.component";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser, logout, searchDevices } from "../utils/requests";
+import { getUser, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
-import { getAuthToken, removeAuthToken } from "../utils/auth";
+import { useAuth } from "../utils/auth";
 import SearchBar from "./searchbar.component";
 
 function UserLogo({ firstName, lastName }) {
@@ -24,9 +23,7 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const authData = queryClient.getQueryData("authToken");
-  const isAuthenticated = authData?.isAuthenticated || getAuthToken()?.isAuthenticated;
-  const userId = authData?.id || getAuthToken()?.id;
+  const { isAuthenticated, logout, userId } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -44,7 +41,7 @@ const Navbar = () => {
         setFirstName(firstName);
         setLastName(lastName);
       },
-      enabled: isAuthenticated,
+      enabled: isAuthenticated && !!userId,
     }
   );
 
@@ -52,14 +49,11 @@ const Navbar = () => {
     enabled: !!searchTerm,
   });
 
-  const { refetch: logoutUser } = useQuery("logout", logout, {
-    enabled: false,
-    onSuccess: () => {
-      queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
-      removeAuthToken();
-      navigate("/login");
-    },
-  });
+  const handleLogout = () => {
+    logout();
+    queryClient.setQueryData("authToken", { isAuthenticated: false, user: null, token: null });
+    navigate("/login");
+  };
 
   useEffect(() => {
     if (data && data.devices && searchTerm) {
@@ -114,7 +108,7 @@ const Navbar = () => {
                   </Link>
                   <button
                     className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
-                    onClick={logoutUser}
+                    onClick={handleLogout}
                   >
                     Logout
                   </button>
@@ -127,37 +121,6 @@ const Navbar = () => {
               )}
             </div>
           </div>
-          {/* <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search devices..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  className="px-3 py-2 placeholder-gray-400 text-gray-900 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-customPrimary sm:text-sm"
-                />
-                {isLoading ? (
-                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10 p-2">Loading...</div>
-                ) : searchTerm && filteredDevices.length > 0 ? (
-                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
-                    {filteredDevices.map(({ _id, deviceName }) => (
-                      <div
-                        key={_id}
-                        onClick={() => {
-                          navigate(`/devices/${_id}`);
-                          clearSearch();
-                        }}
-                        className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
-                      >
-                        {deviceName}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div> */}
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               <SearchBar />
@@ -228,7 +191,7 @@ const Navbar = () => {
             </Link>
             <button
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
-              onClick={logoutUser}
+              onClick={handleLogout}
             >
               Logout
             </button>

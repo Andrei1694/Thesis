@@ -2,7 +2,6 @@ import axios from "axios";
 import { getAuthToken } from "./auth";
 
 const URL = import.meta.env.VITE_API_WS_URL;
-console.log('In requests.jsx', URL)
 const newUrl = URL + '/v1';
 const api = axios.create({
   baseURL: newUrl,
@@ -27,7 +26,6 @@ export async function createDevice(device) {
 }
 
 export async function fetchDevices(page = 1, sortBy = null) {
-  console.log(api.getUri())
   let url = `device/?page=${page}`;
 
   if (sortBy) {
@@ -67,7 +65,6 @@ export async function register(userData) {
   return response.data;
 }
 export async function login(userData) {
-  console.log(api.getUri())
   const response = await api.post(`/user/login`, userData);
 
   return response.data;
@@ -83,7 +80,6 @@ export async function getAllUsers() {
 
 export async function getUser(id) {
   const response = await api.get(`/user/${id}`);
-  console.log(api.get())
   return response.data;
 }
 

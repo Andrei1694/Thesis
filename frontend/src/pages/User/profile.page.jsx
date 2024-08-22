@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { getUser, updateUser } from "../../utils/requests";
 import { queryClient } from "../../App";
-import { getAuthToken } from "../../utils/auth";
+import { useAuth } from "../../utils/auth";
 import Input from "../../components/input.component";
 import Button from "../../components/button.component";
 
@@ -38,14 +38,14 @@ function ProfilePicture({ formik }) {
 
 function ProfilePage() {
   const [isEditMode, setEditMode] = useState(false);
-  const { id } = queryClient.getQueryData("authToken") ?? getAuthToken();
+  const { isAuthenticated, userId } = useAuth();
 
   const {
-    data,
+    data: userData,
     isLoading,
     refetch: fetchUser,
     error: fetchError,
-  } = useQuery(["user"], () => getUser(id), {
+  } = useQuery(["user", userId], () => getUser(userId), {
     onSuccess: (response) => {
       const { firstName, lastName, email } = response;
       formik.setValues({ firstName, lastName, email });
@@ -54,14 +54,15 @@ function ProfilePage() {
       console.error("Error fetching user:", error);
       // Display error message to the user
     },
+    enabled: isAuthenticated && !!userId,
   });
 
   const { mutate: updateUserMutation, isLoading: isUpdating } = useMutation(
-    (values) => updateUser(id, values),
+    (values) => updateUser(userId, values),
     {
       onSuccess: () => {
-        // Refetch user data after successful update
         fetchUser();
+        setEditMode(false);
       },
       onError: (error) => {
         console.error("Error updating user:", error);
@@ -80,16 +81,23 @@ function ProfilePage() {
     onSubmit: (values) => {
       if (isEditMode) {
         updateUserMutation(values);
-        setEditMode(false);
       } else {
         setEditMode(true);
       }
     },
   });
 
-  useEffect(() => {
-    fetchUser();
-  }, [id]);
+  if (!isAuthenticated) {
+    return <div>Please log in to view your profile.</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (fetchError) {
+    return <div>Error loading profile. Please try again later.</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -129,8 +137,9 @@ function ProfilePage() {
             type="submit"
             className="bg-customPrimary text-white rounded-md px-4 py-2"
             onClick={formik.handleSubmit}
+            disabled={isUpdating}
           >
-            {isEditMode ? "Save Changes" : "Edit"}
+            {isEditMode ? (isUpdating ? "Saving..." : "Save Changes") : "Edit"}
           </Button>
         </div>
       </div>
