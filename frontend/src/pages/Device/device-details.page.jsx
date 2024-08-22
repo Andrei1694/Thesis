@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
 import Modal from "../../components/modal.component";
-import DeviceForm from "../../forms/device-form.form";
+import DeviceForm from "../../forms/device.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
-import Slider from "../../components/slider.component";
+
 import {
   JOIN_ROOM,
   RECEIVE_DATA,
@@ -135,7 +135,7 @@ function DeviceDetails() {
               <div>Serial Number: {deviceData.serialNumber}</div>
               <div>Manufacturer: {deviceData.manufacturer}</div>
             </div>
-            <div className="w-full md:w-1/2 flex flex-col justify-center mt-4 md:mt-0">
+            <div className="w-full md:w-1/2 flex flex-col  gap-3 mt-4 md:mt-0">
               <Button onClick={openModal}>Edit Device</Button>
               <Button
                 className="bg-customLight hover:bg-white"
@@ -153,32 +153,10 @@ function DeviceDetails() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="container">
         <RealTimeChart data={measurments} />
       </div>
-      {/* <div>
-        <Button
-          onClick={() => {
-            socket.emit(START_STREAMING, { time: sliderValue });
-          }}
-        >
-          START
-        </Button>
-        <Button
-          onClick={() => {
-            socket.emit(STOP_STREAMING);
-          }}
-        >
-          STOP
-        </Button>
-        <Slider
-          value={sliderValue}
-          handleInputChange={(value) => {
-            setSliderValue(parseInt(value));
-          }}
-        />
-      </div> */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} heading="Edit Device">
         <DeviceForm
           mode="edit"
           device={deviceData}
