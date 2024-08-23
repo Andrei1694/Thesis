@@ -1,12 +1,12 @@
 import Express from 'express'
 
-const sensorRouter = Express.Router()
-import { httpCreateSensor, httpGetSensors, httpGetSensor, httpUpdateSensor, httpDeleteSensor } from '../controllers/sensor.controller.mjs'
+import { httpGetSensors, httpGetSensor, httpUpdateSensor, httpDeleteSensor, httpCreateSensor, httpGetSensorsByDevice } from '../controllers/sensor.controller.mjs'
 
-sensorRouter.post('/sensors', httpCreateSensor)
-sensorRouter.get('/sensors', httpGetSensors)
-sensorRouter.get('/sensors/:id', httpGetSensor)
-sensorRouter.put('/sensors/:id', httpUpdateSensor)
-sensorRouter.delete('/sensors/:id', httpDeleteSensor)
+const sensorRouter = new Express.Router()
+sensorRouter.post('/', httpCreateSensor)
+sensorRouter.get('/', httpGetSensors)
+sensorRouter.get('/:id', httpGetSensor)
+sensorRouter.put('/:id', httpUpdateSensor)
+sensorRouter.delete('/:id', httpDeleteSensor)
 
-module.exports = sensorRouter
+export default sensorRouter

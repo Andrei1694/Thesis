@@ -1,12 +1,19 @@
+import mongoose from "mongoose";
+import Device from "../models/Device.model.mjs"
 
 const SensorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        maxLength: 25,
+        minLength: 2,
+
     },
     description: {
         type: String,
         required: true,
+        maxLength: 25,
+        minLength: 2,
     },
     type: {
         type: String,
@@ -15,10 +22,8 @@ const SensorSchema = new mongoose.Schema({
     unit: {
         type: String,
         required: true,
-    },
-    value: {
-        type: Number,
-        default: 0,
+        maxLength: 25,
+        minLength: 2,
     },
     createdAt: {
         type: Date,
@@ -30,31 +35,53 @@ const SensorSchema = new mongoose.Schema({
 
 export const Sensor = mongoose.model('Sensor', SensorSchema);
 
-export async function createSensor(data) {
-    if (!data) {
-        throw Error('No data provided')
+export async function createSensor(data, deviceId) {
+    if (!data || !deviceId) {
+        throw new Error('Sensor data and device ID are required');
     }
-    const newSensor = new Sensor({
-        ...data
-    })
+    let newSensor = null;
     try {
-        await newSensor.save()
+        // Create the new sensor
+        newSensor = new Sensor(data);
+        await newSensor.save();
+
+        // Update the device with the new sensor ID
+        const updatedDevice = await Device.findByIdAndUpdate(
+            deviceId,
+            { $push: { sensors: newSensor._id } },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedDevice) {
+            // If device update fails, delete the sensor to maintain consistency
+            await Sensor.findByIdAndDelete(newSensor._id);
+            throw new Error('Device not found');
+        }
+
+        return newSensor;
     } catch (error) {
-        console.log(error)
+        // If any error occurs during sensor creation or device update, ensure the sensor is deleted
+        if (newSensor && newSensor._id) {
+            await Sensor.findByIdAndDelete(newSensor._id);
+        }
+        throw error;
     }
 }
-
 export async function getSensors() {
     const sensors = await Sensor.find({})
     return sensors
 }
 
 export async function getSensor(id) {
-    const sensor = await Sensor.find(id)
+    const sensor = await Sensor.findById(id);
     if (!sensor) {
-        throw Error('No sensor found with this id')
+        throw new Error('No sensor found with this id');
     }
-    return sensor
+    return sensor;
+}
+export async function getSensorsByDevice(deviceId) {
+    const device = await Device.findById(deviceId).populate('sensors');
+    return device ? device.sensors : [];
 }
 
 export async function updateSensor(id, data) {
@@ -73,9 +100,30 @@ export async function updateSensor(id, data) {
 
 export async function deleteSensor(id) {
     if (!id) {
-        throw Error('No id provided')
+        throw new Error('Sensor ID is required');
     }
-    const sensor = await Sensor.findByIdAndDelete(id)
-    return sensor
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const sensor = await Sensor.findByIdAndDelete(id).session(session);
+        if (!sensor) {
+            throw new Error('Sensor not found');
+        }
+
+        await Device.updateMany(
+            { sensors: sensor._id },
+            { $pull: { sensors: sensor._id } }
+        ).session(session);
+
+        await session.commitTransaction();
+        return sensor;
+    } catch (error) {
+        await session.abortTransaction();
+        throw error;
+    } finally {
+        session.endSession();
+    }
 }
 

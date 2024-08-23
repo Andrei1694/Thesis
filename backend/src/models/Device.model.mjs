@@ -8,6 +8,10 @@ const deviceSchema = new mongoose.Schema({
         required: true,
         index: true
     },
+    sensors: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sensor'
+    }],
     description: String,
     location: String,
     country: String,
@@ -22,5 +26,5 @@ deviceSchema.methods.toJSON = function () {
     const { __v, ...rest } = obj
     return rest;
 }
-
-export default mongoose.model('Device', deviceSchema)
+const Device = mongoose.model('Device', deviceSchema)
+export default Device

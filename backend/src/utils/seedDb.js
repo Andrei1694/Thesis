@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { faker } from '@faker-js/faker';
 import { User } from '../services/user.service.mjs';
-import DeviceModel from '../models/Device.model.mjs';
+import Device from '../models/Device.model.mjs';
 
 const MONGODB_URI = 'mongodb://localhost:6001/test'; // Replace with your MongoDB URI
 const NUM_USERS = 50; // Number of sample users to create
@@ -43,7 +43,7 @@ async function seedDatabase() {
 
         // Clear existing users and devices
         await User.deleteMany({});
-        await DeviceModel.deleteMany({});
+        await Device.deleteMany({});
         console.log('Cleared existing users and devices');
 
         // Generate and insert new users
@@ -55,7 +55,7 @@ async function seedDatabase() {
         // Generate and insert new devices
         const devicePromises = Array.from({ length: NUM_DEVICES }, () => {
             const deviceData = generateRandomDevice();
-            return new DeviceModel(deviceData).save();
+            return new Device(deviceData).save();
         });
 
         // Wait for all insertions to complete
