@@ -72,7 +72,7 @@ const AuthForm = () => {
     }, {
       staleTime: THIRTY_DAYS_IN_MS,
     });
-    authLogin(token, user._id);
+    authLogin(token, user._id, user.admin);
     navigate("/profile");
   };
 

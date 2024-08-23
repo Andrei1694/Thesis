@@ -1,65 +1,53 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { createBrowserRouter, RouterProvider, Navigate, Outlet } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "./utils/auth";
+
+// Import components
 import Navbar from "./components/navbar.component";
-import { createBrowserRouter, Outlet, RouterProvider, Navigate } from "react-router-dom";
 import DevicesListPage from "./pages/Device/device-list.page";
 import DeviceDetails from "./pages/Device/device-details.page";
-import { QueryClient, QueryClientProvider } from "react-query";
 import Profile from "./pages/User/profile.page";
 import Users from "./pages/User/users.page";
 import LoginPage from "./pages/Login/login.page";
 import PublicLayout from "./layouts/PublicLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import { AuthProvider } from "./utils/auth"; // Make sure to create this file if it doesn't exist
 
 // Create a client
 export const queryClient = new QueryClient();
 
-const RootLayout = () => {
+const AppLayout = () => {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <Outlet />
-    </>
+    </AuthProvider>
   );
 };
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: <AppLayout />,
     children: [
       {
         path: "/",
         element: <AuthLayout />,
         children: [
           { index: true, element: <Navigate to="/devices" replace /> },
-          {
-            path: "profile",
-            element: <Profile />,
-          },
-          {
-            path: "users",
-            element: <Users />,
-          },
-          {
-            path: "devices/:id",
-            element: <DeviceDetails />,
-          },
-          {
-            path: "devices",
-            element: <DevicesListPage />,
-          },
+          { path: "profile", element: <Profile /> },
+          { path: "users", element: <Users /> },
+          { path: "users/:id", element: <Profile /> },
+          { path: "devices/:id", element: <DeviceDetails /> },
+          { path: "devices", element: <DevicesListPage /> },
         ],
       },
       {
         path: '/',
         element: <PublicLayout />,
         children: [
-          {
-            path: "login",
-            element: <LoginPage />,
-          },
+          { path: "login", element: <LoginPage /> },
         ]
       }
     ],
@@ -68,11 +56,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
 

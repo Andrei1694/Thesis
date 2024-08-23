@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import UserCard from "./usercard.component";
 import { useQuery } from "react-query";
 import { getAllUsers } from "../../utils/requests";
-import { queryClient } from "../../App";
 import Spinner from "../../components/spinner.component";
+import { useNavigate } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 function Pagination({ currentPage, totalPages, onPageChange }) {
@@ -31,7 +30,9 @@ function UsersPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [sortField, setSortField] = useState("firstName");
   const [sortOrder, setSortOrder] = useState("asc");
-  const authData = queryClient.getQueryData('authToken')
+  const navigate = useNavigate();
+
+  // const authData = queryClient.getQueryData('authToken')
   const {
     data,
     isLoading,
@@ -84,7 +85,7 @@ function UsersPage() {
         </select>
       </div>
       {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> :
-        users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} />)}
+        users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} onClick={() => navigate(`/users/${user._id}`)} />)}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
