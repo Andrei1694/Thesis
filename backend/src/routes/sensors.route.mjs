@@ -6,6 +6,7 @@ const sensorRouter = new Express.Router()
 sensorRouter.post('/', httpCreateSensor)
 sensorRouter.get('/', httpGetSensors)
 sensorRouter.get('/:id', httpGetSensor)
+sensorRouter.post('/device', httpGetSensorsByDevice)
 sensorRouter.put('/:id', httpUpdateSensor)
 sensorRouter.delete('/:id', httpDeleteSensor)
 

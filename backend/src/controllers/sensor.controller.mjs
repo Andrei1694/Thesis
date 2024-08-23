@@ -36,7 +36,7 @@ async function httpCreateSensor(req, res) {
 }
 
 async function httpGetSensorsByDevice(req, res) {
-    const { deviceId } = req.params
+    const { deviceId } = req.body
     if (!deviceId) {
         return res.status(400).json({ message: 'Missing deviceId' })
     }
