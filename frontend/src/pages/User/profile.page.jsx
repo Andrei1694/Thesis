@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { getUser, updateUser } from "../../utils/requests";
-import { queryClient } from "../../App";
 import { useAuth } from "../../utils/auth";
 import Input from "../../components/input.component";
 import Button from "../../components/button.component";
+import { useParams } from "react-router-dom";
 
 const getInitials = (firstName, lastName) => {
   if (firstName && lastName) {
@@ -38,8 +38,11 @@ function ProfilePicture({ formik }) {
 
 function ProfilePage() {
   const [isEditMode, setEditMode] = useState(false);
-  const { isAuthenticated, userId } = useAuth();
-
+  const { isAuthenticated, userId: myId, isAdmin } = useAuth();
+  const { id } = useParams();
+  let userId = id ?? myId;
+  const canEdit = userId === myId ?? isAdmin;
+  console.log(userId, myId, isAdmin);
   const {
     data: userData,
     isLoading,
@@ -52,7 +55,6 @@ function ProfilePage() {
     },
     onError: (error) => {
       console.error("Error fetching user:", error);
-      // Display error message to the user
     },
     enabled: isAuthenticated && !!userId,
   });
@@ -99,9 +101,15 @@ function ProfilePage() {
     return <div>Error loading profile. Please try again later.</div>;
   }
 
+  if (!userData) {
+    return <div>No user data found.</div>;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-customPrimary">My Profile</h1>
+      <h1 className="text-4xl font-bold mb-8 text-customPrimary">
+        {canEdit ? "My Profile" : `${userData.firstName}'s Profile`}
+      </h1>
       <div className="bg-white rounded-[10px] shadow p-6">
         <div className="flex flex-col md:flex-row">
           <ProfilePicture formik={formik} />
@@ -137,7 +145,7 @@ function ProfilePage() {
             type="submit"
             className="bg-customPrimary text-white rounded-md px-4 py-2"
             onClick={formik.handleSubmit}
-            disabled={isUpdating}
+            disabled={isUpdating || !canEdit}
           >
             {isEditMode ? (isUpdating ? "Saving..." : "Save Changes") : "Edit"}
           </Button>

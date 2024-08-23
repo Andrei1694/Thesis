@@ -1,3 +1,4 @@
+import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "../components/button.component";
@@ -55,18 +56,21 @@ function DeviceForm({ mode = "create", device, onSubmit }) {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="flex flex-col items-start">
-      {Object.keys(formik.values).map((field) => (
-        <Input
-          key={field}
-          label={formatFieldName(field)}
-          error={formik.errors[field]}
-          {...formik.getFieldProps(field)}
-          className="w-full"
-        />
-      ))}
-      <Button type="submit" className="mt-4">
-        Submit
+    <form onSubmit={formik.handleSubmit} className="w-full max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {Object.keys(formik.values).map((field) => (
+          <div key={field} className="mb-2">
+            <Input
+              label={formatFieldName(field)}
+              error={formik.errors[field]}
+              {...formik.getFieldProps(field)}
+              className="w-full"
+            />
+          </div>
+        ))}
+      </div>
+      <Button type="submit" className="mt-4 w-full">
+        {mode === "create" ? "Create Device" : "Update Device"}
       </Button>
     </form>
   );

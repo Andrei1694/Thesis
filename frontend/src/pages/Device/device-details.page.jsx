@@ -16,7 +16,7 @@ import {
   STOP_STREAMING,
 } from "../../utils/typeDefs";
 
-const VITE_API_WS_URL = import.meta.env.VITE_API_WS_URL;
+const SOCKET_SERVER_URL = 'http://localhost:4000'
 let socket;
 
 function DeviceDetails() {
@@ -39,7 +39,7 @@ function DeviceDetails() {
   });
 
   useEffect(() => {
-    socket = io(`wss://${VITE_API_WS_URL}`, {
+    socket = io(`${SOCKET_SERVER_URL}`, {
       path: "/socket.io",
       transports: ["websocket"],
       query: { clientType: "desktop" },
@@ -150,9 +150,8 @@ function DeviceDetails() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <RealTimeChart data={measurments} />
-      </div>
+
+      <RealTimeChart data={measurments} />
       <Modal isOpen={isModalOpen} onClose={closeModal} heading="Edit Device">
         <DeviceForm
           mode="edit"

@@ -9,11 +9,11 @@ const getInitials = (firstName, lastName) => {
   return "";
 };
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, onClick }) {
   const initials = getInitials(user.firstName, user.lastName);
 
   return (
-    <div className="bg-white rounded-[10px] shadow p-6 mb-4">
+    <div className="bg-white rounded-[10px] shadow p-6 mb-4" onClick={onClick}>
       <div className="flex items-center mb-4">
         {user.profileImage ? (
           <img
