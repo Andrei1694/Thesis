@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
 import logger from './logger.mjs';
 
-const URL = 'https://thesis-production.up.railway.app';
+const URL = 'http://localhost:4000';
 const deviceName = 'adsasddas';
 const reconnectInterval = 5000; // Retry connection every 5 seconds
 
