@@ -62,8 +62,9 @@ export async function logoutUserHttp(req, res, next) {
 
 // Get all users
 export async function getAllUsersHttp(req, res, next) {
+  const { page, limit } = req.pagination
   try {
-    const users = await getAllUsers();
+    const users = await getAllUsers(page, limit);
     res.status(200).json(users);
   } catch (error) {
     next(error);

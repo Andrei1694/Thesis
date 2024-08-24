@@ -56,7 +56,6 @@ export const auth = async (req, res, next) => {
 
     const token = authHeader.replace('Bearer ', '');
     const decoded = await verifyToken(token);
-    console.log(decoded);
 
     const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
     if (!user) {

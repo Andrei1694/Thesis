@@ -25,8 +25,9 @@ export async function createDevice(device) {
   return response;
 }
 
-export async function fetchDevices(page = 1, sortBy = null) {
-  let url = `device/?page=${page}`;
+export async function fetchDevices(page = 1, itemsPerPage = 5, sortBy = null) {
+  let url = `device/?page=${page}&limit=${itemsPerPage}`;
+
 
   if (sortBy) {
     const [name, order] = sortBy.split(":");
@@ -73,8 +74,8 @@ export async function logout() {
   const response = await api.get(`/user/logout`);
   return response.data;
 }
-export async function getAllUsers() {
-  const response = await api.get(`/user`);
+export async function getAllUsers(page = 1, limit = 20) {
+  const response = await api.get(`/user?page=${page}&limit=${limit}`);
   return response.data;
 }
 

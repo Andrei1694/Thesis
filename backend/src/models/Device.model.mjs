@@ -27,4 +27,5 @@ deviceSchema.methods.toJSON = function () {
     return rest;
 }
 const Device = mongoose.model('Device', deviceSchema)
+
 export default Device

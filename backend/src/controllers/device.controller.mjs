@@ -4,12 +4,9 @@ export async function httpGetDevicesPaginated(req, res, next) {
     const { page, limit } = req.pagination;
     const { sortBy } = req.query
     try {
-
         const sort = {}
         if (sortBy) {
-            console.log(sortBy)
             const parts = sortBy.split(":")
-            // console.log(parts[0], parts[1])
             sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
         }
         const devices = await Device.find()

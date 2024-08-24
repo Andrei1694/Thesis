@@ -8,7 +8,7 @@ import {
   loginUserHttp,
   logoutUserHttp,
 } from "../controllers/user.controller.mjs";
-import { auth } from "../utils/middlewares.mjs";
+import { auth, generatePagination } from "../utils/middlewares.mjs";
 
 const userRouter = express.Router();
 
@@ -23,7 +23,7 @@ userRouter.post("/login", loginUserHttp);
 userRouter.get("/logout", auth, logoutUserHttp);
 
 // Get all users
-userRouter.get("/", auth, getAllUsersHttp);
+userRouter.get("/", auth, generatePagination, getAllUsersHttp);
 
 // Get a user by ID
 userRouter.get("/:id", auth, getUserByIdHttp);
