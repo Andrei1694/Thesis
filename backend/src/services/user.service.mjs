@@ -158,9 +158,9 @@ export async function createUser(userData) {
 }
 
 // Get all users
-export async function getAllUsers(page = 1, limit = 20) {
+export async function getAllUsers(page = 1, limit = 20, sortBy = null) {
     try {
-        const users = await User.find({}).skip((page - 1) * limit).limit(limit);
+        const users = await User.find({}).skip((page - 1) * limit).limit(limit).sort(sortBy);
         const total = await User.countDocuments()
         return { users, total };
     } catch (error) {

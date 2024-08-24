@@ -5,39 +5,54 @@ import { getAllUsers } from "../../utils/requests";
 import Spinner from "../../components/spinner.component";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/pagination.component";
+import { useFormik } from "formik";
 
-const PAGE_SIZE = 10;
-// function Pagination({ currentPage, totalPages, onPageChange }) {
-//   return (
-//     <div className="flex justify-center mt-8">
-//       {Array.from({ length: totalPages }, (_, index) => (
-//         <button
-//           key={index}
-//           className={`px-4 py-2 mx-1 rounded-md ${currentPage === index + 1
-//             ? "bg-customPrimary text-white"
-//             : "bg-white text-customDark"
-//             }`}
-//           onClick={() => onPageChange(index + 1)}
-//         >
-//           {index + 1}
-//         </button>
-//       ))}
-//     </div>
-//   );
-// }
+function UsersFilter({ onSortChange }) {
+  const sortOptions = [
+    { label: "A-Z", value: { key: "firstName", order: "asc" } },
+    { label: "Z-A", value: { key: "firstName", order: "desc" } },
+    { label: "Newest", value: { key: "createdAt", order: "asc" } },
+    { label: "Oldest", value: { key: "createdAt", order: "desc" } },
+  ];
+  const formik = useFormik({
+    initialValues: { sortOption: sortOptions[0].value },
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit} className="w-full max-w-xs">
+      <div className="flex flex-col mb-4">
+        <label htmlFor="sortSelect" className="mb-1">
+          Sort By:
+        </label>
+        <select
+          id="sortSelect"
+          name="sortOption"
+          value={JSON.stringify(formik.values.sortOption.label)}
+          onChange={(e) => onSortChange(JSON.stringify(e.target.value))}
+          className="border border-gray-300 rounded px-3 py-2 outline-none focus:border-blue-500"
+        >
+          {sortOptions?.map(({ label, value }) => (
+            <option key={label} value={JSON.stringify(value)}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+    </form>
+  );
+}
+
 function UsersPage() {
   const [users, setUsers] = useState([]);
-  const [sortField, setSortField] = useState("firstName");
-  const [sortOrder, setSortOrder] = useState("asc");
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const page = searchParams.get("page");
-  // const authData = queryClient.getQueryData('authToken')
+  const sortBy = searchParams.get("sortBy");
   const {
     data,
     isLoading,
     error: fetchError,
-  } = useQuery(["users", page], () => getAllUsers(page, 5), {
+  } = useQuery(["users", page, sortBy], () => getAllUsers(page, 5, sortBy), {
     onSuccess: (data) => {
       setUsers(data.users);
     },
@@ -47,42 +62,22 @@ function UsersPage() {
     },
   });
   useEffect(() => {
-    setSearchParams({ page: 1 });
+    setSearchParams({ page: 1, sortBy: "firstName:asc" });
   }, []);
 
+  const handleSortChange = (option) => {
+    const { key, order } = JSON.parse(JSON.parse(option));
 
-  const handlePageChange = (page) => {
-    setSearchParams({ page });
-  };
-
-  const handleSortChange = (field) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortField(field);
-      setSortOrder("asc");
-    }
+    setSearchParams({
+      sortBy: `${decodeURIComponent(key)}:${decodeURIComponent(order)}`,
+      page: searchParams.get("page"),
+    });
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-customPrimary">Users</h1>
-      <div className="mb-8">
-        <label htmlFor="sortField" className="mr-4">
-          Sort by:
-        </label>
-        <select
-          id="sortField"
-          className="px-4 py-2 rounded-md border border-customDark"
-          value={sortField}
-          onChange={(e) => handleSortChange(e.target.value)}
-        >
-          <option value="firstName">First Name</option>
-          <option value="lastName">Last Name</option>
-          <option value="email">Email</option>
-          <option value="jobTitle">Job Title</option>
-        </select>
-      </div>
+      <UsersFilter onSortChange={handleSortChange} />
       {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> :
         users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} onClick={() => navigate(`/users/${user._id}`)} />)}
       <Pagination

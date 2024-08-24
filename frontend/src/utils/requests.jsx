@@ -74,8 +74,13 @@ export async function logout() {
   const response = await api.get(`/user/logout`);
   return response.data;
 }
-export async function getAllUsers(page = 1, limit = 20) {
-  const response = await api.get(`/user?page=${page}&limit=${limit}`);
+export async function getAllUsers(page = 1, limit = 20, sortBy = null) {
+  let url = `/user?page=${page}&limit=${limit}`;
+  if (sortBy) {
+    const [name, order] = sortBy.split(":");
+    url += `&sortBy=${name}:${order}`;
+  }
+  const response = await api.get(url);
   return response.data;
 }
 
