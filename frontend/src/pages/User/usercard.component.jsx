@@ -13,8 +13,8 @@ export default function UserCard({ user, onClick }) {
   const initials = getInitials(user.firstName, user.lastName);
 
   return (
-    <div className="bg-white rounded-[10px] shadow p-6 mb-4" onClick={onClick}>
-      <div className="flex items-center mb-4">
+    <div className="bg-white rounded-[10px] shadow px-3 mb-4 h-72 overflow-hidden" onClick={onClick}>
+      <div className="flex flex-col items-center mb-4 mt-2">
         {user.profileImage ? (
           <img
             src={user.profileImage}
@@ -26,8 +26,8 @@ export default function UserCard({ user, onClick }) {
             <span className="text-2xl font-bold text-white">{initials}</span>
           </div>
         )}
-        <div>
-          <h2 className="text-2xl font-bold text-customPrimary">
+        <div className='mt-2'>
+          <h2 className="text-2xl font-bold text-customPrimary whitespace-nowrap text-center">
             {user.firstName} {user.lastName}
           </h2>
           <p className="text-customDark">{user.jobTitle}</p>

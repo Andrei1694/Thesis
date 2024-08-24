@@ -48,11 +48,13 @@ function UsersPage() {
   const navigate = useNavigate();
   const page = searchParams.get("page");
   const sortBy = searchParams.get("sortBy");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
   const {
     data,
     isLoading,
+    isSuccess,
     error: fetchError,
-  } = useQuery(["users", page, sortBy], () => getAllUsers(page, 5, sortBy), {
+  } = useQuery(["users", page, sortBy], () => getAllUsers(page, itemsPerPage, sortBy), {
     onSuccess: (data) => {
       setUsers(data.users);
     },
@@ -74,17 +76,50 @@ function UsersPage() {
     });
   };
 
+  const renderUsers = () => {
+    if (isLoading) {
+      return (
+        <div className="w-full h-full flex justify-center items-center">
+          <Spinner />
+        </div>
+      );
+    }
+
+    if (users) {
+      return (
+        <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {isSuccess && users?.map((user) => (
+            <div key={`userCard${user._id}`}>
+              <UserCard
+                user={user}
+
+                onClick={() => navigate(`/users/${_id}`)}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-customPrimary">Users</h1>
       <UsersFilter onSortChange={handleSortChange} />
-      {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> :
-        users?.map((user, index) => <UserCard key={`${index}${index}`} user={user} onClick={() => navigate(`/users/${user._id}`)} />)}
-      <Pagination
-        page={searchParams.get("page")}
-        total={data?.total}
-        itemsPerPage={5}
-      />
+      {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> : renderUsers()}
+
+      <div className="mt-5 mb-5">
+        {!isLoading && (
+          <Pagination
+            page={searchParams.get("page")}
+            total={data?.total}
+            itemsPerPage={itemsPerPage}
+          />
+        )}
+      </div>
+
     </div>
   );
 }
