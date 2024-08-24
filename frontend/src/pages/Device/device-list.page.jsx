@@ -18,9 +18,10 @@ function DevicesListPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const { data, isLoading, isSuccess } = useQuery(["devices", page, sortBy], () =>
-    fetchDevices(page, sortBy)
+    fetchDevices(page, itemsPerPage, sortBy)
   );
 
   const createDeviceMutation = useMutation({
@@ -105,8 +106,8 @@ function DevicesListPage() {
         {!isLoading && (
           <Pagination
             page={searchParams.get("page")}
-            limit={searchParams.get("limit")}
             total={data?.total}
+            itemsPerPage={itemsPerPage}
           />
         )}
       </div>

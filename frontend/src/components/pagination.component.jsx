@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 
-function DefaultPagination({ total, page }) {
+function Pagination({ total, page, itemsPerPage = 20 }) {
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
-    setTotalPages(Math.ceil(total / 20));
+    setTotalPages(Math.ceil(total / itemsPerPage));
   }, [page, total]);
   const createLink = (pageNumber) => {
     search.set('page', pageNumber)
@@ -21,8 +21,8 @@ function DefaultPagination({ total, page }) {
           key={`page${number}`}
           to={createLink(number)}
           className={`inline-block px-3 py-1 mx-1 rounded-md ${parseInt(page) === number
-              ? "bg-customPrimary text-white"
-              : "bg-customSecondary text-customDark hover:bg-customSecondary"
+            ? "bg-customPrimary text-white"
+            : "bg-customSecondary text-customDark hover:bg-customSecondary"
             }`}
         >
           {number}
@@ -39,4 +39,4 @@ function DefaultPagination({ total, page }) {
   );
 }
 
-export default DefaultPagination;
+export default Pagination;
