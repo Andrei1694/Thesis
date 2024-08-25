@@ -80,8 +80,44 @@ export async function getSensor(id) {
     return sensor;
 }
 export async function getSensorsByDevice(deviceId) {
-    const device = await Device.findById(deviceId).populate('sensors');
-    return device ? device.sensors : [];
+    try {
+        // Fetch the device
+        const device = await Device.findById(deviceId);
+        if (!device) {
+            throw new Error('Device not found');
+        }
+
+        console.log('Original device sensors array:', device.sensors);
+
+        // Fetch existing sensors
+        const existingSensors = await Sensor.find({ _id: { $in: device.sensors } });
+
+        console.log('Existing sensors:', existingSensors);
+
+        // Find IDs of deleted sensors
+        const deletedSensorIds = device.sensors.filter(id =>
+            !existingSensors.some(sensor => sensor._id.equals(id))
+        );
+
+        if (deletedSensorIds.length > 0) {
+            console.log('Deleted sensor IDs:', deletedSensorIds);
+
+            // Remove deleted sensor IDs from the device
+            device.sensors = device.sensors.filter(id =>
+                !deletedSensorIds.some(deletedId => deletedId.equals(id))
+            );
+
+            // Save the updated device
+            await device.save();
+
+            console.log('Updated device sensors array:', device.sensors);
+        }
+
+        return existingSensors;
+    } catch (error) {
+        console.error('Error in getSensorsByDevice:', error);
+        throw error;
+    }
 }
 
 export async function updateSensor(id, data) {

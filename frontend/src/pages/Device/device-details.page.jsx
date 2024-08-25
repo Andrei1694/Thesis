@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { fetchDevice, updateDevice, deleteDevice } from "../../utils/requests";
+import { fetchDevice, updateDevice, deleteDevice, fetchSensors } from "../../utils/requests";
 import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/device.form";
 import Button from "../../components/button.component";
 import Spinner from "../../components/spinner.component";
 import RealTimeChart from "../../components/realtime-chart.component";
 import io from "socket.io-client";
-
+import Sensor from "./sensor.component";
 import {
   JOIN_ROOM,
   RECEIVE_DATA,
@@ -34,6 +34,16 @@ function DeviceDetails() {
   } = useQuery(["devices", id], () => fetchDevice(id), {
     onError: (error) => {
       console.error("Error fetching device:", error);
+      // Display error message to the user
+    },
+  });
+
+  const { data: sensorsData, isLoading: isSensorsLoading } = useQuery(["sensors", id], () => fetchSensors(id), {
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      console.error("Error fetching sensors:", error);
       // Display error message to the user
     },
   });
@@ -149,6 +159,16 @@ function DeviceDetails() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {sensorsData.map((sensor) => {
+          console.log(sensor);
+          return (
+            <div key={`sensor-${sensor._id}`}>
+              <Sensor name={sensor.name} />
+            </div>
+          )
+        })}
       </div>
 
       <RealTimeChart data={measurments} />

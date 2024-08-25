@@ -42,7 +42,7 @@ function ProfilePage() {
   const { id } = useParams();
   let userId = id ?? myId;
   const canEdit = userId === myId || isAdmin;
-  console.log(userId, myId, isAdmin, canEdit);
+
   const {
     data: userData,
     isLoading,
