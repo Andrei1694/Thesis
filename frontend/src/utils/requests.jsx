@@ -93,3 +93,8 @@ export async function updateUser(id, values) {
   const response = await api.put(`/user/${id}`, values);
   return response.data;
 }
+
+export async function fetchSensors(id) {
+  const response = await api.post('/sensors/device', { deviceId: id });
+  return response.data;
+}
