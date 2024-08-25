@@ -38,8 +38,8 @@ export default function UserCard({ user, onClick }) {
       </div>
       <div className="text-customDark group-hover:text-white">
         <p>Email: {user.email}</p>
-        <p>First Name: {user.firstName}</p>
-        <p>Last Name: {user.lastName}</p>
+        {/* <p>First Name: {user.firstName}</p>
+        <p>Last Name: {user.lastName}</p> */}
       </div>
     </div>
   );
