@@ -41,8 +41,8 @@ function ProfilePage() {
   const { isAuthenticated, userId: myId, isAdmin } = useAuth();
   const { id } = useParams();
   let userId = id ?? myId;
-  const canEdit = userId === myId ?? isAdmin;
-  console.log(userId, myId, isAdmin);
+  const canEdit = userId === myId || isAdmin;
+  console.log(userId, myId, isAdmin, canEdit);
   const {
     data: userData,
     isLoading,
