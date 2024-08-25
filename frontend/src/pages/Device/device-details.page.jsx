@@ -38,7 +38,7 @@ function DeviceDetails() {
     },
   });
 
-  const { data: sensorsData, isLoading: isSensorsLoading } = useQuery(["sensors", id], () => fetchSensors(id), {
+  const { data: sensorsData, isLoading: isSensorsLoading, isSuccess: isSensorsSuccess } = useQuery(["sensors", id], () => fetchSensors(id), {
     onSuccess: (response) => {
       console.log(response);
     },
@@ -123,6 +123,18 @@ function DeviceDetails() {
     return <div>Error fetching device: {fetchError.message}</div>;
   }
 
+  const renderSensors = () => {
+    return isSensorsSuccess && sensorsData.map((sensor) => {
+      console.log(sensor);
+      return (
+        <div key={`sensor-${sensor._id}`}>
+          <Sensor name={sensor.name} />
+        </div>
+      )
+    })
+
+  }
+
   return (
     <div className="mt-3">
       <div className="container">
@@ -160,18 +172,14 @@ function DeviceDetails() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sensorsData.map((sensor) => {
-          console.log(sensor);
-          return (
-            <div key={`sensor-${sensor._id}`}>
-              <Sensor name={sensor.name} />
-            </div>
-          )
-        })}
+      <div className="container">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {renderSensors()}
+        </div>
       </div>
 
       <RealTimeChart data={measurments} />
+
       <Modal isOpen={isModalOpen} onClose={closeModal} heading="Edit Device">
         <DeviceForm
           mode="edit"
