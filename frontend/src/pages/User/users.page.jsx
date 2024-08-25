@@ -43,12 +43,17 @@ function UsersFilter({ onSortChange }) {
 }
 
 function UsersPage() {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const page = searchParams.get("page");
   const sortBy = searchParams.get("sortBy");
   const [itemsPerPage, setItemsPerPage] = useState(20);
+
+  useEffect(() => {
+    setSearchParams({ page: 1, sortBy: "firstName:asc" });
+  }, []);
+
   const {
     data,
     isLoading,
@@ -56,16 +61,14 @@ function UsersPage() {
     error: fetchError,
   } = useQuery(["users", page, sortBy], () => getAllUsers(page, itemsPerPage, sortBy), {
     onSuccess: (data) => {
-      setUsers(data.users);
+
     },
     onError: (error) => {
       console.error("Error fetching device:", error);
       // Display error message to the user
     },
   });
-  useEffect(() => {
-    setSearchParams({ page: 1, sortBy: "firstName:asc" });
-  }, []);
+
 
   const handleSortChange = (option) => {
     const { key, order } = JSON.parse(JSON.parse(option));
@@ -85,15 +88,15 @@ function UsersPage() {
       );
     }
 
-    if (users) {
+    if (data) {
+      const { users } = data;
       return (
-        <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-rows-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {isSuccess && users?.map((user) => (
             <div key={`userCard${user._id}`}>
               <UserCard
                 user={user}
-
-                onClick={() => navigate(`/users/${_id}`)}
+                onClick={() => navigate(`/users/${user._id}`)}
               />
             </div>
           ))}
@@ -108,7 +111,7 @@ function UsersPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-customPrimary">Users</h1>
       <UsersFilter onSortChange={handleSortChange} />
-      {isLoading ? <div className="h-100 w-100"> <Spinner /> </div> : renderUsers()}
+      {renderUsers()}
 
       <div className="mt-5 mb-5">
         {!isLoading && (

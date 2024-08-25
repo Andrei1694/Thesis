@@ -4,7 +4,7 @@ function DeviceCard({ deviceName, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="w-[113px] h-[108px] shadow-sm rounded-[10px] cursor-pointer hover:bg-customSecondary text-customDark hover:text-white"
+      className="w-[113px] h-[108px] shadow rounded-[10px] cursor-pointer hover:bg-customSecondary text-customDark hover:text-white"
     >
       <div className="h-[108px] px-2 py-6 rounded-[10px] shadow flex-col justify-start items-center gap-4 inline-flex">
         <div className="flex flex-col justify-center ">

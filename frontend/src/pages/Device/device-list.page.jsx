@@ -62,7 +62,7 @@ function DevicesListPage() {
       );
     }
 
-    if (data) {
+    if (data && isSuccess) {
       const { data: devices } = data;
       return (
         <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">

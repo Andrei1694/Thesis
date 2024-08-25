@@ -11,9 +11,8 @@ const getInitials = (firstName, lastName) => {
 
 export default function UserCard({ user, onClick }) {
   const initials = getInitials(user.firstName, user.lastName);
-
   return (
-    <div className="bg-white rounded-[10px] shadow px-3 mb-4 h-72 overflow-hidden" onClick={onClick}>
+    <div className="hover:bg-customSecondary bg-white rounded-[10px] shadow px-3 mb-4 h-72 overflow-hidden" onClick={onClick}>
       <div className="flex flex-col items-center mb-4 mt-2">
         {user.profileImage ? (
           <img
