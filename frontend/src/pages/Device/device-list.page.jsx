@@ -8,8 +8,8 @@ import Modal from "../../components/modal.component";
 import DeviceForm from "../../forms/device.form";
 import Spinner from "../../components/spinner.component";
 import DeviceFilter from "./device-filter.component";
-import DeviceSearch from "./device-search.component";
 import Button from "../../components/button.component";
+import { useAuth } from "../../utils/auth";
 
 function DevicesListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,8 +18,8 @@ function DevicesListPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-
+  const [itemsPerPage] = useState(25);
+  const { isAdmin } = useAuth();
   const { data, isLoading, isSuccess } = useQuery(["devices", page, sortBy], () =>
     fetchDevices(page, itemsPerPage, sortBy)
   );
@@ -62,7 +62,7 @@ function DevicesListPage() {
       );
     }
 
-    if (data) {
+    if (data && isSuccess) {
       const { data: devices } = data;
       return (
         <div className="grid grid-cols-1 sm:grid-rows-5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
@@ -83,16 +83,13 @@ function DevicesListPage() {
 
   return (
     <div className="container mt-3">
-      {/* <div className="container mt-3">
-        <DeviceSearch />
-      </div> */}
-      <div className="container mt-3">
+      <div className="">
         <DeviceFilter onSortChange={handleSortChange} />
       </div>
 
       <div className="container mt-3 w-full h-[500px]">{renderDevices()}</div>
       <div className="container mt-5">
-        <Button onClick={handleModalOpen}>Create Device</Button>
+        {isAdmin && <Button onClick={handleModalOpen}>Create Device</Button>}
         <Modal
           heading="Register New Device"
           isOpen={isModalOpen}

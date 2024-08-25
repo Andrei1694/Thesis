@@ -41,8 +41,8 @@ function ProfilePage() {
   const { isAuthenticated, userId: myId, isAdmin } = useAuth();
   const { id } = useParams();
   let userId = id ?? myId;
-  const canEdit = userId === myId ?? isAdmin;
-  console.log(userId, myId, isAdmin);
+  const canEdit = userId === myId || isAdmin;
+  console.log(userId, myId, isAdmin, canEdit);
   const {
     data: userData,
     isLoading,
@@ -141,14 +141,14 @@ function ProfilePage() {
           </div>
         </div>
         <div className="mt-6">
-          <Button
+          {canEdit && (<Button
             type="submit"
             className="bg-customPrimary text-white rounded-md px-4 py-2"
             onClick={formik.handleSubmit}
             disabled={isUpdating || !canEdit}
           >
             {isEditMode ? (isUpdating ? "Saving..." : "Save Changes") : "Edit"}
-          </Button>
+          </Button>)}
         </div>
       </div>
     </div>

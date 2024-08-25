@@ -13,8 +13,11 @@ export default function UserCard({ user, onClick }) {
   const initials = getInitials(user.firstName, user.lastName);
 
   return (
-    <div className="bg-white rounded-[10px] shadow p-6 mb-4" onClick={onClick}>
-      <div className="flex items-center mb-4">
+    <div
+      className="group hover:bg-customSecondary rounded-[10px] shadow px-3 mb-4 h-72 overflow-hidden cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="flex flex-col items-center mb-4 mt-2">
         {user.profileImage ? (
           <img
             src={user.profileImage}
@@ -26,17 +29,17 @@ export default function UserCard({ user, onClick }) {
             <span className="text-2xl font-bold text-white">{initials}</span>
           </div>
         )}
-        <div>
-          <h2 className="text-2xl font-bold text-customPrimary">
+        <div className="mt-2 text-center">
+          <h2 className="text-2xl font-bold text-customPrimary group-hover:text-white whitespace-nowrap">
             {user.firstName} {user.lastName}
           </h2>
-          <p className="text-customDark">{user.jobTitle}</p>
+          <p className="text-customDark group-hover:text-white">{user.jobTitle}</p>
         </div>
       </div>
-      <div>
-        <p className="text-customDark">Email: {user.email}</p>
-        <p className="text-customDark">First Name: {user.firstName}</p>
-        <p className="text-customDark">Last Name: {user.lastName}</p>
+      <div className="text-customDark group-hover:text-white">
+        <p>Email: {user.email}</p>
+        {/* <p>First Name: {user.firstName}</p>
+        <p>Last Name: {user.lastName}</p> */}
       </div>
     </div>
   );

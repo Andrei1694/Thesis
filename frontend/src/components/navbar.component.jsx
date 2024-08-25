@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getUser, searchDevices } from "../utils/requests";
 import { useQuery } from "react-query";
 import { queryClient } from "../App";
@@ -23,8 +23,9 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const { isAuthenticated, logout, userId } = useAuth();
-
+  const { isAuthenticated, logout, userId, isAdmin } = useAuth();
+  const activeClassName = "bg-customSecondary text-white px-3 py-2 rounded-md text-sm font-medium";
+  const inactiveClassName = "text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium";
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -32,7 +33,7 @@ const Navbar = () => {
   const [filteredDevices, setFilteredDevices] = useState([]);
   const inputRef = useRef(null);
 
-  const { data: user, isLoading: isUserLoading, refetch: fetchUser } = useQuery(
+  const query = useQuery(
     ["user", userId],
     () => getUser(userId),
     {
@@ -88,26 +89,32 @@ const Navbar = () => {
             <div className="hidden md:block">
               {isAuthenticated && (
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <Link
+                  <NavLink
                     to="/profile"
-                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    className={({ isActive }) =>
+                      isActive ? activeClassName : inactiveClassName
+                    }
                   >
                     My Profile
-                  </Link>
-                  <Link
-                    to="/devices?page=1"
-                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                  </NavLink>
+                  <NavLink
+                    to="/devices"
+                    className={({ isActive }) =>
+                      isActive ? activeClassName : inactiveClassName
+                    }
                   >
                     Devices
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/users"
-                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    className={({ isActive }) =>
+                      isActive ? activeClassName : inactiveClassName
+                    }
                   >
                     Users
-                  </Link>
+                  </NavLink>
                   <button
-                    className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium"
+                    className={inactiveClassName}
                     onClick={handleLogout}
                   >
                     Logout
@@ -115,17 +122,24 @@ const Navbar = () => {
                 </div>
               )}
               {!isAuthenticated && (
-                <Link to="/login" className="text-white hover:bg-customSecondary px-3 py-2 rounded-md text-sm font-medium">
-                  Login
-                </Link>
+                <div className="ml-10 flex items-baseline space-x-4">
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive ? activeClassName : inactiveClassName
+                    }
+                  >
+                    Login
+                  </NavLink>
+                </div>
               )}
             </div>
           </div>
-          <div className="hidden md:block">
+          {isAdmin && (<div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               <SearchBar />
             </div>
-          </div>
+          </div>)}
           {isAuthenticated && (
             <Link to="/profile">
               <UserLogo firstName={firstName} lastName={lastName} />
@@ -171,24 +185,36 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
+            <NavLink
               to="/profile"
-              className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-customSecondary text-white block px-3 py-2 rounded-md text-base font-medium"
+                  : "text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              }
             >
               My Profile
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/devices"
-              className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-customSecondary text-white block px-3 py-2 rounded-md text-base font-medium"
+                  : "text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              }
             >
               Devices
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/users"
-              className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-customSecondary text-white block px-3 py-2 rounded-md text-base font-medium"
+                  : "text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
+              }
             >
               Users
-            </Link>
+            </NavLink>
             <button
               className="text-white hover:bg-customSecondary block px-3 py-2 rounded-md text-base font-medium"
               onClick={handleLogout}
@@ -196,6 +222,7 @@ const Navbar = () => {
               Logout
             </button>
           </div>
+
           <div className="relative">
             <input
               ref={inputRef}
