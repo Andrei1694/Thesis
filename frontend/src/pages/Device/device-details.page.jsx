@@ -38,7 +38,7 @@ function DeviceDetails() {
     },
   });
 
-  const { data: sensorsData, isLoading: isSensorsLoading, isSuccess: isSensorsSuccess } = useQuery(["sensors", id], () => fetchSensors(id), {
+  const { data: sensorsData, error: sensorError, isLoading: isSensorsLoading, isSuccess: isSensorsSuccess } = useQuery(["sensors", id], () => fetchSensors(id), {
     onSuccess: (response) => {
       console.log(response);
     },
@@ -124,6 +124,8 @@ function DeviceDetails() {
   }
 
   const renderSensors = () => {
+    if (isSensorsLoading) return <Spinner />;
+    if (sensorError) return <div>Error loading sensors: {error.message}</div>;
     return isSensorsSuccess && sensorsData.map((sensor) => {
       console.log(sensor);
       return (

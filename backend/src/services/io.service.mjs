@@ -1,83 +1,106 @@
 import { Server } from 'socket.io';
-import cors from 'cors';
-import MeasurmentService from './measurment.service.mjs';
-
-const CONNECTION = 'connection';
-const DISCONNECT = 'disconnect';
-const CPU_USAGE = 'cpu_usage';
-const DEVICE_IS_ONLINE = 'DEVICE_IS_ONLINE';
-const JOIN_ROOM = 'JOIN_ROOM';
-const SEND_DATA = 'SEND_DATA';
+import Device from '../models/Device.model.mjs';
+import MeasurementService from './measurment.service.mjs'
+const EventTypes = Object.freeze({
+  CONNECT: 'connect',
+  DISCONNECT: 'disconnect',
+  CHECK_DEVICE_EXISTS: 'CHECK_DEVICE_EXISTS',
+  DEVICE_EXISTS: 'DEVICE_EXISTS',
+  JOIN_ROOM: 'JOIN_ROOM',
+  SEND_DATA: 'SEND_DATA',
+  SEND_DATA_TO_DB: 'SEND_DATA_TO_DB',
+  DESKTOP_CONNECTED: 'DESKTOP_CONNECTED',
+  DESKTOP_DISCONNECTED: 'DESKTOP_DISCONNECTED',
+  RECEIVE_DATA: 'RECEIVE_DATA'
+});
 
 export default function SocketIOService(server) {
   const io = new Server(server, {
     cors: {
       origin: '*',
-      path: '/socket.io'
+      methods: ['GET', 'POST']
     },
+    path: '/socket.io'
   });
 
   const roomCounts = {};
   const clientRooms = {};
 
-  io.on(CONNECTION, (socket) => {
-    console.log(`A client connected ${socket.id}`);
+  io.on(EventTypes.CONNECT, (socket) => {
+    console.log(`A client connected: ${socket.id}`);
     const clientType = socket.handshake.query.clientType;
 
-    socket.on(JOIN_ROOM, (roomId) => {
-      if (clientRooms[socket.id] && clientRooms[socket.id] === roomId) {
-        console.log(`Client ${socket.id} already joined room ${roomId}`);
-        return;
+    socket.on(EventTypes.CHECK_DEVICE_EXISTS, async (deviceJson) => {
+      try {
+        const { key } = deviceJson;
+        let device = await Device.findOne({ key });
+        if (device) {
+          console.log(`Device ${device.deviceName} already exists in the database`);
+          socket.emit(EventTypes.DEVICE_EXISTS, [true, device.toObject()]);
+        } else {
+          const newDevice = new Device(deviceJson);
+          device = await newDevice.save();
+          console.log(`Device ${device.deviceName} created in the database`);
+          socket.emit(EventTypes.DEVICE_EXISTS, [false, device.toObject()]);
+        }
+      } catch (error) {
+        console.error('Error checking/creating device:', error);
+        socket.emit(EventTypes.DEVICE_EXISTS, [false, null]);
       }
+    });
 
+    socket.on(EventTypes.JOIN_ROOM, (roomId) => {
       socket.join(roomId);
       clientRooms[socket.id] = roomId;
-      console.log(`${clientType} client ${socket.id} joined room ${roomId}`);
-
-      if (clientType === 'device') {
-        io.to(roomId).emit(DEVICE_IS_ONLINE, true);
-      }
-
       if (clientType === 'desktop') {
         roomCounts[roomId] = (roomCounts[roomId] || 0) + 1;
-      }
-
-      socket.emit('START_STREAMING');
-    });
-
-    socket.on(SEND_DATA, async (data) => {
-      const { roomId, ...rest } = data;
-      console.log('=====');
-      console.log(rest);
-      console.log(roomCounts);
-
-      if (roomCounts[roomId] > 0) {
-        // Emit the data to all connected desktop clients in the room
-        console.log('send it to desktop');
-        console.log(roomCounts);
-        io.to(roomId).emit('RECEIVE_DATA', rest);
-      } else {
-        // No desktop client connected, send data to the database
-        try {
-          //   await MeasurmentService.createMeasurment(rest);
-          console.log('Data sent to the database:', rest);
-        } catch (error) {
-          console.error('Error sending data to the database:', error);
+        if (roomCounts[roomId] === 1) {
+          // Notify devices in this room that a desktop client has connected
+          io.to(roomId).emit(EventTypes.DESKTOP_CONNECTED);
         }
       }
+      console.log(`${clientType} client ${socket.id} joined room ${roomId}`);
     });
 
-    socket.on(DISCONNECT, () => {
-      console.log(`A client disconnected ${socket.id}`);
-      const roomId = clientRooms[socket.id];
+    socket.on(EventTypes.SEND_DATA, (data) => {
+      const { roomId, ...rest } = data;
+      io.to(roomId).emit(EventTypes.RECEIVE_DATA, rest);
+    });
 
-      if (clientType === 'desktop') {
-        roomCounts[roomId]--;
+    socket.on(EventTypes.SEND_DATA_TO_DB, async (data) => {
+      try {
+        const { cpuUsage, time, roomId } = data;
+        const [hours, minutes, seconds] = time.split(':').map(Number);
+        const timestamp = new Date();
+        timestamp.setHours(hours, minutes, seconds);
+
+        const { createMeasurement } = new MeasurementService();
+        console.log('Creating measurement:', data);
+        await createMeasurement({
+          value: cpuUsage,
+          metadata: { sensorId: roomId },
+          timestamp: timestamp
+        });
+
+        console.log('Data sent to the database:', data);
+      } catch (error) {
+        console.error('Error sending data to the database:', error);
       }
+    });
 
+    socket.on(EventTypes.DISCONNECT, () => {
+      console.log(`A client disconnected: ${socket.id}`);
+      const roomId = clientRooms[socket.id];
+      if (clientType === 'desktop' && roomId) {
+        roomCounts[roomId] = Math.max((roomCounts[roomId] || 1) - 1, 0);
+        if (roomCounts[roomId] === 0) {
+          // Notify devices in this room that all desktop clients have disconnected
+          io.to(roomId).emit(EventTypes.DESKTOP_DISCONNECTED);
+        }
+      }
       delete clientRooms[socket.id];
     });
   });
 
-  return { io };
+  return io;
 }
