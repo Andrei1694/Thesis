@@ -23,6 +23,7 @@ async function seedDatabase() {
             ipAddress: faker.internet.ip(),
             serialNumber: faker.datatype.uuid(),
             manufacturer: faker.company.companyName(),
+            key: faker.datatype.uuid()
         });
 
         await fakeDevice.save();

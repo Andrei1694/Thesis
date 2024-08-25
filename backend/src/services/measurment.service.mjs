@@ -1,7 +1,7 @@
 import MeasurmentModel from "../models/Measurment.model.mjs";
 
 export default function MeasurmentService() {
-    async function createMeasurment(data) {
+    async function createMeasurement(data) {
         if (!data) {
             throw Error('No data provided')
         }
@@ -15,6 +15,6 @@ export default function MeasurmentService() {
         }
     }
     return {
-        createMeasurment
+        createMeasurement
     }
 }
