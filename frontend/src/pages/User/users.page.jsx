@@ -11,8 +11,8 @@ function UsersFilter({ onSortChange }) {
   const sortOptions = [
     { label: "A-Z", value: { key: "firstName", order: "asc" } },
     { label: "Z-A", value: { key: "firstName", order: "desc" } },
-    { label: "Newest", value: { key: "createdAt", order: "asc" } },
-    { label: "Oldest", value: { key: "createdAt", order: "desc" } },
+    { label: "Newest", value: { key: "createdAt", order: "desc" } },
+    { label: "Oldest", value: { key: "createdAt", order: "asc" } },
   ];
   const formik = useFormik({
     initialValues: { sortOption: sortOptions[0].value },
