@@ -12,7 +12,7 @@ const SensorSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 25,
+        maxLength: 250,
         minLength: 2,
     },
     type: {
@@ -134,6 +134,35 @@ export async function updateSensor(id, data) {
     return sensor
 }
 
+export async function createDeviceWithSensors(deviceData, sensorsData) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const newDevice = new Device(deviceData);
+        await newDevice.save({ session });
+
+        const createdSensors = await Promise.all(sensorsData.map(async (sensorData) => {
+            const newSensor = new Sensor({
+                ...sensorData,
+                device: newDevice._id
+            });
+            await newSensor.save({ session });
+            return newSensor;
+        }));
+
+        newDevice.sensors = createdSensors.map(sensor => sensor._id);
+        await newDevice.save({ session });
+
+        await session.commitTransaction();
+        return newDevice.populate('sensors');
+    } catch (error) {
+        await session.abortTransaction();
+        throw error;
+    } finally {
+        session.endSession();
+    }
+}
 export async function deleteSensor(id) {
     if (!id) {
         throw new Error('Sensor ID is required');

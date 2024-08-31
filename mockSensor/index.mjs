@@ -2,8 +2,7 @@ import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
 import logger from './logger.mjs';
 
-const URL = 'http://192.168.1.7:4000';
-// const deviceName = 'adsasddas';
+const URL = 'http://localhost:4000';
 const reconnectInterval = 5000; // Retry connection every 5 seconds
 const streamInterval = 1000; // Stream data every 10 seconds
 
@@ -21,15 +20,43 @@ const EventTypes = Object.freeze({
 });
 
 const myDevice = {
-  deviceName: 'myDevice',
-  description: "lorem ipsum dolor sit amet",
-  location: "New York",
+  key: "unique_device_key_12345",
+  deviceName: "Smart Home Hub",
+  description: "Central hub for smart home devices",
+  location: "Living Room",
   country: "USA",
   ipAddress: "192.168.1.100",
-  serialNumber: "1234567890",
-  manufacturer: "Apple",
-  key: "1234567890"
-}
+  serialNumber: "SH-HUB-001",
+  manufacturer: "SmartTech Inc.",
+  sensors: [
+    {
+      name: "Temperature Sensor",
+      description: "Measures ambient temperature",
+      type: "temperature",
+      unit: "Celsius"
+    },
+    {
+      name: "Humidity Sensor",
+      description: "Measures relative humidity",
+      type: "humidity",
+      unit: "Percentage"
+    },
+    {
+      name: "Light Sensor",
+      description: "Detects ambient light levels",
+      type: "light",
+      unit: "Lux"
+    },
+    {
+      name: "Motion Sensor",
+      description: "Detects movement in the room",
+      type: "motion",
+      unit: "Boolean"
+    }
+  ]
+};
+
+const deviceName = myDevice.deviceName;
 
 function createSocketService(url) {
   let socket = io(url, {
@@ -44,7 +71,7 @@ function createSocketService(url) {
 
   let streamingInterval;
   let isDesktopConnected = false;
-  const { deviceName } = myDevice;
+
   logger.info(`Device Client (${deviceName}) started and trying to connect to ${url}`);
 
   socket.on(EventTypes.CONNECT, () => {

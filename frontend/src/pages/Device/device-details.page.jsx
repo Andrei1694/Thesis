@@ -49,17 +49,21 @@ function DeviceDetails() {
   });
 
   useEffect(() => {
+    if (!deviceData) return; // Exit if deviceData is not available yet
+
     socket = io(`${SOCKET_SERVER_URL}`, {
       path: "/socket.io",
       transports: ["websocket"],
       query: { clientType: "desktop" },
     });
 
-    socket.emit(JOIN_ROOM, "adsasddas");
+    const deviceName = deviceData.deviceName; // Use the actual device name
+    console.log(`Joining room for device: ${deviceName}`);
+    socket.emit(JOIN_ROOM, deviceName);
 
     socket.on(RECEIVE_DATA, (payload) => {
-      const { cpuUsage, date } = payload;
-      setMeasurements((prevData) => [...prevData, { date, uv: cpuUsage }]);
+      const { cpuUsage, time } = payload;
+      setMeasurements((prevData) => [...prevData, { date: time, uv: cpuUsage }]);
     });
 
     socket.on("disconnect", () => {
@@ -72,7 +76,7 @@ function DeviceDetails() {
       socket.emit(STOP_STREAMING);
       socket.disconnect();
     };
-  }, []);
+  }, [deviceData]); // Add deviceData as a dependency
 
   const {
     mutate: updateDeviceMutation,

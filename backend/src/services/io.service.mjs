@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
 import Device from '../models/Device.model.mjs';
 import MeasurementService from './measurment.service.mjs'
-
+import { createDeviceWithSensors } from './sensor.service.mjs';
 const EventTypes = Object.freeze({
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
@@ -33,16 +33,32 @@ export default function SocketIOService(server) {
 
     socket.on(EventTypes.CHECK_DEVICE_EXISTS, async (deviceJson) => {
       try {
-        const { key } = deviceJson;
+        console.log('deviceJson:', deviceJson);
+        const { key, sensors, ...deviceData } = deviceJson;
         let device = await Device.findOne({ key });
         if (device) {
           console.log(`Device ${device.deviceName} already exists in the database`);
           socket.emit(EventTypes.DEVICE_EXISTS, [true, device.toObject()]);
         } else {
-          const newDevice = new Device(deviceJson);
+          const newDevice = new Device({ ...deviceData, key });
           device = await newDevice.save();
           console.log(`Device ${device.deviceName} created in the database`);
-          socket.emit(EventTypes.DEVICE_EXISTS, [false, device.toObject()]);
+
+          // Create sensors for the device
+          if (sensors && Array.isArray(sensors)) {
+            for (const sensorData of sensors) {
+              try {
+                const newSensor = await createDeviceWithSensors(deviceData, sensorData);
+                console.log(`Sensor ${newSensor.name} created for device ${device.deviceName}`);
+              } catch (sensorError) {
+                console.error('Error creating sensor:', sensorError);
+              }
+            }
+          }
+
+          // Fetch the updated device with sensors
+          const updatedDevice = await Device.findById(device._id).populate('sensors');
+          socket.emit(EventTypes.DEVICE_EXISTS, [false, updatedDevice.toObject()]);
         }
       } catch (error) {
         console.error('Error checking/creating device:', error);
@@ -53,7 +69,6 @@ export default function SocketIOService(server) {
     socket.on(EventTypes.JOIN_ROOM, (roomId) => {
       socket.join(roomId);
       clientRooms[socket.id] = roomId;
-      console.log(` AICI ${clientType} client ${socket.id} joined room ${roomId}`);
       if (clientType === 'desktop') {
         roomCounts[roomId] = (roomCounts[roomId] || 0) + 1;
         if (roomCounts[roomId] === 1) {
