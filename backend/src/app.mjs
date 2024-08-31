@@ -19,11 +19,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const app = express()
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-app.use(cors({ origin: '*' }))
+
+app.use(cors({ origin: process.env.VITE_API_WS_URL }))
 app.use(compression());
 app.use(express.json())
 
