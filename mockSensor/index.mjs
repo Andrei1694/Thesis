@@ -20,8 +20,8 @@ const EventTypes = Object.freeze({
 });
 
 const myDevice = {
-  key: "unique_device_key_12345",
-  deviceName: "Smart Home Hub",
+  key: "21313312132132312",
+  deviceName: "Smart Home adsasdsaasd",
   description: "Central hub for smart home devices",
   location: "Living Room",
   country: "USA",

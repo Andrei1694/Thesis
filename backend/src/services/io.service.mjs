@@ -40,20 +40,21 @@ export default function SocketIOService(server) {
           console.log(`Device ${device.deviceName} already exists in the database`);
           socket.emit(EventTypes.DEVICE_EXISTS, [true, device.toObject()]);
         } else {
-          const newDevice = new Device({ ...deviceData, key });
-          device = await newDevice.save();
-          console.log(`Device ${device.deviceName} created in the database`);
+          // const newDevice = new Device({ ...deviceData, key });
+          // device = await newDevice.save();
+          // console.log(`Device ${device.deviceName} created in the database`);
 
           // Create sensors for the device
           if (sensors && Array.isArray(sensors)) {
-            for (const sensorData of sensors) {
-              try {
-                const newSensor = await createDeviceWithSensors(deviceData, sensorData);
-                console.log(`Sensor ${newSensor.name} created for device ${device.deviceName}`);
-              } catch (sensorError) {
-                console.error('Error creating sensor:', sensorError);
-              }
+
+            try {
+              deviceData.key = key
+              const newSensor = await createDeviceWithSensors(deviceData, sensors);
+              console.log(`Sensor ${newSensor.name} created for device ${deviceData.deviceName}`);
+            } catch (sensorError) {
+              console.error('Error creating sensor:', sensorError);
             }
+
           }
 
           // Fetch the updated device with sensors
