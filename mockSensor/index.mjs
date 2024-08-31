@@ -2,8 +2,8 @@ import { io } from 'socket.io-client';
 import { cpuUsage } from 'os-utils';
 import logger from './logger.mjs';
 
-const URL = 'http://localhost:4000';
-const deviceName = 'adsasddas';
+const URL = 'http://192.168.1.7:4000';
+// const deviceName = 'adsasddas';
 const reconnectInterval = 5000; // Retry connection every 5 seconds
 const streamInterval = 1000; // Stream data every 10 seconds
 
@@ -44,7 +44,7 @@ function createSocketService(url) {
 
   let streamingInterval;
   let isDesktopConnected = false;
-
+  const { deviceName } = myDevice;
   logger.info(`Device Client (${deviceName}) started and trying to connect to ${url}`);
 
   socket.on(EventTypes.CONNECT, () => {

@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import Device from '../models/Device.model.mjs';
 import MeasurementService from './measurment.service.mjs'
+
 const EventTypes = Object.freeze({
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
@@ -52,6 +53,7 @@ export default function SocketIOService(server) {
     socket.on(EventTypes.JOIN_ROOM, (roomId) => {
       socket.join(roomId);
       clientRooms[socket.id] = roomId;
+      console.log(` AICI ${clientType} client ${socket.id} joined room ${roomId}`);
       if (clientType === 'desktop') {
         roomCounts[roomId] = (roomCounts[roomId] || 0) + 1;
         if (roomCounts[roomId] === 1) {

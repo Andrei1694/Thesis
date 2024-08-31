@@ -16,7 +16,7 @@ import {
   STOP_STREAMING,
 } from "../../utils/typeDefs";
 
-const SOCKET_SERVER_URL = 'http://localhost:4000'
+const SOCKET_SERVER_URL = 'http://192.168.1.7:4000'
 let socket;
 
 function DeviceDetails() {
@@ -54,8 +54,8 @@ function DeviceDetails() {
       transports: ["websocket"],
       query: { clientType: "desktop" },
     });
-
-    socket.emit(JOIN_ROOM, "adsasddas");
+    console.log(sensorsData);
+    socket.emit(JOIN_ROOM, "myDevice");
 
     socket.on(RECEIVE_DATA, (payload) => {
       const { cpuUsage, date } = payload;
