@@ -12,7 +12,7 @@ const SensorSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 25,
+        maxLength: 250,
         minLength: 2,
     },
     type: {
@@ -134,6 +134,39 @@ export async function updateSensor(id, data) {
     return sensor
 }
 
+export async function createDeviceWithSensors(deviceData, sensorsData) {
+    try {
+        console.log('Creating new device with data:', JSON.stringify(deviceData, null, 2));
+        const newDevice = new Device(deviceData);
+        await newDevice.save();
+        console.log('New device created:', newDevice._id.toString());
+
+        console.log('Creating sensors:', JSON.stringify(sensorsData, null, 2));
+        const createdSensors = await Promise.all(sensorsData.map(async (sensorData) => {
+            const newSensor = new Sensor({
+                ...sensorData,
+                device: newDevice._id
+            });
+            await newSensor.save();
+            console.log('New sensor created:', newSensor._id.toString());
+            return newSensor;
+        }));
+
+        newDevice.sensors = createdSensors.map(sensor => sensor._id);
+        await newDevice.save();
+
+        console.log('Device and sensors created successfully');
+
+        const populatedDevice = await Device.findById(newDevice._id).populate('sensors');
+        console.log('Populated device:', JSON.stringify(populatedDevice, null, 2));
+
+        return populatedDevice;
+    } catch (error) {
+        Device.findByIdAndDelete(newDevice._id);
+        console.error('Error in createDeviceWithSensors:', error);
+        throw error;
+    }
+}
 export async function deleteSensor(id) {
     if (!id) {
         throw new Error('Sensor ID is required');
