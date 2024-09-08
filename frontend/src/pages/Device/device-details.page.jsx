@@ -16,7 +16,7 @@ import {
   STOP_STREAMING,
 } from "../../utils/typeDefs";
 
-const SOCKET_SERVER_URL = 'http://localhost:4000'
+const SOCKET_SERVER_URL = 'http://192.168.0.196:4000'
 let socket;
 
 function DeviceDetails() {
@@ -62,8 +62,9 @@ function DeviceDetails() {
     socket.emit(JOIN_ROOM, deviceName);
 
     socket.on(RECEIVE_DATA, (payload) => {
-      const { cpuUsage, time } = payload;
-      setMeasurements((prevData) => [...prevData, { date: time, uv: cpuUsage }]);
+      console.log(payload)
+      const { value, time } = payload;
+      setMeasurements((prevData) => [...prevData, { date: time, uv: value }]);
     });
 
     socket.on("disconnect", () => {

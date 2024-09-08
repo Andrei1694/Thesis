@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const app = express()
 
-app.use(cors({ origin: process.env.VITE_API_WS_URL }))
+app.use(cors({ origin: '*' }))
 app.use(compression());
 app.use(express.json())
 
