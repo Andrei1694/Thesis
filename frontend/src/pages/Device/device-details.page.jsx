@@ -16,7 +16,7 @@ import {
   STOP_STREAMING,
 } from "../../utils/typeDefs";
 
-const SOCKET_SERVER_URL = 'http://192.168.0.196:4000'
+const SOCKET_SERVER_URL = 'http://192.168.245.75:4000'
 let socket;
 
 function DeviceDetails() {
